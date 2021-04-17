@@ -1,0 +1,20 @@
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-morentouxiang:before {
+  content: "\e60d";
+}
+@font-face {
+  font-family: 'iconfont';  /* project id 2156175 */
+  src: url('//at.alicdn.com/t/font_2156175_ff46q37zjm.eot');
+  src: url('//at.alicdn.com/t/font_2156175_ff46q37zjm.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_2156175_ff46q37zjm.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_2156175_ff46q37zjm.woff') format('woff'),
+  url('//at.alicdn.com/t/font_2156175_ff46q37zjm.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_2156175_ff46q37zjm.svg#iconfont') format('svg');
+}

@@ -1,0 +1,23 @@
+.homeMenu{
+  display: flex;
+  flex-wrap: wrap;
+  .item{
+    border: 1px solid rgba(156, 151, 151, 0.1);
+    box-sizing: border-box;
+    width: 25%;
+    padding: 10px;
+    text-align: center;
+    .img{
+      display: inline-block;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      line-height: 45px;
+      font-size: 24px;
+      color: white;
+    }
+    .name{
+      margin: 5px 0;
+    }
+  }
+}

@@ -1,0 +1,97 @@
+.shopComment{
+  // 评价信息
+  .starInfo{
+    height: 80px;
+    display: flex;
+    border-bottom: 10px solid rgb(248, 246, 246);
+    p{
+      margin: 5px 0;
+    }
+    .num{
+      font-size: 24px;
+      margin-top: 10px;
+    }
+    // 商品评分
+    .shopStarInfo{
+      text-align: center;
+      width: 100px;
+      height: 80px;
+      .num{
+        color: orange;
+      }
+    }
+    // 星星
+    .star{
+      flex: 1;
+      padding-left: 10px;
+      p{
+        margin: 8px 0;
+        span{
+          margin-right: 10px;
+        }
+      }
+    }
+    // 配送评分
+    .shopSendInfo{
+      text-align: center;
+      width: 100px;
+      height: 80px;
+    }
+  }
+  // 评价分类
+  .commentItems{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    border-bottom: 1px solid rgb(233, 231, 231);
+    .item{
+      margin:5px 10px;
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 30px;
+      border: 2px solid #ccc;
+    }
+  }
+  // 评论信息
+  .commentInfo{
+    display: flex;
+    padding: 10px 20px 20px;
+    // 用户头像
+    .aside{
+      width: 40px;
+      margin-right: 15px;
+      .avatar{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #000;
+        background-size: cover;
+      }
+    }
+    // 用户评论
+    .content{
+      flex: 1;
+      // 名称和时间
+      .nameAndTime{
+        display: flex;
+        justify-content: space-between;
+        .name{
+          font-size: 16px;
+        }
+      }
+      // 到达事时间
+      .arriveTime{
+        margin-top: 5px;
+      }
+      // 图片
+      .commentImg{
+        display: flex;
+        img{
+          width: 80px;
+          height: 80px;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}

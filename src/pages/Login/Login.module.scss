@@ -1,0 +1,80 @@
+.login{
+  height: 100vh;
+  // 关闭按钮
+  .close{
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .content{
+    width: 80%;
+    height: 500px;
+    // 头像
+    .avatar{
+      text-align: center;
+      margin-bottom: 40px;
+      .img{
+        display: inline-block;
+        height: 66px;
+        width: 66px;
+        background: rgb(0,145,255);
+        border-radius: 50%;
+        text-align: center;
+        line-height: 66px;
+        font-size: 40px;
+        color: white;
+      }
+    }
+    // 表单
+    .loginForm{
+      .input{
+        height: 50px;
+        margin-bottom: 16px;
+        background: #f9f9f9;
+        border: 0.02667rem solid rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        input{
+          width: 100%;
+          margin-top: 2px;
+          height: 46px;
+          box-sizing: border-box;
+          padding-left: 15px;
+          outline: none;
+          border: none;
+          font-size: 18px;
+        }
+      }
+    }
+    // 登陆按钮
+    .loginBtn{
+      margin-top: 40px;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      color: white;
+      border-radius: 10px;
+      background: rgb(0,145,255);
+      font-size: 16px;
+      margin-bottom: 16px;
+    }
+    // 提示信息
+    .tip{
+      line-height: 32px;
+      text-align: center;
+      font-size: 14px;
+      a{
+        color: rgba(0, 0, 0, 0.5);
+      }
+      span{
+        margin: 0 15px;
+        position: relative;
+        top: -2px;
+      }
+    }
+  }
+}

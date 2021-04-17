@@ -1,0 +1,19 @@
+.appTab{
+  height: 40px;
+  display: flex;
+  border-bottom: 1px solid rgb(204, 201, 201);
+  .item{
+    text-align: center;
+    flex: 1;
+    height: 40px;
+    span{
+      box-sizing: border-box;
+      width: 50px;
+      display: inline-block;
+      line-height: 37px;
+    }
+    .currentSpan{
+      border-bottom: 2px solid red;
+    }
+  }
+}

@@ -1,0 +1,44 @@
+.AppBar{
+  height: 40px;
+  line-height: 40px;
+  display: flex;
+  font-size: 16px;
+  padding: 0 15px;
+  color: white;
+  // 左边
+  .left{
+    width: 30%;
+    position: relative;
+    padding-left: 30px;
+    .leftIcon{
+      width: 30px;
+      height: 39px;
+      position: absolute;
+      left: 0px;
+      top: 1px;
+      overflow: hidden;
+    }
+  }
+  // 中间
+  .center{
+    width: 40%;
+    text-align: center;
+  }
+  // 右边
+  .right{
+    width: 30%;
+    overflow: hidden;
+    white-space: nowrap;/*不换行*/
+    text-overflow:ellipsis;/*超出部分文字以...显示*/
+    position: relative;
+    padding-right: 30px;
+    text-align: right;
+    .rightIcon{
+      width: 30px;
+      height: 39px;
+      position: absolute;
+      top: 1px;
+      right: 0px;
+    }
+  }
+}

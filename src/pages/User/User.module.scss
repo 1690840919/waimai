@@ -1,0 +1,113 @@
+.user{
+  height: 100vh;
+  background: rgb(248,245,245);
+  // 登陆后信息
+  .userInfo{
+    .content{
+      position: relative;
+      top: -1px;
+      overflow: hidden;
+      height: 100px;
+      background: rgb(91,170,250);
+      display: flex;
+      // 用户头像
+      .avatar{
+        width: 60px;
+        padding: 0 20px;
+        .img{
+          border-radius: 50%;
+          margin: 20px 0;
+          font-size: 40px;
+          width: 60px;
+          height: 60px;
+          background: white;
+          text-align: center;
+          line-height: 60px;
+        }
+      }
+      .text{
+        flex: 1;
+        padding-right: 40px;
+        .userName{
+          margin: 20px 0 10px;
+          font-size: 16px;
+          color: white;
+          font-weight: bold;
+        }
+        .userId{
+          height: 18px;
+          line-height: 18px;
+          display: inline-block;
+          border-radius: 10px;
+          padding: 2px 12px;
+          color: #e4c7c7;
+          border: 1px solid #e9d0d0;
+        }
+      }
+      // 更多按钮
+      .moreIcon{
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        line-height: 20px;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+        color: white;
+      }
+    } 
+  }
+  // 未登录头像
+  .noLoginAvatar{
+    height: 100px;
+    background: rgb(91,170,250);
+    padding: 60px 0 20px;
+    // 头像
+    .avatar{
+      text-align: center;
+      .img{
+        background: white;
+        border-radius: 50%;
+        line-height: 60px;
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        font-size: 40px;
+        color: rgb(85, 78, 78);
+      }
+    }
+    // 登陆/注册
+    .info{
+      margin-top: 5px;
+      text-align: center;
+      color: white;
+      font-size: 14px;
+    }
+  }
+  // 功能栏
+  .funcArea{
+    display: flex;
+    background: white;
+    margin-bottom: 5px;
+    .item{
+      flex: 1;
+      height: 60px;
+      padding: 10px;
+      text-align: center;
+      .icon{
+        color: #ee3f3f;
+        margin-top: 10px;
+        line-height: 24px;
+        font-size: 28px;
+      }
+      .name{
+        margin:5px 0px;
+      }
+    }
+  }
+  // 菜单栏目
+  .menuArea{
+
+  }
+}

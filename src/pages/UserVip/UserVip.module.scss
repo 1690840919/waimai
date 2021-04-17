@@ -1,0 +1,68 @@
+.userVip{
+  min-height: 100vh;
+  background: rgb(244,244,244);
+  // 用户资料
+  .userInfo{
+    position: relative;
+    top: -1px;
+    height: 100px;
+    background: rgb(91,170,250);
+    display: flex;
+    align-items: center;
+    position: relative;
+    // 头像
+    .avatar{
+      width: 60px;
+      height: 60px;
+      margin: 0 20px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    // 昵称和时间
+    .info{
+      flex: 1;
+      padding-right: 100px;
+      P{
+        max-width: 175px;
+        overflow: hidden;/*超出部分隐藏*/
+        white-space: nowrap;/*不换行*/
+        text-overflow:ellipsis;/*超出部分文字以...显示*/
+      }
+      .name{
+        margin-top: 6px;
+        font-size: 16px;
+        color: white;
+        font-weight: bolder;
+      }
+      .other{
+        span{
+          vertical-align: middle;
+          color: rgb(104, 102, 102);
+        }
+        .icon{
+          color: #f1c892;
+          margin-right: 10px;
+        }
+      }
+    }
+    // 按钮
+    .vipBtn{
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      width: 65px;
+      height: 32px;
+      border-radius: 15px;
+      background: rgb(158,110,110);
+      color: white;
+      line-height: 32px;
+      text-align: center;
+    }
+  }
+}

@@ -1,0 +1,22 @@
+.userAddress{
+  min-height: 100vh;
+  background: rgb(244,244,244);
+  // 底部按钮
+  .addBtn{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    padding: 10px 20px;
+    background: white;
+    .btn{
+      line-height: 30px;
+      text-align: center;
+      font-size: 14px;
+      background:rgb(91,170,250);
+      color: white;
+      border-radius: 20px;
+    }
+  }
+}
