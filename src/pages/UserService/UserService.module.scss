@@ -1,48 +1,52 @@
 .userService{
   // 聊天
-  .chat{
+  .chatContent{
+    margin: 40px 0 50px;
+   .chat{
     .chatInfo{
       padding: 10px 16px;
       display: flex;
-      .avatar{
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        overflow: hidden;
-        img{
-          width: 100%;
-          height: 100%;
+        .avatar{
+          width: 35px;
+          height: 35px;
+          border-radius: 50%;
+          overflow: hidden;
+          img{
+            width: 100%;
+            height: 100%;
+          }
         }
-      }
-      .content{
-        flex: 1;
-        margin: 0 15px;
-        .text{
-          display: inline-block;
-          background: rgb(224,239,251);
-          border-radius: 10px;
-          line-height: 38px;
-          padding: 0 10px;
-          font-size: 14px;
-          position: relative;
-          .icon{
-            display: block;
-            position: absolute;
-            top: 12px;
-            width: 15px;
-            height: 15px;
+        .content{
+          flex: 1;
+          margin: 0 15px;
+          word-break: break-all;
+          .text{
+            display: inline-block;
             background: rgb(224,239,251);
-            transform: rotate(-135deg);
-          }
-          .leftIcon{
-            left: -7px;
-          }
-          .rightIcon{
-            right: -7px!important;
+            border-radius: 10px;
+            line-height: 38px;
+            padding: 0 10px;
+            font-size: 14px;
+            position: relative;
+            .icon{
+              display: block;
+              position: absolute;
+              top: 12px;
+              width: 15px;
+              height: 15px;
+              background: rgb(224,239,251);
+              transform: rotate(-135deg);
+            }
+            .leftIcon{
+              left: -7px;
+            }
+            .rightIcon{
+              right: -7px!important;
+            }
           }
         }
       }
-    }
+    } 
   }
   // 用户输入
   .userInput{

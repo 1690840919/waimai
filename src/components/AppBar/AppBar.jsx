@@ -13,11 +13,13 @@ function AppBar(props) {
   // 接收背景颜色，左中右，图标
   const { leftSize, size, bgColor, left = null, center = null, right = null, leftIcon = '&#xe651;',
     handleRight, handleLeft, paddingLeft, paddingRight, onClick, height = '40px', rightSize,
-    rightIcon = null, color, leftIconColor, rightIconColor, rightColor } = props
+    rightIcon = null, color, leftIconColor, rightIconColor, rightColor, fixed
+  } = props
   return (
     <div onClick={onClick} className={Style.AppBar} style={{
       height, lineHeight: height,
-      backgroundColor: bgColor, color, fontSize: size
+      backgroundColor: bgColor, color, fontSize: size,
+      position: fixed ? 'fixed' : null, top: 0, left: 0, right: 0, zIndex: 2
     }}>
       {/* 左边 */}
       <div style={{ fontSize: leftSize, paddingLeft }} className={`${Style.left}`}>
