@@ -7,11 +7,11 @@ import ShopFood from './components/ShopFood/ShopFood'
 import ShopInfo from './components/ShopInfo/ShopInfo'
 import ShopComment from './components/ShopComment/ShopComment'
 function ShopDetail(props) {
-  const { history } = props
+  const { history,match } = props
   const [current, setCurrent] = useState(0)
   const appTabData = ['点餐', '评价', '商家']
   const shopInfo = {
-    id: '6001',
+    id: match.params.id.replace(':',''),
     img: 'https://img.meituan.net/msmerchant/c5a3b24ff7fe9076081c7af20d96ac7060537.png@320w_320h_1e_1c',
     name: '书亦烧仙草（龙洞广金店）',
     star: 3.7,

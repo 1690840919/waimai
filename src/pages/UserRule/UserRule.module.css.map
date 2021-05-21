@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,SAAS,CAAA;EACP,UAAU,EAAE,KAAK;EACjB,UAAU,EAAE,OAAgB;CAC7B",
-    "sources": [
-        "UserRule.module.scss"
-    ],
-    "names": [],
-    "file": "UserRule.module.css"
-}

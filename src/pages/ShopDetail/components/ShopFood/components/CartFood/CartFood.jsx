@@ -3,13 +3,14 @@ import { connect } from 'react-redux'
 import Style from './CartFood.module.scss'
 import { updateCart } from '../../../../../../redux/actions'
 function CartFood(props) {
-  const { changeCart, item, shopInfo, dispatch, cartInfo } = props
 
+  const { item, shopInfo, dispatch, cartInfo,closeCartContent } = props
   // 点击添加/减少商品
   const handleNum = (foodData, add) => {
-    if (cartInfo[shopInfo.id]) {
-      const food = cartInfo[shopInfo.id].food
-      // 查找有没有这个商品
+    let food
+    if (cartInfo[shopInfo.id]) { // 购物车有这个店铺
+      food = [...cartInfo[shopInfo.id].food] // 获取这个店铺的订单
+      // 查找订单有没有这个商品
       if (food.find(item => item.id === foodData.id)) {
         food.forEach((item, index) => {
           if (item.id === foodData.id) {
@@ -24,20 +25,20 @@ function CartFood(props) {
         foodData.num = 1
         food.push(foodData)
       }
-    } else {
+    } else { // 购物车没有这个店铺
       foodData.num = 1
-      const data = {
-        shopInfo,
-        food: [
-          foodData
-        ]
-      }
-      cartInfo[shopInfo.id] = data
+      food = [foodData]
     }
-    dispatch(updateCart(cartInfo))
-    // 购物车改变
-    changeCart()
-    console.log(cartInfo)
+    !food.length && closeCartContent()
+    const data = {
+      shopInfo,
+      food
+    }
+    const newCartInfo = {
+      ...cartInfo,
+      [shopInfo.id]:data
+    } 
+    dispatch(updateCart(newCartInfo))
   }
 
   return (

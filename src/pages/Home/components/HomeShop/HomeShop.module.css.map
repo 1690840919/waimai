@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,SAAS,CAAA;EACP,UAAU,EAAE,IAAI;CACjB",
-    "sources": [
-        "HomeShop.module.scss"
-    ],
-    "names": [],
-    "file": "HomeShop.module.css"
-}

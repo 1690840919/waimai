@@ -4,7 +4,9 @@ import Style from './Shop.module.scss'
 function Shop(props) {
   const { data, history, bgColor, color } = props
   const handleShop = () => {
-    history.push(`/shopDetail:${data.id}`)
+    if(history){
+      history.push(`/shopDetail:${data.id}`)
+    }
   }
   return (
     <div style={{ backgroundColor: bgColor, color }}

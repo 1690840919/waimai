@@ -5,16 +5,17 @@ import { updateCart } from '../../../../../../redux/actions'
 function Food(props) {
   const { obj, cartInfo, shopInfo, dispatch, changeCart } = props
   const [showNum, setShowNum] = useState(false)
-  const [foodNum, setFoodNum] = useState(1)
+  const [foodNum, setFoodNum] = useState(0)
 
   // 点击添加/减少商品
   const handleNum = (foodData, add) => {
-    if (!showNum) {
+    if (add && !showNum) {
       setShowNum(true)
     }
-    if (cartInfo[shopInfo.id]) {
-      const food = cartInfo[shopInfo.id].food
-      // 查找有没有这个商品
+    let food
+    if (cartInfo[shopInfo.id]) { // 购物车有这个店铺
+      food = [...cartInfo[shopInfo.id].food] // 获取这个店铺的订单
+      // 查找订单有没有这个商品
       if (food.find(item => item.id === foodData.id)) {
         food.forEach((item, index) => {
           if (item.id === foodData.id) {
@@ -25,36 +26,37 @@ function Food(props) {
               food[index].num += add ? 1 : -1
               setFoodNum(food[index].num)
             }
-
           }
         })
       } else {// 没有这个商品，设为1， 进行添加
         foodData.num = 1
         food.push(foodData)
       }
-    } else {
+    } else { // 购物车没有这个店铺
       foodData.num = 1
-      const data = {
-        shopInfo,
-        food: [
-          foodData
-        ]
-      }
-      cartInfo[shopInfo.id] = data
+      food = [foodData]
     }
-    dispatch(updateCart(cartInfo))
-    // 购物车改变
-    changeCart()
-    console.log(cartInfo)
+    const data = {
+      shopInfo,
+      food
+    }
+    const newCartInfo = {
+      ...cartInfo,
+      [shopInfo.id]:data
+    } 
+    dispatch(updateCart(newCartInfo))
   }
 
   // 初始化数据
   useEffect(() => {
     const food = cartInfo[shopInfo.id]?.food || []
     const item = food.find(item => item.id === obj.id)
-    if (item && item.num > 0) {
+    if (item && item.num) {
       setFoodNum(item.num)
       setShowNum(true)
+    }else{
+      setFoodNum(0)
+      setShowNum(false)
     }
   }, [cartInfo, shopInfo, obj])
 
@@ -76,10 +78,10 @@ function Food(props) {
       </div>
       {/* 添加购物车按钮 */}
       <div className={Style.changeBtn}>
-        {showNum ? <span className={`iconfont ${Style.red}`}
+        {showNum ? <span className={`iconfont ${Style.red}`} // 减少商品
           onClick={() => { handleNum(obj, 0) }} >&#xe611;</span> : null}
         {showNum ? <span className={Style.foodNum}>{foodNum}</span> : null}
-        <span onClick={() => { handleNum(obj, 1) }}
+        <span onClick={() => { handleNum(obj, 1) }} // 增加商品
           className={`iconfont ${Style.add}`}>&#xe640;</span>
       </div>
     </div>

@@ -5,6 +5,7 @@ import Food from './components/Food/Food'
 import CartFood from './components/CartFood/CartFood'
 import { connect } from 'react-redux'
 import Toast from '../../.../../../../components/Toast/Toast'
+import { updateCart } from '../../../../redux/actions'
 
 
 function ShopFood(props) {
@@ -52,23 +53,45 @@ function ShopFood(props) {
 
   const [toastInfo, setToastInfo] = useState({})
 
+  // 更新购物车里面的信息
+  useEffect(() => {
+    if (cartInfo[shopInfo.id] && cartInfo[shopInfo.id].food) {
+      setCartContent(cartInfo[shopInfo.id].food)
+      const food = cartInfo[shopInfo.id]?.food || []
+      let num
+      if(food.length){
+        num = food.length === 1? food[0].num:food.reduce((a, b) => (a.num + b.num))
+      }else{
+        num = 0
+      }
+      setTotalNum(num)
+    }
+  }, [cartInfo, shopInfo])
+
   // 点击购物车
   const handleCart = () => {
     if (!cartContent.length) {
       setToastInfo({
-        text: '购物车不能为空',
+        text: '购物车是空的',
         date: new Date()
       })
       return
     }
-    const value = !showCartContent
-    setShowCartContent(value)
+    setShowCartContent(!showCartContent)
   }
 
-  // 购物车内容变化
-  const changeCart = async () => {
-    setTotalNum(cartInfo[shopInfo.id].food.length)
-    setCartContent(cartInfo[shopInfo.id].food)
+  // 清空购物车
+  const clearCart = () => {
+    const data = {
+      shopInfo,
+      food:[],
+    }
+    const newCartInfo = {
+      ...cartInfo,
+      [shopInfo.id]:data
+    } 
+    dispatch(updateCart(newCartInfo))
+    setShowCartContent(false)
   }
 
   // 去结算
@@ -102,7 +125,7 @@ function ShopFood(props) {
       <div className={Style.content}>
         {
           foodData.map(obj => {
-            return <Food changeCart={changeCart} key={obj.id} obj={obj} shopInfo={shopInfo} />
+            return <Food key={obj.id} obj={obj} shopInfo={shopInfo} />
           })
         }
       </div>
@@ -115,7 +138,7 @@ function ShopFood(props) {
           </div>
         </div>
         {/* 信息 */}
-        <div className={Style.cartInfo} onClick={handleCart}>
+        <div className={Style.cartInfo}>
           <p className={Style.price}>￥0.00</p>
           <p className={Style.tip}>另外需要配送费￥5</p>
         </div>
@@ -131,13 +154,16 @@ function ShopFood(props) {
             <div onClick={(e) => { e.stopPropagation() }} className={Style.cartContent}>
               <div className={Style.absolute}>
                 {/* 顶部标题 */}
-                <AppBar absolute={true} paddingLeft={0} size={'12px'} left={'我的购物车'} color={'#333'} leftIcon={null} rightIcon={'&#xe61d;'} rightSize={'12px'} />
+                <AppBar absolute={true} paddingLeft={0} size={'12px'} 
+                handleRight={clearCart}
+                left={'我的购物车'} color={'#333'} leftIcon={null} 
+                rightIcon={'&#xe61d;'} rightSize={'12px'} />
               </div>
               {/* 商品 */}
               {
                 cartContent.map(item => {
-                  return <CartFood changeCart={changeCart}
-                    shopInfo={shopInfo} key={item.id} item={item} />
+                  return <CartFood closeCartContent={()=>{setShowCartContent(false)}}
+                   shopInfo={shopInfo} key={item.id} item={item} />
                 })
               }
             </div>

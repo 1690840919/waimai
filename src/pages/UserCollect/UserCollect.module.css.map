@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,YAAY,CAAA;EACV,UAAU,EAAE,KAAK;EACjB,UAAU,EAAE,OAAgB;CAC7B",
-    "sources": [
-        "UserCollect.module.scss"
-    ],
-    "names": [],
-    "file": "UserCollect.module.css"
-}
