@@ -18,7 +18,7 @@ function Home(props) {
         left={'广州-天河'} leftSize={'14px'}
       />
       {/* 搜索框 */}
-      <Search />
+      <Search onClick={() => { history.push("/search") }} />
       {/* 轮播图 */}
       <AppSwiper width={'100%'} height={'100px'} />
       {/* 菜单 */}

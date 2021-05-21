@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import Style from './AppBar.module.scss'
 
 // 参数
@@ -19,7 +18,7 @@ function AppBar(props) {
     <div onClick={onClick} className={Style.AppBar} style={{
       height, lineHeight: height,
       backgroundColor: bgColor, color, fontSize: size,
-      position: fixed ? 'fixed' : null, top: 0, left: 0, right: 0, zIndex: 2
+      position: fixed ? 'fixed' : null, top: 0, left: 0, right: 0, zIndex: 2,
     }}>
       {/* 左边 */}
       <div style={{ fontSize: leftSize, paddingLeft }} className={`${Style.left}`}>

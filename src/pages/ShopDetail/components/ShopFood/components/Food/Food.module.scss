@@ -1,0 +1,66 @@
+.food{
+  display: flex;
+  margin: 20px 0;
+  position: relative;
+  // 食品图片
+  .foodImg{
+    width: 75px;
+    height: 75px;
+    margin-right: 10px;
+    img{
+      width: 75px;
+      height: 75px;
+    }
+  }
+  // 食品信息
+  .foodInfo{
+    flex: 1;
+    p{
+      margin: 5px 0;
+      width: 180px;
+      font-size:12px;
+      overflow: hidden;/*超出部分隐藏*/
+      white-space: nowrap;/*不换行*/
+      text-overflow:ellipsis;/*超出部分文字以...显示*/
+    }
+    .title{
+      margin-top: -2px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .num{
+      span{
+        margin-right: 10px;
+      }
+    }
+    .price{
+      color: #fb4e44;
+      font-size: 18px;
+    }
+  }
+  // 添加购物车按钮
+  .changeBtn{
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+    span{
+      vertical-align: middle;
+      display: inline-block;
+    }
+    .red,.add{
+      width: 22px;
+      height: 22px;
+      line-height: 24px;
+      text-align: center;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+      margin: 0 10px;
+    }
+    .foodNum{
+      font-size: 16px;
+    }
+    .add{
+      background: orange;
+    }
+  }
+}

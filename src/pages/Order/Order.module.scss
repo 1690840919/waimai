@@ -1,5 +1,5 @@
 .order{
-  min-height: 100vh;
+  height: 100vh;
   .noLoginStatus{
     height: calc(100vh - 90px);
     display: flex;    
@@ -16,6 +16,134 @@
         background: url('../../assets//images//noOrder.jpg');
         background-size: cover;
         border-radius: 40px;
+      }
+    }
+  }
+  // 登陆后
+  .loginStatus{
+    box-sizing: border-box;
+    padding: 40px 0 50px;
+    min-height: 100vh;
+    background: rgb(244,244,244);
+    .orderContent{
+      .order{
+        height: auto;
+        margin: 20px 10px;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        // 店铺信息
+        .shopInfo{
+          display: flex;
+          .avatar{
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-right: 10px;
+            img{
+              width: 100%;
+              height: 100%;
+            }
+          }
+          .info{
+            flex: 1;
+            .title{
+              display: flex;
+              justify-content: space-between;
+              .name{
+                font-size: 16px;
+                font-weight: bold;
+                margin-bottom: 10px;
+                position: relative;
+                &::after{
+                  content: "";
+                  position: absolute;
+                  top: 7px;
+                  right:-5px;
+                  display: block;
+                  width: 6px;
+                  height: 6px;
+                  border-bottom: 2px solid #555;
+                  border-right: 2px solid #555;
+                  transform: rotate(-45deg);
+                }
+              }
+              .orderStatus{
+                margin-right: 10px;
+                font-size: 14px;
+                color: #999;
+              }
+            }
+            .others{
+              span{
+                display: inline-block;
+                color: red;
+                border-radius: 5px;
+                border: 1px solid red;
+                padding: 1px 5px;
+                margin-right: 10px;
+                font-size: 12px;
+              }
+            }
+          }
+        }
+        // 食品
+        .orderFood{
+          margin: 10px 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .foods{
+            flex: 1;
+            display: flex;
+            align-items: center;
+            overflow-x: auto;
+            .food{
+              width: 80px;
+              .img{
+                width: 70px;
+                height: 70px;
+                border-radius: 10px;
+                overflow: hidden;
+                img{
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+              .foodName{
+                overflow: hidden;
+                display: block;
+                font-size:12px;
+                overflow: hidden;/*超出部分隐藏*/
+                white-space: nowrap;/*不换行*/
+                text-overflow:ellipsis;/*超出部分文字以...显示*/
+              }
+            }
+          }
+          .foodInfo{
+            width: 80px;
+            text-align: right;
+            p{
+              margin: 2px;
+            }
+            .price{
+              font-size: 16px;
+            }
+          }
+        }
+        // 按钮
+        .orderBtn{
+          padding-top: 5px;
+          display: flex;
+          justify-content: flex-end;
+          .btn{
+            border:1px solid #888;
+            padding: 5px 10px;
+            border-radius: 10px;
+            margin-left: 10px;
+          }
+        }
       }
     }
   }

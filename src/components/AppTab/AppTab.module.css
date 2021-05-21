@@ -1,0 +1,28 @@
+.appTab {
+  height: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-bottom: 1px solid #ccc9c9;
+}
+
+.appTab .item {
+  text-align: center;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  height: 40px;
+}
+
+.appTab .item span {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 50px;
+  display: inline-block;
+  line-height: 37px;
+}
+
+.appTab .item .currentSpan {
+  border-bottom: 2px solid red;
+}
+/*# sourceMappingURL=AppTab.module.css.map */

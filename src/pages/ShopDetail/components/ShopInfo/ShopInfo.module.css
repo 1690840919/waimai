@@ -1,0 +1,44 @@
+.shopInfo .title {
+  font-weight: bold;
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.shopInfo .sendInfo {
+  padding-left: 20px;
+  height: 100px;
+  border-bottom: 5px solid #f5f2f2;
+}
+
+.shopInfo .sendInfo .send span {
+  display: inline-block;
+  background: #0597f4;
+  padding: 2px 5px;
+  border-radius: 10px;
+  margin-right: 10px;
+  color: white;
+}
+
+.shopInfo .sendInfo .price span {
+  margin-left: 10px;
+  font-size: 14px;
+  color: orange;
+}
+
+.shopInfo .activity {
+  padding-left: 20px;
+}
+
+.shopInfo .activity .item {
+  font-size: 14px;
+}
+
+.shopInfo .activity .item span {
+  display: inline-block;
+  background: #e37f49;
+  padding: 2px 5px;
+  border-radius: 10px;
+  margin-right: 10px;
+  color: white;
+}
+/*# sourceMappingURL=ShopInfo.module.css.map */

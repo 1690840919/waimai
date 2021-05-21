@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,UAAU,CAAA;EACR,QAAQ,EAAE,QAAQ;EAClB,GAAG,EAAE,IAAI;EACT,QAAQ,EAAE,MAAM;CACjB",
+    "sources": [
+        "AppSwiper.module.scss"
+    ],
+    "names": [],
+    "file": "AppSwiper.module.css"
+}

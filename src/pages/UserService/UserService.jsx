@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Style from './UserService.module.scss'
 import AppBar from '../../components/AppBar/AppBar'
-import debounce from '../../utils/debounce'
 import { getItem, setItem } from '../../utils/storage'
 import { CHATCONTENT } from '../../utils/enums'
 import Toast from '../../components/Toast/Toast'

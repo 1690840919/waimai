@@ -2,9 +2,9 @@ import React from 'react'
 import Style from './Search.module.scss'
 
 function Search(props) {
-  const { height = '50px', left, right } = props
+  const { height = '50px', left, right, onClick, rightClick } = props
   return (
-    <div style={{ height, lineHeight: height }} className={Style.search}>
+    <div onClick={onClick} style={{ height, lineHeight: height }} className={Style.search}>
       {
         left ?
           <div className={Style.left}>
@@ -19,7 +19,7 @@ function Search(props) {
       </div>
       {
         right ?
-          <div className={Style.right}>
+          <div onClick={rightClick} className={Style.right}>
             {right}
           </div>
           : null

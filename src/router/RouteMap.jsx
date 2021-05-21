@@ -18,6 +18,8 @@ import UserRule from '../pages/UserRule/UserRule'
 import UserCollect from '../pages/UserCollect/UserCollect'
 import UserDiscount from '../pages/UserDiscount/UserDiscount'
 import UserWallet from '../pages/UserWallet/UserWallet'
+import OrderInfo from '../pages/OrderInfo/OrderInfo'
+import Search from '../pages/Search/Search'
 class RouteMap extends Component {
   render() {
     return (
@@ -27,6 +29,7 @@ class RouteMap extends Component {
           <Route path='/home' component={Home} />
           <Route path='/cart' component={Cart} />
           <Route path='/order' component={Order} />
+          <Route path='/orderInfo' component={OrderInfo} />
           <Route path='/user' component={User} />
           <Route path='/login' component={Login} />
           <Route path='/shopDetail:id' component={ShopDetail} />
@@ -40,6 +43,7 @@ class RouteMap extends Component {
           <Route path='/userCollect' component={UserCollect} />
           <Route path='/userDiscount' component={UserDiscount} />
           <Route path='/userWallet' component={UserWallet} />
+          <Route path='/search' component={Search} />
           <Route path="*" component={NotFound} />
         </Switch>
       </Router>

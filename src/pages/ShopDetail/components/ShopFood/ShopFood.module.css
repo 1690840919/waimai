@@ -1,0 +1,130 @@
+.shopFood {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.shopFood .aside {
+  width: 80px;
+  background: whitesmoke;
+}
+
+.shopFood .aside .item {
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+}
+
+.shopFood .content {
+  padding: 0 10px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  height: 100px;
+  background: white;
+}
+
+.shopFood .cart {
+  z-index: 5;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: #3b3b3c;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.shopFood .cart .img {
+  width: 70px;
+  height: 50px;
+  position: relative;
+}
+
+.shopFood .cart .img .icon {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  font-size: 30px;
+  background: #ffd161;
+  border-radius: 50%;
+}
+
+.shopFood .cart .img .total {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 22px;
+  height: 22px;
+  background: red;
+  color: white;
+  z-index: 10;
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 22px;
+  text-align: center;
+}
+
+.shopFood .cart .cartInfo {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  color: white;
+  padding: 2px;
+}
+
+.shopFood .cart .cartInfo p {
+  margin: 0;
+}
+
+.shopFood .cart .cartInfo .price {
+  font-size: 18px;
+}
+
+.shopFood .cart .buy {
+  width: 100px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  background: #ffc339;
+  color: #333;
+  font-size: 16px;
+}
+
+.shopFood .cartContentBox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.shopFood .cartContentBox .cartContent {
+  width: 100%;
+  margin-bottom: 50px;
+  max-height: 50%;
+  background: white;
+  overflow-y: auto;
+}
+
+.shopFood .cartContentBox .cartContent .absolute {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background: white;
+}
+/*# sourceMappingURL=ShopFood.module.css.map */

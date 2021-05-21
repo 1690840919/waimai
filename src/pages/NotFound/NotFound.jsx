@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
+import Style from './NotFound.module.scss'
 
 class NotFound extends Component {
   render() {
     return (
-      <div>
-        404 没有找到页面
+      <div className={Style.notFound}>
+        <p>404 </p>
+        <p>没有找到页面</p>
       </div>
     )
   }

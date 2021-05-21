@@ -1,0 +1,23 @@
+@charset "UTF-8";
+@import url(d:\项目代码\项目案例资源\案例代码\React案例\3、懒人外卖\waimai\src\styles\iconfont.css);
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 200px;
+  font-size: 16px;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+}
+/*# sourceMappingURL=index.css.map */

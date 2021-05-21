@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Style from './AppTab.module.scss'
 
 function AppTab(props) {
