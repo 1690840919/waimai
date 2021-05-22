@@ -58,11 +58,15 @@ function ShopFood(props) {
     if (cartInfo[shopInfo.id] && cartInfo[shopInfo.id].food) {
       setCartContent(cartInfo[shopInfo.id].food)
       const food = cartInfo[shopInfo.id]?.food || []
-      let num
+      let num = 0
       if(food.length){
-        num = food.length === 1? food[0].num:food.reduce((a, b) => (a.num + b.num))
-      }else{
-        num = 0
+        if(food.length === 1){
+          num += food[0].num
+        }else{
+          food.forEach(obj=>{
+            num += obj.num
+          })
+        }
       }
       setTotalNum(num)
     }
