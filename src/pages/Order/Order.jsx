@@ -11,7 +11,7 @@ function Order(props) {
   return (
     <div className={Style.order}>
       {/* 顶部标题 */}
-      <AppBar fixed={true} bgColor={'rgb(91,170,250)'} color={'white'} center={'我的订单'} />
+      <AppBar leftIcon={null} fixed={true} bgColor={'rgb(91,170,250)'} color={'white'} center={'我的订单'} />
       {
         isLogin ?
           // 已经登陆

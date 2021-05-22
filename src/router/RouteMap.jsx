@@ -20,6 +20,7 @@ import UserDiscount from '../pages/UserDiscount/UserDiscount'
 import UserWallet from '../pages/UserWallet/UserWallet'
 import OrderInfo from '../pages/OrderInfo/OrderInfo'
 import Search from '../pages/Search/Search'
+import OrderSure from '../pages/OrderSure/OrderSure'
 class RouteMap extends Component {
   render() {
     return (
@@ -30,6 +31,7 @@ class RouteMap extends Component {
           <Route path='/cart' component={Cart} />
           <Route path='/order' component={Order} />
           <Route path='/orderInfo' component={OrderInfo} />
+          <Route path='/orderSure:id' component={OrderSure} />
           <Route path='/user' component={User} />
           <Route path='/login' component={Login} />
           <Route path='/shopDetail:id' component={ShopDetail} />

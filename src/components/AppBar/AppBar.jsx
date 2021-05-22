@@ -12,11 +12,12 @@ function AppBar(props) {
   // 接收背景颜色，左中右，图标
   const { leftSize, size, bgColor, left = null, center = null, right = null, leftIcon = '&#xe651;',
     handleRight, handleLeft, paddingLeft, paddingRight, onClick, height = '40px', rightSize,
-    rightIcon = null, color, leftIconColor, rightIconColor, rightColor, fixed
+    rightIcon = null, color, leftIconColor, rightIconColor, rightColor, fixed,padding
+    ,rightIconSize
   } = props
   return (
     <div onClick={onClick} className={Style.AppBar} style={{
-      height, lineHeight: height,
+      height, lineHeight: height,padding,
       backgroundColor: bgColor, color, fontSize: size,
       position: fixed ? 'fixed' : null, top: 0, left: 0, right: 0, zIndex: 2,
     }}>
@@ -41,7 +42,7 @@ function AppBar(props) {
         {/* 右边图标 */}
         <div
           onClick={handleRight}
-          style={{ color: rightIconColor }}
+          style={{ color: rightIconColor,fontSize:rightIconSize }}
           className={`iconfont ${Style.rightIcon}`}
           dangerouslySetInnerHTML={{ __html: rightIcon }}
         >

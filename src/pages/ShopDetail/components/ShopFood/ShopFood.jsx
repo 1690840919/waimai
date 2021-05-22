@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory,useRouteMatch } from 'react-router-dom'
 import Style from './ShopFood.module.scss'
 import AppBar from '../../../../components/AppBar/AppBar'
 import Food from './components/Food/Food'
@@ -52,6 +53,10 @@ function ShopFood(props) {
   const [cartContent, setCartContent] = useState([])
 
   const [toastInfo, setToastInfo] = useState({})
+
+  const history = useHistory();
+
+  const match = useRouteMatch()
 
   // 更新购物车里面的信息
   useEffect(() => {
@@ -107,6 +112,7 @@ function ShopFood(props) {
       })
       return
     }
+    history.push(`/OrderSure:${(match.params.id).replace(':',"")}`)
   }
 
   return (
