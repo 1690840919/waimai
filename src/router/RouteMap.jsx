@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 
 import Home from '../pages/Home/Home'
@@ -21,7 +22,15 @@ import UserWallet from '../pages/UserWallet/UserWallet'
 import OrderInfo from '../pages/OrderInfo/OrderInfo'
 import Search from '../pages/Search/Search'
 import OrderSure from '../pages/OrderSure/OrderSure'
+import { getItem } from '../utils/storage'
+import { updateUserInfo } from '../redux/actions'
 class RouteMap extends Component {
+
+  componentDidMount(){
+    const data = getItem('lazy_waimai_userInfo')
+    data && this.props.dispatch(updateUserInfo(data))
+  }
+
   render() {
     return (
       <Router>
@@ -54,4 +63,11 @@ class RouteMap extends Component {
 }
 
 
-export default RouteMap
+export default connect(
+  ({userInfo}) => ({
+    userInfo
+  }),
+  (dispatch) => ({
+    dispatch
+  })
+)(RouteMap)

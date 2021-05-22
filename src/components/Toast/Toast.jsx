@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Style from './Toast.module.scss'
 
 function Toast(props) {
-  const { text = '提示语句', isShow, icon = '&#xea76;' } = props
+  const { text = '提示语句', isShow, icon, callBackFn } = props
   const [show, setShow] = useState()
 
   const startToast = () => {
@@ -10,6 +10,7 @@ function Toast(props) {
     setShow(true)
     setTimeout(() => {
       setShow(false)
+      callBackFn && callBackFn()
       // console.log('关闭')
     }, 1000);
   }
@@ -29,7 +30,7 @@ function Toast(props) {
             <div className={Style.content}>
               <div>
                 <div className={`iconfont ${Style.icon}`}
-                  dangerouslySetInnerHTML={{ __html: icon }}></div>
+                  dangerouslySetInnerHTML={{ __html: icon || '&#xea76;' }}></div>
                 <div className={Style.tip}>{text}</div>
               </div>
             </div>

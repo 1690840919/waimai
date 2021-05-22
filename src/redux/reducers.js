@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import {
-  UPDATE_CART
+  UPDATE_CART, 
+  UPDATE_USERINFO
 } from './actionTypes'
 const cartInfoState = {
   // '601': {
@@ -23,11 +24,10 @@ const cartInfo = (state = {}, action) => {
   }
 }
 // 用户信息
-const userInfo = (state = { name: 'beitu' }, action) => {
+const userInfo = (state = {}, action) => {
   switch (action.type) {
-    // case UPDATE_U:
-    //   console.log('ok');
-    //   return action.data
+    case UPDATE_USERINFO:
+      return action.data.data
     default:
       return { ...state }
   }

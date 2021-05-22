@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import Style from './User.module.scss'
 import AppBar from '../../components/AppBar/AppBar'
 import TabBar from '../../components/TabBar/TabBar'
 
 function User(props) {
-  const { history } = props
+  const { history,userInfo } = props
   // 登陆状态
-  const [isLogin, setIsLogin] = useState(1)
+  const [isLogin, setIsLogin] = useState(0)
   // 菜单数据
   const menuData = [
     {
@@ -55,9 +55,12 @@ function User(props) {
   ]
   // 点击去登陆
   const toLogin = () => {
-    console.log("去登陆")
+    history.push('/login')
   }
 
+  useEffect(()=>{
+    setIsLogin(!!userInfo.id)
+  },[userInfo])
 
   return (
     <div className={Style.user}>
@@ -72,13 +75,17 @@ function User(props) {
             <div className={Style.content} onClick={() => { history.push('/userInfo') }}>
               {/* 用户头像 */}
               <div className={Style.avatar}>
-                <div className={`iconfont ${Style.img}`}>&#xe658;</div>
+                {
+                  userInfo.avatar?
+                  <img src={userInfo.avatar} alt="" />
+                  :<div className={`iconfont ${Style.img}`}>&#xe658;</div>
+                }
               </div>
               {/* 用户昵称 */}
               <div className={Style.text}>
-                <p className={Style.userName}>新用户13411782971</p>
+                <p className={Style.userName}>{userInfo.nickName}</p>
                 <p>
-                  <span className={Style.userId}>用户ID：13411782971</span>
+                  <span className={Style.userId}>{`用户ID：${userInfo.id}`}</span>
                 </p>
               </div>
               {/* 更多 */}
@@ -127,11 +134,11 @@ function User(props) {
 
 
 export default connect(
-  (state) => ({
-
+  ({userInfo}) => ({
+    userInfo
   }),
   (dispatch) => ({
-
+    dispatch
   })
 )(User)
 

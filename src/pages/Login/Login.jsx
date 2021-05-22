@@ -1,10 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Style from './Login.module.scss'
-
 import { useState } from 'react'
+import { userLogin, userRegister } from '../../api/user'
+import Toast from '../../components/Toast/Toast'
+import { updateUserInfo } from '../../redux/actions'
+import {setItem} from '../../utils/storage'
 function Login(props) {
+  const { history, dispatch, userInfo } = props
   const [isLogin, setIsLogin] = useState(true)
+  const [submitData, setSubmitData] = useState({
+    username: 'beitu',
+    password: '123456',
+    surePassword: '123456',
+  })
+  const [toastInfo, setToastInfo] = useState({})
   // 点击去注册
   const handleRegister = () => {
     setIsLogin(false)
@@ -15,13 +25,56 @@ function Login(props) {
   }
 
   // 点击登陆/注册
-  const handleType = () => {
+  const handleType = async () => {
     // 如果是登陆
     if (isLogin) {
-      console.log('登陆')
-      props.history.push('/user')
+      const { data } = await userLogin(submitData)
+      // 登陆失败
+      if (data.code !== 1000) {
+        setToastInfo({
+          text: data.message,
+          date: new Date(),
+        })
+        return
+      }
+      dispatch(updateUserInfo(data))
+      setItem('lazy_waimai_userInfo',data)
+      // 登陆成功
+      setToastInfo({
+        text: data.message,
+        date: new Date(),
+        icon: '&#xe687;',
+        callBackFn: () => {
+          history.push('/user')
+        }
+      })
     } else {// 否侧是注册
-      console.log('注册')
+      const { password, surePassword } = submitData
+      // 密码不一致
+      if (password !== surePassword) {
+        setToastInfo({
+          text: '密码不一致',
+          date: new Date(),
+        })
+        return
+      }
+      const { data } = await userRegister(submitData)
+      // 注册失败
+      if (data.code !== 1000) {
+        setToastInfo({
+          text: data.message,
+          date: new Date(),
+        })
+        return
+      }
+      // 注册成功
+      setToastInfo({
+        text: data.message,
+        date: new Date(),
+        icon: '&#xe687;'
+      })
+      setIsLogin(true)
+      setSubmitData({})
     }
   }
 
@@ -31,8 +84,30 @@ function Login(props) {
     window.history.back()
   }
 
+  // 更新提交的信息
+  const updateSubmitData = (e, type) => {
+    const value = e.target.value
+    const data = {
+      ...submitData,
+      [type]: value
+    }
+    setSubmitData(data)
+  }
+
+  // 点击忘记密码
+  const handleForgetPassword = () => {
+    setToastInfo({
+      text: "联系管理员",
+      date: new Date(),
+      icon: '&#xe606;'
+    })
+  }
+
   return (
     <div className={Style.login}>
+      {/* 消息提醒 */}
+      <Toast callBackFn={toastInfo.callBackFn} text={toastInfo.text}
+        isShow={toastInfo.date} icon={toastInfo.icon} />
       {/* 关闭按钮 */}
       <div onClick={handleClose} className={`iconfont ${Style.close}`}>&#xe60b;</div>
       {/* 登陆内容 */}
@@ -44,15 +119,18 @@ function Login(props) {
         {/* 登陆表单 */}
         <div className={Style.loginForm}>
           <div className={Style.input}>
-            <input placeholder='请输入账号' type="text" />
+            <input placeholder='请输入账号' value={submitData.username || ""}
+              onChange={e => { updateSubmitData(e, 'username') }} type="text" />
           </div>
           <div className={Style.input}>
-            <input placeholder='请输入密码' type="password" />
+            <input placeholder='请输入密码' value={submitData.password || ""}
+              onChange={e => { updateSubmitData(e, 'password') }} type="password" />
           </div>
           {
             !isLogin ?
               <div className={Style.input}>
-                <input placeholder='请输入确认密码' type="password" />
+                <input placeholder='请输入确认密码' value={submitData.surePassword || ""}
+                  onChange={e => { updateSubmitData(e, 'surePassword') }} type="password" />
               </div>
               : null
           }
@@ -68,7 +146,7 @@ function Login(props) {
               <div>
                 <a href='/#' onClick={(e) => { e.preventDefault(); handleRegister() }}>立即注册</a>
                 <span>|</span>
-                <a href='/#'>忘记密码</a>
+                <a href='/#' onClick={(e) => { e.preventDefault(); handleForgetPassword() }}>忘记密码</a>
               </div>
               :
               <div>
@@ -83,11 +161,11 @@ function Login(props) {
 
 
 export default connect(
-  (state) => ({
-
+  ({ userInfo }) => ({
+    userInfo
   }),
   (dispatch) => ({
-
+    dispatch
   })
 )(Login)
 
