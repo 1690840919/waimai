@@ -38,7 +38,7 @@ function Login(props) {
         return
       }
       dispatch(updateUserInfo(data))
-      setItem('lazy_waimai_userInfo',data)
+      setItem('lazy_waimai_userInfo',data.data)
       // 登陆成功
       setToastInfo({
         text: data.message,

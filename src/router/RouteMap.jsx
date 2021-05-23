@@ -28,7 +28,7 @@ class RouteMap extends Component {
 
   componentDidMount(){
     const data = getItem('lazy_waimai_userInfo')
-    data && this.props.dispatch(updateUserInfo(data))
+    data && this.props.dispatch(updateUserInfo({data}))
   }
 
   render() {

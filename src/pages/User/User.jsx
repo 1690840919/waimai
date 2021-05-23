@@ -56,6 +56,7 @@ function User(props) {
   // 点击去登陆
   const toLogin = () => {
     history.push('/login')
+    console.log(userInfo)
   }
 
   useEffect(()=>{
