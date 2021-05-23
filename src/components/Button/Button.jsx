@@ -2,9 +2,12 @@ import React from 'react'
 import Style from './Button.module.scss'
 
 function Button(props) {
-  const { display = 'block', text, width, height, bgColor, color, size, radius } = props
+  const { 
+    onClick,
+    display = 'block', text, width, height, bgColor, color, size, radius } = props
   return (
     <div
+      onClick={onClick}
       style={{
         width,
         height,

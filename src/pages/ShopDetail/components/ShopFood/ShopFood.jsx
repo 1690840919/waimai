@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory,useRouteMatch } from 'react-router-dom'
+import { useHistory, useRouteMatch } from 'react-router-dom'
 import Style from './ShopFood.module.scss'
 import AppBar from '../../../../components/AppBar/AppBar'
 import Food from './components/Food/Food'
@@ -64,16 +64,19 @@ function ShopFood(props) {
       setCartContent(cartInfo[shopInfo.id].food)
       const food = cartInfo[shopInfo.id]?.food || []
       let num = 0
-      if(food.length){
-        if(food.length === 1){
+      if (food.length) {
+        if (food.length === 1) {
           num += food[0].num
-        }else{
-          food.forEach(obj=>{
+        } else {
+          food.forEach(obj => {
             num += obj.num
           })
         }
       }
       setTotalNum(num)
+    }else{
+      setCartContent([])
+      setTotalNum(0)
     }
   }, [cartInfo, shopInfo])
 
@@ -91,14 +94,10 @@ function ShopFood(props) {
 
   // 清空购物车
   const clearCart = () => {
-    const data = {
-      shopInfo,
-      food:[],
-    }
     const newCartInfo = {
       ...cartInfo,
-      [shopInfo.id]:data
-    } 
+    }
+    delete newCartInfo[shopInfo.id]
     dispatch(updateCart(newCartInfo))
     setShowCartContent(false)
   }
@@ -112,7 +111,7 @@ function ShopFood(props) {
       })
       return
     }
-    history.push(`/OrderSure:${(match.params.id).replace(':',"")}`)
+    history.push(`/OrderSure:${(match.params.id).replace(':', "")}`)
   }
 
   return (
@@ -164,16 +163,16 @@ function ShopFood(props) {
             <div onClick={(e) => { e.stopPropagation() }} className={Style.cartContent}>
               <div className={Style.absolute}>
                 {/* 顶部标题 */}
-                <AppBar absolute={true} paddingLeft={0} size={'12px'} 
-                handleRight={clearCart}
-                left={'我的购物车'} color={'#333'} leftIcon={null} 
-                rightIcon={'&#xe61d;'} rightSize={'12px'} />
+                <AppBar absolute={true} paddingLeft={0} size={'12px'}
+                  handleRight={clearCart}
+                  left={'我的购物车'} color={'#333'} leftIcon={null}
+                  rightIcon={'&#xe61d;'} rightSize={'12px'} />
               </div>
               {/* 商品 */}
               {
                 cartContent.map(item => {
-                  return <CartFood closeCartContent={()=>{setShowCartContent(false)}}
-                   shopInfo={shopInfo} key={item.id} item={item} />
+                  return <CartFood closeCartContent={() => { setShowCartContent(false) }}
+                    shopInfo={shopInfo} key={item.id} item={item} />
                 })
               }
             </div>

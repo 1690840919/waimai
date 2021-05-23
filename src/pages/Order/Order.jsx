@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import AppBar from '../../components/AppBar/AppBar'
 import Button from '../../components/Button/Button'
@@ -6,8 +6,16 @@ import TabBar from '../../components/TabBar/TabBar'
 import Style from './Order.module.scss'
 
 function Order(props) {
-  const { history } = props
-  const [isLogin, setIsLogin] = useState(true)
+  const { history,userInfo } = props
+  const [isLogin, setIsLogin] = useState(0)
+
+  useEffect(()=>{
+    if(userInfo && userInfo.id){
+      setIsLogin(true)
+    }
+  },[userInfo])
+
+
   return (
     <div className={Style.order}>
       {/* 顶部标题 */}
@@ -294,7 +302,7 @@ function Order(props) {
               <div className={Style.img}>
               </div>
               <p>登陆后查看外卖订单</p>
-              <Button
+              <Button onClick={()=>{history.push('/login')}}
                 width={'120px'} height={'40px'} size={'14px'}
                 bgColor={'rgb(91,170,250)'} color={'white'}
                 text={'立即登陆'} />
@@ -309,8 +317,8 @@ function Order(props) {
 
 
 export default connect(
-  (state) => ({
-
+  ({userInfo}) => ({
+    userInfo
   }),
   (dispatch) => ({
 

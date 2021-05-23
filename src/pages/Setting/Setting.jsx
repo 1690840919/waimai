@@ -36,7 +36,6 @@ function Setting(props) {
       removeItem('lazy_waimai_userInfo')
       dispatch(updateUserInfo({data:{}}))
       const {data} = await userExit()
-      console.log(data)
       if(data.code !== 1000){
         setToastInfo({
           text: '登陆身份已过期',

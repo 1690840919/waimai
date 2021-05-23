@@ -43,7 +43,10 @@ function Food(props) {
     const newCartInfo = {
       ...cartInfo,
       [shopInfo.id]:data
-    } 
+    }
+    if(!food.length){
+      delete newCartInfo[shopInfo.id]
+    }
     dispatch(updateCart(newCartInfo))
   }
 

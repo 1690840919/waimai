@@ -29,7 +29,6 @@ function CartFood(props) {
       foodData.num = 1
       food = [foodData]
     }
-    !food.length && closeCartContent()
     const data = {
       shopInfo,
       food
@@ -38,6 +37,10 @@ function CartFood(props) {
       ...cartInfo,
       [shopInfo.id]:data
     } 
+    if(!food.length){
+      closeCartContent()
+      delete newCartInfo[shopInfo.id]
+    }
     dispatch(updateCart(newCartInfo))
   }
 
