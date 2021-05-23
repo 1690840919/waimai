@@ -12,11 +12,11 @@ function OrderSure(props){
     setToastInfo({
       text: '下单成功',
       icon:'&#xe687;',
-      date: new Date()
+      date: new Date(),
+      callBackFn:()=>{
+        history.replace('/order')
+      }
     })
-    setTimeout(() => {
-      history.push('/order')
-    }, 1000);
   }
   return (
     <div className={Style.orderSure}>
@@ -136,7 +136,8 @@ function OrderSure(props){
         <div onClick={sureOrder} className={Style.sureBtn}>提交订单</div>
       </div>
       {/* 消息提醒 */}
-      <Toast text={toastInfo.text} isShow={toastInfo.date} icon={toastInfo.icon} />
+      <Toast callBackFn={toastInfo.callBackFn}
+       text={toastInfo.text} isShow={toastInfo.date} icon={toastInfo.icon} />
     </div>
   )
 }

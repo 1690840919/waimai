@@ -30,10 +30,12 @@ function Food(props) {
         })
       } else {// 没有这个商品，设为1， 进行添加
         foodData.num = 1
+        foodData.isSelect = true
         food.push(foodData)
       }
     } else { // 购物车没有这个店铺
       foodData.num = 1
+      foodData.isSelect = true
       food = [foodData]
     }
     const data = {

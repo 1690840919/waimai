@@ -10,11 +10,9 @@
   content: "\e60d";
 }
 @font-face {
-  font-family: 'iconfont';  /* project id 2156175 */
-  src: url('//at.alicdn.com/t/font_2156175_mwkppt29cpr.eot');
-  src: url('//at.alicdn.com/t/font_2156175_mwkppt29cpr.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_2156175_mwkppt29cpr.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_2156175_mwkppt29cpr.woff') format('woff'),
-  url('//at.alicdn.com/t/font_2156175_mwkppt29cpr.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_2156175_mwkppt29cpr.svg#iconfont') format('svg');
+  font-family: 'iconfont';  /* Project id 2156175 */
+  src: url('//at.alicdn.com/t/font_2156175_tu0z4owq41h.woff2?t=1621749749157') format('woff2'),
+       url('//at.alicdn.com/t/font_2156175_tu0z4owq41h.woff?t=1621749749157') format('woff'),
+       url('//at.alicdn.com/t/font_2156175_tu0z4owq41h.ttf?t=1621749749157') format('truetype');
 }
+

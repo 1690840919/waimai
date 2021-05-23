@@ -50,6 +50,8 @@ function ShopFood(props) {
 
   const [totalNum, setTotalNum] = useState(0)
 
+  const [totalPrice, setTotalPrice] = useState(0.00)
+
   const [cartContent, setCartContent] = useState([])
 
   const [toastInfo, setToastInfo] = useState({})
@@ -64,19 +66,24 @@ function ShopFood(props) {
       setCartContent(cartInfo[shopInfo.id].food)
       const food = cartInfo[shopInfo.id]?.food || []
       let num = 0
+      let price = 0
       if (food.length) {
         if (food.length === 1) {
           num += food[0].num
+          price += food[0].num * food[0].price
         } else {
           food.forEach(obj => {
             num += obj.num
+            price += obj.num * obj.price
           })
         }
       }
       setTotalNum(num)
+      setTotalPrice(price)
     }else{
       setCartContent([])
       setTotalNum(0)
+      setTotalPrice(0)
     }
   }, [cartInfo, shopInfo])
 
@@ -148,7 +155,7 @@ function ShopFood(props) {
         </div>
         {/* 信息 */}
         <div className={Style.cartInfo}>
-          <p className={Style.price}>￥0.00</p>
+          <p className={Style.price}>￥{totalPrice.toFixed(2)}</p>
           <p className={Style.tip}>另外需要配送费￥5</p>
         </div>
         {/* 按钮 */}
