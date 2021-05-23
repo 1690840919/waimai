@@ -86,7 +86,7 @@ function User(props) {
               <div className={Style.text}>
                 <p className={Style.userName}>{userInfo.nickName}</p>
                 <p>
-                  <span className={Style.userId}>{`用户ID：${userInfo.id}`}</span>
+                  <span className={Style.userId}>{`用户ID：${"8"+String(userInfo.id).padStart(5,0)}`}</span>
                 </p>
               </div>
               {/* 更多 */}

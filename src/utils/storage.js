@@ -17,12 +17,12 @@ const setItem = (key, value) => {
   window.localStorage.setItem(key, value)
 }
 
-const remove = (key) => {
+const removeItem = (key) => {
   window.localStorage.removeItem(key)
 }
 
 export {
   getItem,
   setItem,
-  remove
+  removeItem
 }
