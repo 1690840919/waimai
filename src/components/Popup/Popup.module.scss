@@ -1,0 +1,22 @@
+.popup{
+  .popupBox{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left:0;
+    bottom: 0;
+    background: rgba(0,0,0,.5);
+    .bottomContentBox{
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgb(244,244,244);
+      width: 100%;
+      border-radius: 20px 20px 0 0 ;
+      transition: all 5s;
+      box-sizing: border-box;
+      padding: 20px;
+    }
+  }
+}

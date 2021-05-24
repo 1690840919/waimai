@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useRef } from 'react'
 import { connect } from 'react-redux'
 import Style from './UserInfo.module.scss'
 import AppBar from '../../components/AppBar/AppBar'
 import { getTime } from '../../utils/time'
-
+import Popup from '../../components/Popup/Popup'
+import EditNickName from './components/EditNickName/EditNickName'
+import EditPhone from './components/EditPhone/EditPhone'
+import EditGender from './components/EditGender/EditGender'
 function UserInfo(props) {
   const { history, userInfo } = props
+  const PopupRef = useRef()
   const [userInfoArr, setUserInfoArr] = useState([])
+  const [popupContent,setPopupContent] = useState()
 
   useEffect(() => {
     setUserInfoArr([
@@ -28,6 +33,26 @@ function UserInfo(props) {
       },
     ])
   }, [userInfo])
+  
+  // 点击个人信息
+  const handleUserInfo = (title) => {
+    switch (title){
+      case '昵称':
+        PopupRef.current.setShowContent(true)
+        setPopupContent(<EditNickName/>)
+        break
+      case '手机号码':
+        PopupRef.current.setShowContent(true)
+        setPopupContent(<EditPhone/>)
+        break
+      case '性别':
+        PopupRef.current.setShowContent(true)
+        setPopupContent(<EditGender/>)
+        break
+      default:
+        break
+    }
+  }
 
   return (
     <div className={Style.userInfo}>
@@ -46,10 +71,13 @@ function UserInfo(props) {
         userInfoArr.length && userInfoArr.map(obj=>(
           <AppBar key={obj.title} paddingLeft={0} left={obj.title} leftIcon={null}
             right={obj.right} rightSize={'12px'} rightColor={'#969799'}
-            rightIconColor={'#333'} leftSize={'14px'}
+            rightIconColor={'#333'} leftSize={'14px'} onClick={()=>{handleUserInfo(obj.title)}}
             rightIcon={'&#xe695;'} color={'#333'} bgColor={'white'} />
         ))
       }
+      
+      {/* 弹出层 */}
+      <Popup PopupRef={PopupRef} content={popupContent} ></Popup>
     </div>
   )
 }

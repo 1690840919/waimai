@@ -1,0 +1,29 @@
+.field{
+  display: flex;
+  box-sizing: border-box;
+  height: 90px;
+  font-size: 16px;
+  padding: 10px;
+  .title{
+    width: 80px;
+    text-align: center;
+  }
+  .input{
+    flex: 1;
+    position: relative;
+    .sizeShow{
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      font-size: 12px;
+    }
+    textarea{
+      height: 100%;
+      font-size: 16px;
+      line-height: 30x;
+      width: 100%;
+      border: none;
+      outline: none;
+    }
+  }
+}
