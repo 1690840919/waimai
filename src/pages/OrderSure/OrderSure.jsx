@@ -1,14 +1,17 @@
 import React,{useState} from 'react'
+import {connect} from 'react-redux'
 import Style from './OrderSure.module.scss'
 import AppBar from '../../components/AppBar/AppBar'
 import Toast from '../../components/Toast/Toast'
+import { updateCart } from '../../redux/actions'
 
 function OrderSure(props){
-  const { history } = props
+  const { history,dispatch } = props
   const [toastInfo, setToastInfo] = useState({})
 
   // 点击确认订单
   const sureOrder = () => {
+    dispatch(updateCart({}))
     setToastInfo({
       text: '下单成功',
       icon:'&#xe687;',
@@ -142,4 +145,11 @@ function OrderSure(props){
   )
 }
 
-export default OrderSure
+export default connect(
+  ({ cartInfo }) => ({
+    cartInfo
+  }),
+  (dispatch) => ({
+    dispatch
+  })
+)(OrderSure)
