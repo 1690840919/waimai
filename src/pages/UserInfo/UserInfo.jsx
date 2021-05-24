@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import Style from './UserInfo.module.scss'
 import AppBar from '../../components/AppBar/AppBar'
+import { getTime } from '../../utils/time'
 
 function UserInfo(props) {
   const { history, userInfo } = props
@@ -23,7 +24,7 @@ function UserInfo(props) {
       },
       {
         title: '注册时间',
-        right: userInfo.registerTime,
+        right: getTime(userInfo.registerTime,'YY-MM-DD'),
       },
     ])
   }, [userInfo])
@@ -36,16 +37,16 @@ function UserInfo(props) {
 
 
       {/* 头像 */}
-      <AppBar paddingLeft={0} left={'头像'} leftIcon={null} height={'60px'}
+      <AppBar paddingLeft={0} left={'头像'} leftIcon={null} height={'60px'}  leftSize={'14px'}
         right={<div style={{ backgroundImage: `url("${userInfo.avatar}")` }} className={Style.avatar}></div>}
         rightIcon={'&#xe695;'} color={'#333'} bgColor={'white'} />
       
       {/* 个人信息 */}
       {
         userInfoArr.length && userInfoArr.map(obj=>(
-          <AppBar paddingLeft={0} left={obj.title} leftIcon={null}
+          <AppBar key={obj.title} paddingLeft={0} left={obj.title} leftIcon={null}
             right={obj.right} rightSize={'12px'} rightColor={'#969799'}
-            rightIconColor={'#333'}
+            rightIconColor={'#333'} leftSize={'14px'}
             rightIcon={'&#xe695;'} color={'#333'} bgColor={'white'} />
         ))
       }
