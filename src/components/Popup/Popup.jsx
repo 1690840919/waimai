@@ -10,8 +10,8 @@ function Popup(props) {
   // 暴露的方法
   useImperativeHandle(PopupRef, () => {
     return {
-      setShowContent: () => {
-        setShowContent(true)
+      setShowContent: value => {
+        setShowContent(value)
       }
     }
   })

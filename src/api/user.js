@@ -26,3 +26,11 @@ export const userExit = data => {
     data
   })
 }
+// 资料修改
+export const userEdit = data => {
+  return request({
+    method:'post',
+    url:'user/editUserInfo',
+    data
+  })
+}

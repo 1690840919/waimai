@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { connect } from 'react-redux'
 import Style from './UserInfo.module.scss'
 import AppBar from '../../components/AppBar/AppBar'
@@ -11,7 +11,7 @@ function UserInfo(props) {
   const { history, userInfo } = props
   const PopupRef = useRef()
   const [userInfoArr, setUserInfoArr] = useState([])
-  const [popupContent,setPopupContent] = useState()
+  const [popupContent, setPopupContent] = useState()
 
   useEffect(() => {
     setUserInfoArr([
@@ -29,27 +29,32 @@ function UserInfo(props) {
       },
       {
         title: '注册时间',
-        right: getTime(userInfo.registerTime,'YY-MM-DD'),
+        right: getTime(userInfo.registerTime, 'YY-MM-DD'),
       },
     ])
   }, [userInfo])
-  
+
+  const closePopup = value => {
+    PopupRef.current.setShowContent(value)
+  }
+
   // 点击个人信息
   const handleUserInfo = (title) => {
-    switch (title){
+    switch (title) {
       case '昵称':
-        PopupRef.current.setShowContent(true)
-        setPopupContent(<EditNickName/>)
+        closePopup(true)
+        setPopupContent(<EditNickName closePopup={() => { closePopup(false) }} />)
         break
       case '手机号码':
-        PopupRef.current.setShowContent(true)
-        setPopupContent(<EditPhone/>)
+        closePopup(true)
+        setPopupContent(<EditPhone closePopup={() => { closePopup(false) }} />)
         break
       case '性别':
-        PopupRef.current.setShowContent(true)
-        setPopupContent(<EditGender/>)
+        closePopup(true)
+        setPopupContent(<EditGender closePopup={() => { closePopup(false) }} />)
         break
       default:
+        console.log('222')
         break
     }
   }
@@ -62,20 +67,20 @@ function UserInfo(props) {
 
 
       {/* 头像 */}
-      <AppBar paddingLeft={0} left={'头像'} leftIcon={null} height={'60px'}  leftSize={'14px'}
+      <AppBar paddingLeft={0} left={'头像'} leftIcon={null} height={'60px'} leftSize={'14px'}
         right={<div style={{ backgroundImage: `url("${userInfo.avatar}")` }} className={Style.avatar}></div>}
         rightIcon={'&#xe695;'} color={'#333'} bgColor={'white'} />
-      
+
       {/* 个人信息 */}
       {
-        userInfoArr.length && userInfoArr.map(obj=>(
+        userInfoArr.length && userInfoArr.map(obj => (
           <AppBar key={obj.title} paddingLeft={0} left={obj.title} leftIcon={null}
             right={obj.right} rightSize={'12px'} rightColor={'#969799'}
-            rightIconColor={'#333'} leftSize={'14px'} onClick={()=>{handleUserInfo(obj.title)}}
+            rightIconColor={'#333'} leftSize={'14px'} onClick={() => { handleUserInfo(obj.title) }}
             rightIcon={'&#xe695;'} color={'#333'} bgColor={'white'} />
         ))
       }
-      
+
       {/* 弹出层 */}
       <Popup PopupRef={PopupRef} content={popupContent} ></Popup>
     </div>
