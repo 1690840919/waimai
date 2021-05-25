@@ -1,16 +1,23 @@
-import react, { useEffect, useRef, useState } from 'react'
+import react, { createRef, useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
 import Style from './EditAvatar.module.scss'
 import Toast from '../../../../components/Toast/Toast'
+import { userEdit } from '../../../../api/user'
+import { updateUserInfo } from '../../../../redux/actions'
+import { setItem } from '../../../../utils/storage'
+import { getBase64, getFile } from '../../../../utils/fileAndBase64'
+import Cropper from 'react-cropper'
+import 'cropperjs/dist/cropper.css'
 function EditAvatar(props) {
-  const { closeEditAvatar } = props
+  const { closeEditAvatar, dispatch, userInfo } = props
   const inputRef = useRef()
   const [toastInfo, setToastInfo] = useState({})
   const [avatarUrl, setAvatarUrl] = useState()
+  const [cropperRef, setCropperRef] = useState()
 
   useEffect(() => {
     inputRef.current.click()
-  },[])
+  }, [])
 
   // 获取图片数据
   const getAvatarData = (e) => {
@@ -38,13 +45,21 @@ function EditAvatar(props) {
         return
       }
       // 转换为base64
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (e) => {
-        const url = e.target.result
+      getBase64(file, (url) => {
         setAvatarUrl(url)
-      }
+      })
     }
+  }
+
+  // 点击确认裁剪
+  const handleAvatar = () => {
+    const avatar = cropperRef.getCroppedCanvas().toDataURL() + ""
+    const file = getFile(avatar,'dd')
+    console.log(file)
+    const newData = { ...userInfo, avatar }
+    dispatch(updateUserInfo({ data: newData }))
+    setItem('lazy_waimai_userInfo', newData)
+    closeEditAvatar()
   }
 
   return (
@@ -58,10 +73,20 @@ function EditAvatar(props) {
       </div>
       {
         avatarUrl ?
-          <div onClick={closeEditAvatar} className={Style.avatarEditBox}>
-            <div className={Style.img}>
-              <img src={avatarUrl} alt="" />
+          <div className={Style.avatarEditBox}>
+            <div className={Style.tools}>
+              <div onClick={closeEditAvatar}>取消</div>
+              <div onClick={handleAvatar}>确认</div>
             </div>
+            <Cropper
+              onInitialized={cropper => {
+                setCropperRef(cropper)
+              }}
+              src={avatarUrl} // 图片的base64
+              background={false} // 背景马赛克
+              style={{ width: '100%' }}
+              guides={false}
+            />
           </div>
           : null
       }

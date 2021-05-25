@@ -22,5 +22,21 @@
         width: 100%;
       }
     }
+    .tools{
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      color: white;
+      font-size: 16px;
+      padding: 20px;
+      div{
+        border: 1px solid #ccc;
+        padding: 7px 14px;
+        border-radius: 10px;
+      }
+    }
   }
 }
