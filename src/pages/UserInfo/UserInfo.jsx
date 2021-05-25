@@ -7,11 +7,13 @@ import Popup from '../../components/Popup/Popup'
 import EditNickName from './components/EditNickName/EditNickName'
 import EditPhone from './components/EditPhone/EditPhone'
 import EditGender from './components/EditGender/EditGender'
+import EditAvatar from './components/EditAvatar/EditAvatar'
 function UserInfo(props) {
   const { history, userInfo } = props
   const PopupRef = useRef()
   const [userInfoArr, setUserInfoArr] = useState([])
   const [popupContent, setPopupContent] = useState()
+  const [editAvatar,setEditAvatar] = useState(false)
 
   useEffect(() => {
     setUserInfoArr([
@@ -54,9 +56,17 @@ function UserInfo(props) {
         setPopupContent(<EditGender closePopup={() => { closePopup(false) }} />)
         break
       default:
-        console.log('222')
         break
     }
+  }
+
+  // 显示修改头像
+  const openEditAvatar = () => {
+    setEditAvatar(true)
+  }
+  // 关闭修改头像
+  const closeEditAvatar = () => {
+    setEditAvatar(false)
   }
 
   return (
@@ -69,7 +79,15 @@ function UserInfo(props) {
       {/* 头像 */}
       <AppBar paddingLeft={0} left={'头像'} leftIcon={null} height={'60px'} leftSize={'14px'}
         right={<div style={{ backgroundImage: `url("${userInfo.avatar}")` }} className={Style.avatar}></div>}
+        onClick={openEditAvatar}
         rightIcon={'&#xe695;'} color={'#333'} bgColor={'white'} />
+
+      {/* 头像修改 */}
+      {
+        editAvatar?
+        <EditAvatar closeEditAvatar={closeEditAvatar} />
+        :null
+      }
 
       {/* 个人信息 */}
       {
