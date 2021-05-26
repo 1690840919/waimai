@@ -1,4 +1,5 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import Style from './UserWallet.module.scss'
 import AppBar from '../../components/AppBar/AppBar'
 function UserWallet(props) {
@@ -71,4 +72,11 @@ function UserWallet(props) {
   )
 }
 
-export default UserWallet
+export default connect(
+  ({userInfo})=>({
+    userInfo
+  }),
+  ({dispatch})=>({
+    dispatch
+  })
+)(UserWallet)

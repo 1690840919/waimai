@@ -1,5 +1,14 @@
 import request from './request'
 
+// 检测登陆状态
+export const loginCheck = data => {
+  return request({
+    method:'POST',
+    url:'user/loginCheck',
+    data
+  })
+}
+
 // 注册账号
 export const userRegister = data => {
   return request({

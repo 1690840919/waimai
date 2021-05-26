@@ -14,11 +14,11 @@ function Setting(props) {
       left: '个人中心',
     },
     {
-      to: "/",
+      // to: "/",
       left: '安全设置',
     },
     {
-      to: "/",
+      // to: "/",
       left: '隐私设置',
     },
     {
