@@ -13,7 +13,7 @@ function UserInfo(props) {
   const PopupRef = useRef()
   const [userInfoArr, setUserInfoArr] = useState([])
   const [popupContent, setPopupContent] = useState()
-  const [editAvatar,setEditAvatar] = useState(false)
+  const [editAvatar, setEditAvatar] = useState(false)
 
   useEffect(() => {
     setUserInfoArr([
@@ -36,6 +36,7 @@ function UserInfo(props) {
     ])
   }, [userInfo])
 
+  // 切换popup弹出层
   const closePopup = value => {
     PopupRef.current.setShowContent(value)
   }
@@ -62,7 +63,9 @@ function UserInfo(props) {
 
   // 显示修改头像
   const openEditAvatar = () => {
-    setEditAvatar(true)
+    closePopup(true)
+    setPopupContent(<EditAvatar closeEditAvatar={() => { closeEditAvatar() }}
+      closePopup={() => { closePopup(false) }} />)
   }
   // 关闭修改头像
   const closeEditAvatar = () => {
@@ -83,11 +86,11 @@ function UserInfo(props) {
         rightIcon={'&#xe695;'} color={'#333'} bgColor={'white'} />
 
       {/* 头像修改 */}
-      {
+      {/* {
         editAvatar?
         <EditAvatar closeEditAvatar={closeEditAvatar} />
         :null
-      }
+      } */}
 
       {/* 个人信息 */}
       {
