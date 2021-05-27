@@ -7,6 +7,7 @@ import { uploadImg } from '../../../../api/utils'
 import { updateUserInfo } from '../../../../redux/actions'
 import { setItem } from '../../../../utils/storage'
 import { getBase64, getFile } from '../../../../utils/fileAndBase64'
+import ToastLoading from '../../../../components/ToastLoading/ToastLoading'
 import Cropper from 'react-cropper'
 import 'cropperjs/dist/cropper.css'
 function EditAvatar(props) {
@@ -16,13 +17,11 @@ function EditAvatar(props) {
   const [toastInfo, setToastInfo] = useState({})
   const [avatarUrl, setAvatarUrl] = useState()
   const [cropperRef, setCropperRef] = useState()
-
-  // useEffect(() => {
-  //   inputRef.current.click()
-  // }, [])
+  const [toastLoading,setToastLoading] = useState({is:false})
 
   // 获取图片数据
   const getAvatarData = (e) => {
+    setToastLoading({is:false,text:'加载中'})
     const file = inputRef.current.files[0]
     if (file) {
       const type = file.name.split('.')[1]
@@ -49,12 +48,14 @@ function EditAvatar(props) {
 
   // 点击确认裁剪
   const handleAvatar = async () => {
+    setToastLoading({is:true,text:'修改中'})
     const avatar = cropperRef.getCroppedCanvas().toDataURL() + ""
     const file = await getFile(avatar, userInfo.nickName + '.jpg')
     const fileData = new FormData()
     fileData.append('file', file)
     const { data: uploadResult } = await uploadImg(fileData)
     if (uploadResult.code !== 1000) {
+      setToastLoading({is:false,text:'修改中'})
       setToastInfo({
         text: uploadResult.message,
         date: new Date(),
@@ -67,6 +68,7 @@ function EditAvatar(props) {
     const url = uploadResult.data.url
     const { data: { code, message } } = await userEdit({ avatar: url })
     if (code !== 1000) {
+      setToastLoading({is:false,text:'修改中'})
       setToastInfo({
         text: message,
         date: new Date(),
@@ -76,6 +78,7 @@ function EditAvatar(props) {
     const newData = { ...userInfo, avatar }
     dispatch(updateUserInfo({ data: newData }))
     setItem('lazy_waimai_userInfo', newData)
+    setToastLoading({is:false,text:'修改中'})
     setToastInfo({
       text: message,
       date: new Date(),
@@ -88,6 +91,12 @@ function EditAvatar(props) {
 
   return (
     <div className={Style.editAvatar}>
+      {/* 消息加载 */}
+      {
+        toastLoading.is?
+        <ToastLoading text={toastLoading.text} />
+        :null
+      }
       {/* 消息提醒 */}
       <Toast callBackFn={toastInfo.callBackFn} text={toastInfo.text}
         isShow={toastInfo.date} icon={toastInfo.icon} />

@@ -6,20 +6,24 @@ import { userEdit } from '../../../../api/user'
 import { updateUserInfo } from '../../../../redux/actions'
 import { setItem } from '../../../../utils/storage'
 import Toast from '../../../../components/Toast/Toast'
+import ToastLoading from '../../../../components/ToastLoading/ToastLoading'
 function EditGender(props) {
   const { userInfo, dispatch,closePopup } = props
   const [currentGender, setCurrentGender] = useState()
   const [toastInfo, setToastInfo] = useState({})
+  const [toastLoading,setToastLoading] = useState(false)
 
   // 初始化性别
   useEffect(() => {
     setCurrentGender(userInfo.gender)
   }, [userInfo])
 
-  // 点击修改昵称
+  // 点击修改性别
   const handleGender = async () => {
+    setToastLoading(true)
     const { data } = await userEdit({ gender: currentGender })
     if (data.code !== 1000) {
+      setToastLoading(false)
       setToastInfo({
         text: data.message,
         date: new Date(),
@@ -29,6 +33,7 @@ function EditGender(props) {
     const newData = { ...userInfo, gender: currentGender }
     dispatch(updateUserInfo({ data: newData }))
     setItem('lazy_waimai_userInfo', newData)
+    setToastLoading(false)
     setToastInfo({
       text: data.message,
       date: new Date(),
@@ -40,6 +45,12 @@ function EditGender(props) {
 
   return (
     <div className={Style.editGender}>
+      {/* 消息加载 */}
+      {
+        toastLoading?
+        <ToastLoading text={'修改中'} />
+        :null
+      }
       {/* 消息提醒 */}
       <Toast callBackFn={toastInfo.callBackFn} text={toastInfo.text}
         isShow={toastInfo.date} icon={toastInfo.icon} />

@@ -6,6 +6,7 @@ import {removeItem} from '../../utils/storage'
 import { updateUserInfo } from '../../redux/actions'
 import { userExit } from '../../api/user'
 import Toast from '../../components/Toast/Toast'
+import ToastLoading from '../../components/ToastLoading/ToastLoading'
 function Setting(props) {
   const { history,dispatch } = props
   const settingData = [
@@ -26,6 +27,7 @@ function Setting(props) {
     }
   ]
   const [toastInfo, setToastInfo] = useState({})
+  const [toastLoading,setToastLoading] = useState(false)
 
   // 点击设置
   const handleSetting = async item => {
@@ -35,7 +37,9 @@ function Setting(props) {
     if(item.left === '退出登录'){
       removeItem('lazy_waimai_userInfo')
       dispatch(updateUserInfo({data:{}}))
+      setToastLoading(true)
       const {data} = await userExit()
+      setToastLoading(false)
       if(data.code !== 1000){
         setToastInfo({
           text: '登陆身份已过期',
@@ -59,6 +63,12 @@ function Setting(props) {
 
   return (
     <div className={Style.setting}>
+      {/* 消息加载 */}
+      {
+        toastLoading?
+        <ToastLoading text={'退出中'} />
+        :null
+      }
       {/* 消息提醒 */}
       <Toast callBackFn={toastInfo.callBackFn} text={toastInfo.text}
         isShow={toastInfo.date} icon={toastInfo.icon} />

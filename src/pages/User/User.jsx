@@ -76,6 +76,7 @@ function User(props) {
               {/* 用户头像 */}
               <div className={Style.avatar}>
                 {
+                  // 'http://localhost:7000/upload_b665aff76b1824e2974417c67ee7b6de.jpg'
                   userInfo.avatar?
                   <img src={userInfo.avatar} alt="" />
                   :<div className={`iconfont ${Style.img}`}>&#xe658;</div>

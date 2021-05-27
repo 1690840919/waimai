@@ -11,10 +11,15 @@ const getItem = (key) => {
 }
 
 const setItem = (key, value) => {
-  if (typeof value === 'object') {
-    value = JSON.stringify(value)
+  try {
+    if (typeof value === 'object') {
+      value = JSON.stringify(value)
+    }
+    window.localStorage.setItem(key, value)
+  } catch (err) {
+    console.log(err);
   }
-  window.localStorage.setItem(key, value)
+
 }
 
 const removeItem = (key) => {

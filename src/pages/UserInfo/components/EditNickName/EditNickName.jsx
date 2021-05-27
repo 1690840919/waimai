@@ -7,10 +7,12 @@ import Toast from '../../../../components/Toast/Toast'
 import { userEdit } from '../../../../api/user'
 import { updateUserInfo } from '../../../../redux/actions'
 import { setItem } from '../../../../utils/storage'
+import ToastLoading from '../../../../components/ToastLoading/ToastLoading'
 function EditNickName(props){
   const { userInfo, dispatch, closePopup } = props
   const [toastInfo, setToastInfo] = useState({})
   const [submitData, setSubmitData] = useState({})
+  const [toastLoading,setToastLoading] = useState(false)
 
   // 初始化昵称
   useEffect(()=>{
@@ -19,8 +21,10 @@ function EditNickName(props){
 
   // 点击修改昵称
   const handleNewNickName= async () => {
+    setToastLoading(true)
     const { data } = await userEdit(submitData)
     if (data.code !== 1000) {
+      setToastLoading(false)
       setToastInfo({
         text: data.message,
         date: new Date(),
@@ -30,6 +34,7 @@ function EditNickName(props){
     const newData = { ...userInfo, nickName: submitData.nickName }
     dispatch(updateUserInfo({ data: newData }))
     setItem('lazy_waimai_userInfo', newData)
+    setToastLoading(false)
     setToastInfo({
       text: data.message,
       date: new Date(),
@@ -41,6 +46,12 @@ function EditNickName(props){
 
   return(
     <div className={Style.edit}>
+      {/* 消息加载 */}
+      {
+        toastLoading?
+        <ToastLoading text={'修改中'} />
+        :null
+      }
       {/* 消息提醒 */}
       <Toast callBackFn={toastInfo.callBackFn} text={toastInfo.text}
         isShow={toastInfo.date} icon={toastInfo.icon} />

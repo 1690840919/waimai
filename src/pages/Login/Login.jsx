@@ -6,6 +6,7 @@ import { userLogin, userRegister } from '../../api/user'
 import Toast from '../../components/Toast/Toast'
 import { updateUserInfo } from '../../redux/actions'
 import {setItem} from '../../utils/storage'
+import ToastLoading from '../../components/ToastLoading/ToastLoading'
 function Login(props) {
   const { history, dispatch, userInfo } = props
   const [isLogin, setIsLogin] = useState(true)
@@ -15,6 +16,7 @@ function Login(props) {
     surePassword: '123456',
   })
   const [toastInfo, setToastInfo] = useState({})
+  const [toastLoading,setToastLoading] = useState({is:false})
   // 点击去注册
   const handleRegister = () => {
     setIsLogin(false)
@@ -28,9 +30,11 @@ function Login(props) {
   const handleType = async () => {
     // 如果是登陆
     if (isLogin) {
+      setToastLoading({is:true,text:'登陆中'})
       const { data } = await userLogin(submitData)
       // 登陆失败
       if (data.code !== 1000) {
+        setToastLoading({is:false})
         setToastInfo({
           text: data.message,
           date: new Date(),
@@ -39,6 +43,7 @@ function Login(props) {
       }
       dispatch(updateUserInfo(data))
       setItem('lazy_waimai_userInfo',data.data)
+      setToastLoading({is:false})
       // 登陆成功
       setToastInfo({
         text: data.message,
@@ -58,9 +63,11 @@ function Login(props) {
         })
         return
       }
+      setToastLoading({is:true,text:'注册中'})
       const { data } = await userRegister(submitData)
       // 注册失败
       if (data.code !== 1000) {
+        setToastLoading({is:false})
         setToastInfo({
           text: data.message,
           date: new Date(),
@@ -68,6 +75,7 @@ function Login(props) {
         return
       }
       // 注册成功
+      setToastLoading({is:false})
       setToastInfo({
         text: data.message,
         date: new Date(),
@@ -105,6 +113,12 @@ function Login(props) {
 
   return (
     <div className={Style.login}>
+      {/* 消息加载 */}
+      {
+        toastLoading.is?
+        <ToastLoading text={toastLoading.text} />
+        :null
+      }
       {/* 消息提醒 */}
       <Toast callBackFn={toastInfo.callBackFn} text={toastInfo.text}
         isShow={toastInfo.date} icon={toastInfo.icon} />

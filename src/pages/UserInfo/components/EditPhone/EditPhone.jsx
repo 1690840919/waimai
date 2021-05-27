@@ -4,6 +4,7 @@ import Style from './EditPhone.module.scss'
 import Button from '../../../../components/Button/Button'
 import Field from '../../../../components/Field/Field'
 import Toast from '../../../../components/Toast/Toast'
+import ToastLoading from '../../../../components/ToastLoading/ToastLoading'
 import { userEdit } from '../../../../api/user'
 import { updateUserInfo } from '../../../../redux/actions'
 import { setItem } from '../../../../utils/storage'
@@ -12,6 +13,7 @@ function EditPhone(props) {
   const { userInfo, dispatch,closePopup } = props
   const [toastInfo, setToastInfo] = useState({})
   const [submitData, setSubmitData] = useState({})
+  const [toastLoading,setToastLoading] = useState(false)
 
   // 初始化手机号码
   useEffect(()=>{
@@ -20,8 +22,10 @@ function EditPhone(props) {
 
   // 点击修改手机号码
   const handleNewPhone = async () => {
+    setToastLoading(true)
     const { data } = await userEdit(submitData)
     if (data.code !== 1000) {
+      setToastLoading(false)
       setToastInfo({
         text: data.message,
         date: new Date(),
@@ -42,6 +46,12 @@ function EditPhone(props) {
 
   return (
     <div className={Style.edit}>
+      {/* 消息加载 */}
+      {
+        toastLoading?
+        <ToastLoading text={'修改中'} />
+        :null
+      }
       {/* 消息提醒 */}
       <Toast callBackFn={toastInfo.callBackFn} text={toastInfo.text}
         isShow={toastInfo.date} icon={toastInfo.icon} />

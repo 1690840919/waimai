@@ -23,7 +23,7 @@ function MoreBill(props) {
         setBillDataNull(true)
         return
       }
-      setBillData(data.data.reverse())
+      setBillData(data.data)
     }else{
       setBillDataNull(true)
       setLoading(false)

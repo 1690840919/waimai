@@ -6,20 +6,32 @@ import { userEdit } from '../../../../api/user'
 import { updateUserInfo } from '../../../../redux/actions'
 import { setItem } from '../../../../utils/storage'
 import Toast from '../../../../components/Toast/Toast'
+import ToastLoading from '../../../../components/ToastLoading/ToastLoading'
 
 function RefillMoney(props) {
   const refillMenus = [30, 50, 100, 200, 300, 500]
-  const { dispatch, userInfo, showPopup,update } = props
+  const { dispatch, userInfo, showPopup, update } = props
   const [money, setMoney] = useState()
   const [toastInfo, setToastInfo] = useState({})
+  const [toastLoading, setToastLoading] = useState(false)
 
   // 点击充值
   const handleRefill = async () => {
+    setToastLoading(true)
+    if (!money || money * 1 <= 0) {
+      setToastLoading(false)
+      setToastInfo({
+        text: '充值金额错误',
+        date: new Date(),
+      })
+      return
+    }
     const { data } = await userEdit({
       addMoney: money * 1,
       money: money * 1 + userInfo.money * 1
     })
     if (data.code !== 1000) {
+      setToastLoading(false)
       setToastInfo({
         text: data.message,
         date: new Date(),
@@ -30,6 +42,7 @@ function RefillMoney(props) {
     const newData = { ...userInfo, money: money * 1 + userInfo.money * 1 }
     dispatch(updateUserInfo({ data: newData }))
     setItem('lazy_waimai_userInfo', newData)
+    setToastLoading(false)
     setToastInfo({
       text: '充值成功',
       date: new Date(),
@@ -42,6 +55,12 @@ function RefillMoney(props) {
 
   return (
     <div className={Style.refillMoney}>
+      {/* 消息加载 */}
+      {
+        toastLoading ?
+          <ToastLoading text={'充值中'} />
+          : null
+      }
       {/* 消息提醒 */}
       <Toast callBackFn={toastInfo.callBackFn} text={toastInfo.text}
         isShow={toastInfo.date} icon={toastInfo.icon} />
