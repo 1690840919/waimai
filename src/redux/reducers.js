@@ -1,19 +1,9 @@
 import { combineReducers } from 'redux'
 import {
   UPDATE_CART, 
-  UPDATE_USERINFO
+  UPDATE_USERINFO,
+  UPDATE_BILLINFO,
 } from './actionTypes'
-const cartInfoState = {
-  // '601': {
-  //   name: '烧烤',
-  //   food: [
-  //     {
-  //       id: '601001',
-  //       name: "鸡腿"
-  //     }
-  //   ]
-  // }
-}
 // 购物车
 const cartInfo = (state = {}, action) => {
   switch (action.type) {
@@ -32,8 +22,18 @@ const userInfo = (state = {}, action) => {
       return { ...state }
   }
 }
+// 账单信息
+const billInfo = (state = [], action) => {
+  switch (action.type) {
+    case UPDATE_BILLINFO:
+      return action.data
+    default:
+      return [ ...state ]
+  }
+}
 
 export default combineReducers({
   cartInfo,
-  userInfo
+  userInfo,
+  billInfo
 })

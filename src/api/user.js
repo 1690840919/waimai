@@ -43,3 +43,12 @@ export const userEdit = data => {
     data
   })
 }
+
+// 查询用户账单
+export const userBill = (data) => {
+  return request({
+    method:'post',
+    url:'user/userBill',
+    data,
+  })
+}

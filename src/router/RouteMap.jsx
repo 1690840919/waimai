@@ -26,6 +26,7 @@ import { getItem,removeItem } from '../utils/storage'
 import { updateUserInfo } from '../redux/actions'
 import { loginCheck } from '../api/user'
 import Toast from '../components/Toast/Toast'
+import MoreBill from '../pages/UserWallet/components/MoreBill/MoreBill'
 class RouteMap extends Component {
 
   constructor(props){
@@ -81,6 +82,7 @@ class RouteMap extends Component {
           <Route path='/userDiscount' component={UserDiscount} />
           <Route path='/userWallet' component={UserWallet} />
           <Route path='/search' component={Search} />
+          <Route path="/userBill" component={MoreBill} />
           <Route path="*" component={NotFound} />
         </Switch>
       </Router>
