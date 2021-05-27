@@ -52,3 +52,12 @@ export const userBill = (data) => {
     data,
   })
 }
+
+// 获取用户红包/卡券
+export const userDiscount = (data) => {
+  return request({
+    method:'post',
+    url:'user/userDiscount',
+    data,
+  })
+}

@@ -3,6 +3,7 @@ import {
   UPDATE_CART, 
   UPDATE_USERINFO,
   UPDATE_BILLINFO,
+  UPDATE_DISCOUNTINFO,
 } from './actionTypes'
 // 购物车
 const cartInfo = (state = {}, action) => {
@@ -31,9 +32,19 @@ const billInfo = (state = [], action) => {
       return [ ...state ]
   }
 }
+// 红包卡券
+const discountInfo = (state = [], action) => {
+  switch (action.type) {
+    case UPDATE_DISCOUNTINFO:
+      return action.data
+    default:
+      return [ ...state ]
+  }
+}
 
 export default combineReducers({
   cartInfo,
   userInfo,
-  billInfo
+  billInfo,
+  discountInfo,
 })
