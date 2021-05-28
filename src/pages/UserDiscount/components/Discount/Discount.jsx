@@ -1,6 +1,6 @@
 import react from 'react'
 import Style from './Discount.module.scss'
-import { getTime } from '../../../utils/time'
+import { getTime } from '../../../../utils/time'
 import { useHistory } from 'react-router-dom'
 function Discount(props) {
   const history = useHistory()

@@ -26,6 +26,9 @@ function UserWallet(props) {
   // 更新账单信息
   useEffect(() => {
     setBillData(billInfo)
+    if (billInfo.length) {
+      setShowNull(false)
+    }
   }, [billInfo])
 
   // 初始化账单数据
@@ -38,11 +41,11 @@ function UserWallet(props) {
         return
       }
       dispatch(updateBillInfo(data.data))
-    }else{
+    } else {
       setShowNull(true)
       setLoading(false)
     }
-    
+
   }
 
   // 切换popup弹出层

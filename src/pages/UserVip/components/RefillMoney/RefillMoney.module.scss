@@ -1,0 +1,36 @@
+.refillMoney{
+  .menuTitle{
+    font-size: 16px;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 20px;
+  }
+  .menus{
+    display: flex;
+    justify-content: space-between;
+    .menu{
+      margin-bottom: 30px;
+      width: 29%;
+      height: 125px;
+      box-sizing: border-box;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .title{
+        font-size: 16px;
+        margin: 10px 0;
+      }
+      .money{
+        color: #fc6107;
+        margin: 10px 0;
+        font-weight: bold;
+        .num{
+          font-size: 30px;
+        }
+      }
+    }
+  }
+}

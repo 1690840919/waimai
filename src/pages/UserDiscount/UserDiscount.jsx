@@ -4,14 +4,16 @@ import Style from './UserDiscount.module.scss'
 import AppBar from '../../components/AppBar/AppBar'
 import AppTab from '../../components/AppTab/AppTab'
 import { userDiscount } from '../../api/user'
-import Discount from './components/Discount'
 import { updateDiscountInfo } from '../../redux/actions'
+import Loading from '../../components/Loading/Loading'
+import Discount from './components/Discount/Discount'
 function UserDiscount(props) {
   const { history, dispatch, discountInfo } = props
   const appTabData = ['全部', '红包', '卡券']
   const [current, setCurrent] = useState(0)
   const [discountData, setDiscountData] = useState()
   const [typeDiscount, setTypeDiscount] = useState()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     initDiscount()
@@ -24,6 +26,7 @@ function UserDiscount(props) {
   // 初始化红包卡券
   const initDiscount = async () => {
     const { data } = await userDiscount()
+    setLoading(false)
     if (data.code === 1000) {
       dispatch(updateDiscountInfo(data.data))
     }
@@ -54,21 +57,28 @@ function UserDiscount(props) {
         current === 0 && discountData ?
           <div className={Style.allDiscount}>
             {
-              discountData.length && discountData.map(obj => (
-                <Discount key={obj.id} obj={obj} />
-              ))
+              discountData.length ?
+                discountData.map(obj => (
+                  <Discount key={obj.id} obj={obj} />
+                ))
+                : null
             }
+            <Loading loading={loading} />
           </div>
           : null
+
       }
       {
         current === 1 ?
           <div className={Style.redPacket}>
             {
-              typeDiscount.length && typeDiscount.map(obj => (
-                <Discount key={obj.id} obj={obj} />
-              ))
+              typeDiscount.length ?
+                typeDiscount.map(obj => (
+                  <Discount key={obj.id} obj={obj} />
+                ))
+                : null
             }
+            <Loading loading={loading} />
           </div>
           : null
       }
@@ -76,14 +86,17 @@ function UserDiscount(props) {
         current === 2 ?
           <div className={Style.coupon}>
             {
-              typeDiscount.length && typeDiscount.map(obj => (
-                <Discount key={obj.id} obj={obj} />
-              ))
+              typeDiscount.length ?
+                typeDiscount.map(obj => (
+                  <Discount key={obj.id} obj={obj} />
+                ))
+                : null
             }
+            <Loading loading={loading} />
           </div>
           : null
       }
-    </div>
+    </div >
   )
 }
 

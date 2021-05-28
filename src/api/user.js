@@ -3,8 +3,8 @@ import request from './request'
 // 检测登陆状态
 export const loginCheck = data => {
   return request({
-    method:'POST',
-    url:'user/loginCheck',
+    method: 'POST',
+    url: 'user/loginCheck',
     data
   })
 }
@@ -12,8 +12,8 @@ export const loginCheck = data => {
 // 注册账号
 export const userRegister = data => {
   return request({
-    method:'POST',
-    url:'user/registerUserName',
+    method: 'POST',
+    url: 'user/registerUserName',
     data
   })
 }
@@ -21,8 +21,8 @@ export const userRegister = data => {
 // 登陆账号
 export const userLogin = data => {
   return request({
-    method:'post',
-    url:'user/loginUserName',
+    method: 'post',
+    url: 'user/loginUserName',
     data
   })
 }
@@ -30,16 +30,16 @@ export const userLogin = data => {
 // 退出登陆
 export const userExit = data => {
   return request({
-    method:'post',
-    url:'user/exitUserName',
+    method: 'post',
+    url: 'user/exitUserName',
     data
   })
 }
 // 资料修改
 export const userEdit = data => {
   return request({
-    method:'post',
-    url:'user/editUserInfo',
+    method: 'post',
+    url: 'user/editUserInfo',
     data
   })
 }
@@ -47,8 +47,8 @@ export const userEdit = data => {
 // 查询用户账单
 export const userBill = (data) => {
   return request({
-    method:'post',
-    url:'user/userBill',
+    method: 'post',
+    url: 'user/userBill',
     data,
   })
 }
@@ -56,8 +56,17 @@ export const userBill = (data) => {
 // 获取用户红包/卡券
 export const userDiscount = (data) => {
   return request({
-    method:'post',
-    url:'user/userDiscount',
+    method: 'post',
+    url: 'user/userDiscount',
+    data,
+  })
+}
+
+// 充值VIP
+export const userVip = (data) => {
+  return request({
+    method: 'post',
+    url: 'user/userVip',
     data,
   })
 }
