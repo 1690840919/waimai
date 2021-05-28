@@ -70,3 +70,13 @@ export const userVip = (data) => {
     data,
   })
 }
+
+// 领取会员红包
+export const userVipPacket = (data) => {
+  return request({
+    method: 'post',
+    url: 'user/userVipPacket',
+    data,
+  })
+}
+

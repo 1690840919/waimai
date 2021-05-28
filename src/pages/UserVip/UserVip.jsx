@@ -4,28 +4,37 @@ import Style from './UserVip.module.scss'
 import AppBar from '../../components/AppBar/AppBar'
 import { getTime } from '../../utils/time'
 import Popup from '../../components/Popup/Popup'
+import Toast from '../../components/Toast/Toast'
 import RefillMoney from './components/RefillMoney/RefillMoney'
+import ToastLoading from '../../components/ToastLoading/ToastLoading'
+import { userVipPacket } from '../../api/user'
 function UserVip(props) {
   const { history, userInfo } = props
   const [vip, setVip] = useState(true)
   const PopupRef = useRef()
+  const [toastInfo, setToastInfo] = useState({})
   const [popupContent, setPopupContent] = useState()
+  const [toastLoading, setToastLoading] = useState(false)
   const vipMenus = [
     {
-      icon:'&#xe62c;',
-      name:'会员红包'
+      icon: '&#xe62c;',
+      name: '会员红包',
+      to: '/userDiscount',
     },
     {
-      icon:'&#xe63b;',
-      name:'会员活动'
+      icon: '&#xe63b;',
+      name: '会员活动',
+      to: '/home',
     },
     {
-      icon:'&#xe61c;',
-      name:'超低折扣'
+      icon: '&#xe61c;',
+      name: '超低折扣',
+      to: '/home',
     },
     {
-      icon:'&#xe606;',
-      name:'专属客服'
+      icon: '&#xe606;',
+      name: '专属客服',
+      to: '/userService',
     },
   ]
   // 切换popup弹出层
@@ -39,8 +48,44 @@ function UserVip(props) {
     setPopupContent(<RefillMoney showPopup={showPopup} />)
   }
 
+  // 点击来领取会员红包
+  const handleVipPacket = async () => {
+    if (!userInfo.isVip) {
+      setToastLoading(false)
+      setToastInfo({
+        text: '会员未开通',
+        date: new Date(),
+      })
+      return
+    }
+    setToastLoading(true)
+    const { data } = await userVipPacket()
+    if (data.code !== 1000) {
+      setToastLoading(false)
+      setToastInfo({
+        text: data.message,
+        date: new Date(),
+      })
+      return
+    }
+    setToastLoading(false)
+    setToastInfo({
+      text: data.message,
+      date: new Date(),
+    })
+  }
+
   return (
     <div className={Style.userVip}>
+      {/* 消息加载 */}
+      {
+        toastLoading ?
+          <ToastLoading text={'领取中'} />
+          : null
+      }
+      {/* 消息提醒 */}
+      <Toast callBackFn={toastInfo.callBackFn} text={toastInfo.text}
+        isShow={toastInfo.date} icon={toastInfo.icon} />
       {/* 弹出层 */}
       <Popup PopupRef={PopupRef} content={popupContent} ></Popup>
       {/* 顶部标题 */}
@@ -93,7 +138,7 @@ function UserVip(props) {
           </div>
           <div className={Style.tip}>
             <div className={Style.condition}>限制外卖订单使用</div>
-            <div className={Style.btn}>领取</div>
+            <div onClick={handleVipPacket} className={Style.btn}>领取</div>
           </div>
         </div>
       </div>
@@ -101,14 +146,14 @@ function UserVip(props) {
       <div className={`${Style.areaBox}`}>
         <AppBar paddingRight={0} paddingLeft={0} left={'会员特权'}
           color={'#333'} rightColor={'#969799'}
-          right={'更多'} leftIcon={null} size={'14px'}/>
+          right={'更多'} leftIcon={null} size={'14px'} />
         <div className={Style.menus}>
           {
-            vipMenus.map(obj=>(
-              <div className={Style.menu}>
+            vipMenus.map(obj => (
+              <div key={obj.name} onClick={() => { history.push(obj.to) }} className={Style.menu}>
                 <div className={Style.icon}>
-                  <span className="iconfont" 
-                  dangerouslySetInnerHTML={{__html:obj.icon}}></span>
+                  <span className="iconfont"
+                    dangerouslySetInnerHTML={{ __html: obj.icon }}></span>
                 </div>
                 <div className={Style.name}>
                   {obj.name}
