@@ -6,11 +6,13 @@ import Button from '../../components/Button/Button'
 import { userNewAddress, userDeleteAddress } from '../../api/user'
 import ToastLoading from '../../components/ToastLoading/ToastLoading'
 import Toast from '../../components/Toast/Toast'
+import Dialog from '../../components/Dialog/Dialog'
 function UserAddressEdit(props) {
   const { history } = props
   const routeLocation = useLocation()
   const [toastLoading, setToastLoading] = useState({ is: false })
   const [toastInfo, setToastInfo] = useState({})
+  const [dialog, setDialog] = useState({ show: false })
   const [reqData, setReqData] = useState({
     name: '',
     phone: '',
@@ -66,21 +68,30 @@ function UserAddressEdit(props) {
   }
 
   // 点击删除
-  const handleDelete = async () => {
-    setToastLoading({ is: true, text: '删除中' })
-    const { data } = await userDeleteAddress({ id: routeLocation.query.id })
-    setToastLoading({ is: false })
-    setToastInfo({
-      text: data.message,
-      date: new Date(),
-      callBackFn: () => {
-        history.replace('/userAddress')
+  const handleDelete = () => {
+    setDialog({
+      show: dialog.show + 1,
+      confirm: async () => {
+        setDialog({show:false})
+        setToastLoading({ is: true, text: '删除中' })
+        const { data } = await userDeleteAddress({ id: routeLocation.query.id })
+        setToastLoading({ is: false })
+        setToastInfo({
+          text: data.message,
+          date: new Date(),
+          callBackFn: () => {
+            history.replace('/userAddress')
+          }
+        })
       }
     })
   }
 
   return (
     <div className={Style.userAddressEdit}>
+      {/* dialog弹窗 */}
+      <Dialog dialog={dialog.show} text={'确认删除该地址吗？'}
+        confirm={dialog.confirm} />
       {/* 消息加载 */}
       {
         toastLoading.is ?

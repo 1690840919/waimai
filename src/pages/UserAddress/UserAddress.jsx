@@ -33,7 +33,7 @@ function UserAddress(props) {
   return (
     <div className={Style.userAddress}>
       {/* 顶部标题 */}
-      <AppBar fixed={true} handleLeft={() => { history.goBack() }}
+      <AppBar fixed={true} handleLeft={() => { history.push('/user') }}
         center={'我的地址'} bgColor={'rgb(91,170,250)'} />
       {/* 我的地址 */}
       <div className={Style.myAddress}>
