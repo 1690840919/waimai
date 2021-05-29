@@ -80,3 +80,29 @@ export const userVipPacket = (data) => {
   })
 }
 
+// 保存新地址
+export const userNewAddress = (data) => {
+  return request({
+    method: 'post',
+    url: 'user/userNewAddress',
+    data,
+  })
+}
+
+// 保存新地址
+export const userAddress = (data) => {
+  return request({
+    method: 'post',
+    url: 'user/userAddress',
+    data,
+  })
+}
+
+// 删除地址
+export const userDeleteAddress = (data) => {
+  return request({
+    method: 'post',
+    url: 'user/userDeleteAddress',
+    data,
+  })
+}

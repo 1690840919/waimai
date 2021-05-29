@@ -1,6 +1,8 @@
 .userAddress{
   min-height: 100vh;
   background: rgb(244,244,244);
+  padding: 40px 0 50px;
+  box-sizing: border-box;
   // 我的地址
   .myAddress{
     .address{
@@ -17,6 +19,7 @@
         width: 50px;
         height: 100%;
         font-size: 22px;
+        color: #5baafa;
       }
       .center{
         flex: 1;
