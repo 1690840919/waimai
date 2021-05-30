@@ -1,0 +1,29 @@
+.switch{
+  .content{
+    height: 30px;
+    width: 50px;
+    border-radius: 20px;
+    background: white;
+    border: 1px solid #ccc;
+    .box{
+      z-index: 2;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+      position: relative;
+      top: -1px;
+      left: 0px;
+      transition: width 0.5s;
+      background-color: rgb(25,137,250);
+      .white{
+        z-index: 3;
+        position: absolute;
+        right: 0px;
+        top: -1px;
+        background: white;
+        border-radius: 50%;
+      }
+    }
+  }
+}

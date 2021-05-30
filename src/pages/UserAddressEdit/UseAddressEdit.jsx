@@ -7,6 +7,7 @@ import { userNewAddress, userDeleteAddress } from '../../api/user'
 import ToastLoading from '../../components/ToastLoading/ToastLoading'
 import Toast from '../../components/Toast/Toast'
 import Dialog from '../../components/Dialog/Dialog'
+import Switch from '../../components/Switch/Switch'
 function UserAddressEdit(props) {
   const { history } = props
   const routeLocation = useLocation()
@@ -18,14 +19,14 @@ function UserAddressEdit(props) {
     phone: '',
     address: '',
     detail: '',
-    default: false,
+    isDefault: false,
   })
 
   useEffect(() => {
     if (routeLocation.query) {
-      const { name, phone, address, detail, id } = routeLocation.query
+      const { name, phone, address, detail, id, isDefault } = routeLocation.query
       setReqData({
-        name, phone, address, detail, id
+        name, phone, address, detail, id, isDefault
       })
     }
   }, [routeLocation])
@@ -56,7 +57,7 @@ function UserAddressEdit(props) {
       phone: '',
       address: '',
       detail: '',
-      default: false,
+      isDefault: false,
     })
     setToastInfo({
       text: routeLocation.query ? '修改成功' : data.message,
@@ -72,7 +73,7 @@ function UserAddressEdit(props) {
     setDialog({
       show: dialog.show + 1,
       confirm: async () => {
-        setDialog({show:false})
+        setDialog({ show: false })
         setToastLoading({ is: true, text: '删除中' })
         const { data } = await userDeleteAddress({ id: routeLocation.query.id })
         setToastLoading({ is: false })
@@ -127,10 +128,13 @@ function UserAddressEdit(props) {
           <input onChange={e => { changeReqData('detail', e.target.value) }} value={reqData.detail} type="text" placeholder='街道门牌、楼层房间号等信息' />
         </div>
         {/* 默认地址 */}
-        {/* <div className={Style.input}>
+        <div className={Style.input}>
           <span className={Style.defaultAddress}>设为默认收货地址</span>
-          <input type="text" placeholder='街道门牌、楼层房间号等信息' />
-        </div> */}
+          <div className={Style.icon}>
+            <Switch value={reqData.isDefault} height={25}
+              change={value => { changeReqData('isDefault', value) }} />
+          </div>
+        </div>
       </div>
       {/* 保存按钮 */}
       <div className={Style.btn}>

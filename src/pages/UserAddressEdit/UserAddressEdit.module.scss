@@ -1,5 +1,6 @@
 .userAddressEdit{
   min-height: 100vh;
+  background: rgb(244,244,244);
   // 表单
   .form{
     padding: 0 12px;
@@ -7,16 +8,22 @@
       padding: 10px 16px;
       height: 30px;
       display: flex;
-      // .defaultAddress{
-      //   line-height: 30px;
-      //   font-size: 14px;
-      // }
+      justify-content: space-between;
+      .defaultAddress{
+        line-height: 30px;
+        font-size: 14px;
+      }
       .title{
         width: 70px;
         line-height: 30px;
         font-size: 14px;
       }
+      .icon{
+        display: flex;
+        align-items: center;
+      }
       input{
+        background: rgb(244,244,244);
         border: none;
         outline: none;
         flex: 1;
