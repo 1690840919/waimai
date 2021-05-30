@@ -25,11 +25,11 @@ function ShopDetail(props) {
   return (
     <div className={Style.shopDetail}>
       {/* 顶部导航栏 */}
-      <AppBar bgColor={'rgb(46, 47, 59)'} leftIcon={'&#xe651;'} color={'white'}
+      <AppBar bgColor={'rgb(91,170,250)'} leftIcon={'&#xe651;'} color={'white'}
         rightIcon={'&#xe628;'} handleLeft={() => { history.goBack() }}
       />
       {/* 店铺信息 */}
-      <Shop data={shopInfo} bgColor={'rgb(46, 47, 59)'} color={'white'} />
+      <Shop data={shopInfo} bgColor={'rgb(91,170,250)'} color={'white'} />
       {/* 菜单栏目 */}
       <AppTab appTabData={appTabData} changeTab={changeTab} current={current} />
       {

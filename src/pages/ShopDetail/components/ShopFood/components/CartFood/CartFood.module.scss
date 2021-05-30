@@ -34,18 +34,24 @@
     .red,.add{
       width: 22px;
       height: 22px;
-      line-height: 24px;
+      line-height: 22px;
       text-align: center;
       border-radius: 50%;
-      border: 1px solid #ccc;
       margin-left: 10px;
+      color: white;
     }
     .foodNum{
       font-size: 16px;
       margin-left: 10px;
     }
+    .red{
+      color: rgb(112, 177, 241);
+      border: 1px solid rgb(112, 177, 241);
+      box-sizing: border-box;
+      line-height: 21px;
+    }
     .add{
-      background: orange;
+      background: rgb(112, 177, 241);
     }
   }
 }
