@@ -5,8 +5,11 @@
     width: 88px;
     height: 88px;
     border-radius: 10px;
-    background-size: cover;
     margin-right: 16px;
+    img{
+      width: 100%;
+      height: 100%;
+    }
   }
   // 店铺信息
   .shopInfo{
