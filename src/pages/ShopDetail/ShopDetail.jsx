@@ -40,7 +40,7 @@ function ShopDetail(props) {
           : null
       }
       {/* 菜单栏目 */}
-      <AppTab appTabData={appTabData} changeTab={changeTab} current={current} />
+      <AppTab sticky={true} top={0} appTabData={appTabData} changeTab={changeTab} current={current} />
       {
         current === 0 && shopInfo ?
           <ShopFood shopInfo={shopInfo} />

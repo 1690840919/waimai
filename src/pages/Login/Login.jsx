@@ -89,7 +89,7 @@ function Login(props) {
   // 点击关闭按钮
   const handleClose = () => {
     // 返回
-    window.history.back()
+    history.push('/user')
   }
 
   // 更新提交的信息

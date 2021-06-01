@@ -7,43 +7,12 @@ import CartFood from './components/CartFood/CartFood'
 import { connect } from 'react-redux'
 import Toast from '../../.../../../../components/Toast/Toast'
 import { updateCart } from '../../../../redux/actions'
+import { shopMenu, shopFood } from '../../../../api/shop'
 
 
 function ShopFood(props) {
   const { cartInfo, shopInfo, dispatch } = props
-  const menuData = ['热销', '折扣', '招牌猪脚', '自选双拼', '豪华双拼', '招牌猪脚', '自选双拼', '豪华双拼']
-  const foodData = [
-    {
-      id: '6001001',
-      img: 'https://img.meituan.net/msmerchant/c5a3b24ff7fe9076081c7af20d96ac7060537.png@320w_320h_1e_1c',
-      name: '新奥尔良烤翅买一送一',
-      tip: '【美味鸡肉】当日新鲜发酵的饼底加上甄选风味浓郁的新奥尔良烤鸡肉，与美式香肠、鲜肉肠进行熔炼，辅以金黄香浓的马苏里拉芝士，每一口都是满足。英寸比萨不另外赠送优惠券！',
-      sale: 300,
-      good: 20,
-      price: '12.9',
-      discount: '4.19折 限购1份',
-    },
-    {
-      id: '6001002',
-      img: 'https://img.meituan.net/msmerchant/c5a3b24ff7fe9076081c7af20d96ac7060537.png@320w_320h_1e_1c',
-      name: '新奥尔良烤翅买一送一',
-      tip: '【美味鸡肉】当日新鲜发酵的饼底加上甄选风味浓郁的新奥尔良烤鸡肉，与美式香肠、鲜肉肠进行熔炼，辅以金黄香浓的马苏里拉芝士，每一口都是满足。英寸比萨不另外赠送优惠券！',
-      sale: 300,
-      good: 20,
-      price: '12.9',
-      discount: '4.19折 限购1份',
-    },
-    {
-      id: '6001003',
-      img: 'https://img.meituan.net/msmerchant/c5a3b24ff7fe9076081c7af20d96ac7060537.png@320w_320h_1e_1c',
-      name: '新奥尔良烤翅买一送一',
-      tip: '【美味鸡肉】当日新鲜发酵的饼底加上甄选风味浓郁的新奥尔良烤鸡肉，与美式香肠、鲜肉肠进行熔炼，辅以金黄香浓的马苏里拉芝士，每一口都是满足。英寸比萨不另外赠送优惠券！',
-      sale: 300,
-      good: 20,
-      price: '12.9',
-      discount: '4.19折 限购1份',
-    }
-  ]
+
   const [currentMenu, setCurrentMenu] = useState(2)
 
   const [showCartContent, setShowCartContent] = useState(false)
@@ -56,9 +25,51 @@ function ShopFood(props) {
 
   const [toastInfo, setToastInfo] = useState({})
 
+  const [menuData, setMenuData] = useState([
+    { menus: '热销', id: '000' },
+    { menus: '折扣', id: '001' },
+  ])
+
+  const [foodData, setFoodData] = useState([])
+
   const history = useHistory();
 
   const match = useRouteMatch()
+
+  useEffect(() => {
+    if (shopInfo) {
+      initData()
+    }
+  }, [shopInfo])
+
+  // 初始化数据
+  const initData = async () => {
+    const id = shopInfo && shopInfo.id
+    const { data: menu } = await shopMenu({ id })
+    if (menu.code === 1000) {
+      setMenuData(menuData.concat(menu.data))
+    }
+
+    const { data: foods } = await shopFood({
+      id,
+      menu: menuData[currentMenu] && menuData[currentMenu].menus
+    })
+    if (foods.code === 1000) {
+      setFoodData(foods.data)
+    }
+  }
+
+  // 点击菜单
+  const handleMenu = async (index) => {
+    setCurrentMenu(index)
+    const { data: foods } = await shopFood({
+      id: shopInfo.id,
+      menu: menuData[index].menus
+    })
+    if (foods.code === 1000) {
+      setFoodData(foods.data)
+    }
+  }
 
   // 更新购物车里面的信息
   useEffect(() => {
@@ -80,7 +91,7 @@ function ShopFood(props) {
       }
       setTotalNum(num)
       setTotalPrice(price)
-    }else{
+    } else {
       setCartContent([])
       setTotalNum(0)
       setTotalPrice(0)
@@ -129,10 +140,10 @@ function ShopFood(props) {
           {
             menuData.map((item, index) => {
               return <li
-                key={index}
+                key={item.id}
                 style={{ background: currentMenu === index ? 'white' : null }}
-                onClick={() => { setCurrentMenu(index) }}
-                className={Style.item}>{item}</li>
+                onClick={() => { handleMenu(index) }}
+                className={Style.item}>{item.menus}</li>
             })
           }
         </ul>

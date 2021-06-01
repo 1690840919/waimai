@@ -69,17 +69,17 @@ function Food(props) {
     <div key={obj.id} className={Style.food}>
       {/* 商品图片 */}
       <div className={Style.foodImg}>
-        <img src={obj.img} alt="" />
+        <img src={obj.foodImg} alt="" />
       </div>
       {/* 商品信息 */}
       <div className={Style.foodInfo}>
-        <p className={Style.title}>{obj.name}</p>
-        <p className={Style.tip}>{obj.tip}</p>
+        <p className={Style.title}>{obj.foodName}</p>
+        <p className={Style.tip}>{obj.foodTip}</p>
         <p className={Style.num}>
-          <span>月售{obj.sale}</span>
-          <span>赞{obj.good}</span>
+          <span>月售{obj.foodSale}</span>
+          <span>赞{obj.foodLike}</span>
         </p>
-        <p className={Style.price}>￥{obj.price}</p>
+        <p className={Style.price}>￥{obj.foodPrice}</p>
       </div>
       {/* 添加购物车按钮 */}
       <div className={Style.changeBtn}>
