@@ -1,20 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import { userOrder } from '../../api/user'
 import AppBar from '../../components/AppBar/AppBar'
 import Button from '../../components/Button/Button'
 import TabBar from '../../components/TabBar/TabBar'
 import Style from './Order.module.scss'
 
 function Order(props) {
-  const { history,userInfo } = props
+  const { history, userInfo } = props
   const [isLogin, setIsLogin] = useState(0)
+  const [orderData, setOrderData] = useState()
 
-  useEffect(()=>{
-    if(userInfo && userInfo.id){
+  useEffect(() => {
+    if (userInfo && userInfo.id) {
       setIsLogin(true)
+      initData()
     }
-  },[userInfo])
+  }, [userInfo])
 
+  // 初始化订单
+  const initData = async () => {
+    const { data } = await userOrder()
+    if (data.code === 1000) {
+      setOrderData(data.data)
+    }
+  }
 
   return (
     <div className={Style.order}>
@@ -25,276 +35,68 @@ function Order(props) {
           // 已经登陆
           <div className={Style.loginStatus}>
             {/* 订单内容 */}
-            <div className={Style.orderContent}>
-              <div className={Style.order} onClick={() => { history.push('/orderInfo') }}>
-                {/* 店铺信息 */}
-                <div className={Style.shopInfo}>
-                  <div className={Style.avatar}>
-                    <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                  </div>
-                  <div className={Style.info}>
-                    <div className={Style.title}>
-                      <div className={Style.name}>
-                        水饺先生（龙洞点）
+            {
+              orderData ?
+                <div className={Style.orderContent}>
+                  {
+                    orderData.map(obj => (
+                      <div key={obj.order.id} className={Style.order} onClick={() => { history.push('/orderInfo') }}>
+                        {/* 店铺信息 */}
+                        <div className={Style.shopInfo}>
+                          <div className={Style.avatar}>
+                            <img src={obj.shop.img} alt="" />
+                          </div>
+                          <div className={Style.info}>
+                            <div className={Style.title}>
+                              <span>
+                                {obj.shop.name}
+                              </span>
+                            </div>
+                            <div className={Style.others}>
+                              <span>10减2</span>
+                              <span>20减4</span>
+                              <span>30减6</span>
+                            </div>
+                          </div>
+                          <div className={Style.orderStatus}>{obj.order.arrive ? '已完成' : '配送中'}</div>
+                        </div>
+                        {/* 食品 */}
+                        <div className={Style.orderFood}>
+                          <div className={Style.foods}>
+                            {
+                              obj.food.data.map(item => (
+                                <div key={item.id} className={Style.food}>
+                                  <div className={Style.img}>
+                                    <img src={item.img} alt="" />
+                                  </div>
+                                  <div className={Style.foodName}>
+                                    {item.name}
+                                  </div>
+                                </div>
+                              ))
+                            }
+                          </div>
+                          <div className={Style.foodInfo}>
+                            <p className={Style.price}>￥{obj.food.totalPrice}</p>
+                            <p className={Style.num}>共{obj.food.data.length}件</p>
+                          </div>
+                        </div>
+                        {/* 按钮 */}
+                        <div className={Style.orderBtn}>
+                          <div className={Style.btn}>再来一单</div>
+                          {
+                            !obj.order.comment ?
+                              <div className={Style.btn}>评价</div>
+                              : null
+                          }
+
+                        </div>
                       </div>
-                      <div className={Style.orderStatus}>已完成</div>
-                    </div>
-                    <div className={Style.others}>
-                      <span>10减2</span>
-                      <span>20减4</span>
-                      <span>30减6</span>
-                    </div>
-                  </div>
+                    ))
+                  }
                 </div>
-                {/* 食品 */}
-                <div className={Style.orderFood}>
-                  <div className={Style.foods}>
-                    <div className={Style.food}>
-                      <div className={Style.img}>
-                        <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                      </div>
-                      <div className={Style.foodName}>
-                        全家父超好此地 较迟自
-                      </div>
-                    </div>
-                    <div className={Style.food}>
-                      <div className={Style.img}>
-                        <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                      </div>
-                      <div className={Style.foodName}>
-                        全家父超好此地 较迟自
-                      </div>
-                    </div>
-                    <div className={Style.food}>
-                      <div className={Style.img}>
-                        <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                      </div>
-                      <div className={Style.foodName}>
-                        全家父超好此地 较迟自
-                      </div>
-                    </div>
-                    <div className={Style.food}>
-                      <div className={Style.img}>
-                        <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                      </div>
-                      <div className={Style.foodName}>
-                        全家父超好此地 较迟自
-                      </div>
-                    </div>
-                  </div>
-                  <div className={Style.foodInfo}>
-                    <p className={Style.price}>￥29.99</p>
-                    <p className={Style.num}>共3件</p>
-                  </div>
-                </div>
-                {/* 按钮 */}
-                <div className={Style.orderBtn}>
-                  <div className={Style.btn}>再来一单</div>
-                  <div className={Style.btn}>评价</div>
-                </div>
-              </div>
-              <div className={Style.order}>
-                {/* 店铺信息 */}
-                <div className={Style.shopInfo}>
-                  <div className={Style.avatar}>
-                    <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                  </div>
-                  <div className={Style.info}>
-                    <div className={Style.title}>
-                      <div className={Style.name}>
-                        水饺先生（龙洞点）
-                      </div>
-                      <div className={Style.orderStatus}>已完成</div>
-                    </div>
-                    <div className={Style.others}>
-                      <span>10减2</span>
-                      <span>20减4</span>
-                      <span>30减6</span>
-                    </div>
-                  </div>
-                </div>
-                {/* 食品 */}
-                <div className={Style.orderFood}>
-                  <div className={Style.foods}>
-                    <div className={Style.food}>
-                      <div className={Style.img}>
-                        <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                      </div>
-                      <div className={Style.foodName}>
-                        全家父超好此地 较迟自
-                      </div>
-                    </div>
-                    <div className={Style.food}>
-                      <div className={Style.img}>
-                        <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                      </div>
-                      <div className={Style.foodName}>
-                        全家父超好此地 较迟自
-                      </div>
-                    </div>
-                    <div className={Style.food}>
-                      <div className={Style.img}>
-                        <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                      </div>
-                      <div className={Style.foodName}>
-                        全家父超好此地 较迟自
-                      </div>
-                    </div>
-                    <div className={Style.food}>
-                      <div className={Style.img}>
-                        <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                      </div>
-                      <div className={Style.foodName}>
-                        全家父超好此地 较迟自
-                      </div>
-                    </div>
-                  </div>
-                  <div className={Style.foodInfo}>
-                    <p className={Style.price}>￥29.99</p>
-                    <p className={Style.num}>共3件</p>
-                  </div>
-                </div>
-                {/* 按钮 */}
-                <div className={Style.orderBtn}>
-                  <div className={Style.btn}>再来一单</div>
-                  <div className={Style.btn}>评价</div>
-                </div>
-              </div>
-              <div className={Style.order}>
-                {/* 店铺信息 */}
-                <div className={Style.shopInfo}>
-                  <div className={Style.avatar}>
-                    <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                  </div>
-                  <div className={Style.info}>
-                    <div className={Style.title}>
-                      <div className={Style.name}>
-                        水饺先生（龙洞点）
-                      </div>
-                      <div className={Style.orderStatus}>已完成</div>
-                    </div>
-                    <div className={Style.others}>
-                      <span>10减2</span>
-                      <span>20减4</span>
-                      <span>30减6</span>
-                    </div>
-                  </div>
-                </div>
-                {/* 食品 */}
-                <div className={Style.orderFood}>
-                  <div className={Style.foods}>
-                    <div className={Style.food}>
-                      <div className={Style.img}>
-                        <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                      </div>
-                      <div className={Style.foodName}>
-                        全家父超好此地 较迟自
-                      </div>
-                    </div>
-                    <div className={Style.food}>
-                      <div className={Style.img}>
-                        <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                      </div>
-                      <div className={Style.foodName}>
-                        全家父超好此地 较迟自
-                      </div>
-                    </div>
-                    <div className={Style.food}>
-                      <div className={Style.img}>
-                        <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                      </div>
-                      <div className={Style.foodName}>
-                        全家父超好此地 较迟自
-                      </div>
-                    </div>
-                    <div className={Style.food}>
-                      <div className={Style.img}>
-                        <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                      </div>
-                      <div className={Style.foodName}>
-                        全家父超好此地 较迟自
-                      </div>
-                    </div>
-                  </div>
-                  <div className={Style.foodInfo}>
-                    <p className={Style.price}>￥29.99</p>
-                    <p className={Style.num}>共3件</p>
-                  </div>
-                </div>
-                {/* 按钮 */}
-                <div className={Style.orderBtn}>
-                  <div className={Style.btn}>再来一单</div>
-                  <div className={Style.btn}>评价</div>
-                </div>
-              </div>
-              <div className={Style.order}>
-                {/* 店铺信息 */}
-                <div className={Style.shopInfo}>
-                  <div className={Style.avatar}>
-                    <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                  </div>
-                  <div className={Style.info}>
-                    <div className={Style.title}>
-                      <div className={Style.name}>
-                        水饺先生（龙洞点）
-                      </div>
-                      <div className={Style.orderStatus}>已完成</div>
-                    </div>
-                    <div className={Style.others}>
-                      <span>10减2</span>
-                      <span>20减4</span>
-                      <span>30减6</span>
-                    </div>
-                  </div>
-                </div>
-                {/* 食品 */}
-                <div className={Style.orderFood}>
-                  <div className={Style.foods}>
-                    <div className={Style.food}>
-                      <div className={Style.img}>
-                        <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                      </div>
-                      <div className={Style.foodName}>
-                        全家父超好此地 较迟自
-                      </div>
-                    </div>
-                    <div className={Style.food}>
-                      <div className={Style.img}>
-                        <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                      </div>
-                      <div className={Style.foodName}>
-                        全家父超好此地 较迟自
-                      </div>
-                    </div>
-                    <div className={Style.food}>
-                      <div className={Style.img}>
-                        <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                      </div>
-                      <div className={Style.foodName}>
-                        全家父超好此地 较迟自
-                      </div>
-                    </div>
-                    <div className={Style.food}>
-                      <div className={Style.img}>
-                        <img src="https://img.meituan.net/msmerchant/de445de110c0177c85d473b4a6e40c4e1130737.jpg@320w_320h_1e_1c" alt="" />
-                      </div>
-                      <div className={Style.foodName}>
-                        全家父超好此地 较迟自
-                      </div>
-                    </div>
-                  </div>
-                  <div className={Style.foodInfo}>
-                    <p className={Style.price}>￥29.99</p>
-                    <p className={Style.num}>共3件</p>
-                  </div>
-                </div>
-                {/* 按钮 */}
-                <div className={Style.orderBtn}>
-                  <div className={Style.btn}>再来一单</div>
-                  <div className={Style.btn}>评价</div>
-                </div>
-              </div>
-            </div>
+                : null
+            }
           </div>
           // 未登录
           : <div className={Style.noLoginStatus}>
@@ -302,7 +104,7 @@ function Order(props) {
               <div className={Style.img}>
               </div>
               <p>登陆后查看外卖订单</p>
-              <Button onClick={()=>{history.push('/login')}}
+              <Button onClick={() => { history.push('/login') }}
                 width={'120px'} height={'40px'} size={'14px'}
                 bgColor={'rgb(91,170,250)'} color={'white'}
                 text={'立即登陆'} />
@@ -317,7 +119,7 @@ function Order(props) {
 
 
 export default connect(
-  ({userInfo}) => ({
+  ({ userInfo }) => ({
     userInfo
   }),
   (dispatch) => ({

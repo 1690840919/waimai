@@ -106,3 +106,21 @@ export const userDeleteAddress = (data) => {
     data,
   })
 }
+
+// 用户下单
+export const userOrderCreate = (data) => {
+  return request({
+    method: 'post',
+    url: 'user/userOrderCreate',
+    data,
+  })
+}
+
+// 获取用户订单
+export const userOrder = (data) => {
+  return request({
+    method: 'post',
+    url: 'user/userOrder',
+    data,
+  })
+}

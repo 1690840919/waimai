@@ -167,7 +167,7 @@ function ShopFood(props) {
         {/* 信息 */}
         <div className={Style.cartInfo}>
           <p className={Style.price}>￥{totalPrice.toFixed(2)}</p>
-          <p className={Style.tip}>另外需要配送费￥5</p>
+          <p className={Style.tip}>另外需要配送费￥{shopInfo.deliver}</p>
         </div>
         {/* 按钮 */}
         <div onClick={goPay} className={Style.buy}>
