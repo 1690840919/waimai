@@ -42,7 +42,7 @@ function Shop(props) {
         </div>
         {/* 店铺优惠 */}
         {
-          data.quan ?
+          data.quan && !isTopInfo ?
             <p className={`${Style.discount} ${Style.quan}`}>
               <span className={Style.header}>券</span>
               <span>{data.quan}</span>
@@ -50,7 +50,7 @@ function Shop(props) {
             : null
         }
         {
-          data.jian ?
+          data.jian && !isTopInfo ?
             <p className={`${Style.discount} ${Style.quan}`}>
               <span className={Style.header}>减</span>
               <span>{data.jian}</span>
@@ -58,7 +58,7 @@ function Shop(props) {
             : null
         }
         {
-          data.tuan ?
+          data.tuan && !isTopInfo ?
             <p className={`${Style.discount} ${Style.quan}`}>
               <span style={{ backgroundColor: '#38c2aa' }} className={Style.header}>团</span>
               <span className={Style.text}>{data.tuan}</span>

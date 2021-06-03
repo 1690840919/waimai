@@ -1,26 +1,34 @@
 .shopFood{
   display: flex;
+  height: calc(100vh - 238px);
+  overflow: hidden;
+  box-sizing: border-box;
   // 侧边菜单
   .aside{
     width:80px;
     background: rgb(245,245,245);
+    height: 100%;
     margin-bottom: 50px;
-    .item{
-      text-align: center;
-      height: 40px;
-      line-height: 40px;
+    overflow: auto;
+    .items{
+      .item{
+        text-align: center;
+        height: 40px;
+        line-height: 40px;
+      }
     }
   }
   // 菜单内容
   .content{
     padding:0 10px;
     flex: 1;
-    height: 100px;
+    height:100%;
     background: white;
+    overflow: auto;
   }
   // 购物车
   .cart{
-    z-index: 5;
+    z-index: 12;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -94,6 +102,7 @@
     background: rgba(0,0,0,.6);
     display: flex;
     align-items: flex-end;
+    z-index: 11;
     .cartContent{
       position: fixed;
       bottom: 50px;

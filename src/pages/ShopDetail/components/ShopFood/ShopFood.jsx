@@ -81,11 +81,11 @@ function ShopFood(props) {
       if (food.length) {
         if (food.length === 1) {
           num += food[0].num
-          price += food[0].num * food[0].price
+          price += food[0].num * food[0].foodPrice
         } else {
           food.forEach(obj => {
             num += obj.num
-            price += obj.num * obj.price
+            price += obj.num * obj.foodPrice
           })
         }
       }

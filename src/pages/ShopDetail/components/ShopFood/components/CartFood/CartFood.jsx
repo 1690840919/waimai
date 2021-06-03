@@ -47,13 +47,13 @@ function CartFood(props) {
   return (
     <div key={item.id} className={Style.food}>
       <div className={Style.img}>
-        <img src={item.img} alt="" />
+        <img src={item.foodImg} alt="" />
       </div>
       <div className={Style.info}>
-        {item.name}
+        {item.foodName}
       </div>
       <div className={Style.price}>
-        {item.price}
+        {item.foodPrice}
       </div>
       <div className={Style.btn}>
         <span onClick={() => { handleNum(item, 0) }}

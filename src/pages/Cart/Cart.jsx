@@ -17,7 +17,7 @@ function Cart(props) {
       let num = 0
       cartInfo[key].food.forEach( obj => {
         if(obj.isSelect){
-          num += obj.num * obj.price
+          num += obj.num * obj.foodPrice
         }
       })
       price += num
@@ -172,7 +172,7 @@ function Cart(props) {
                             onClick={()=>{updateCartShopSelect(cartInfo[key].food,cartInfo[key].shopInfo)}}
                             dangerouslySetInnerHTML={{__html:checkShopSelect(cartInfo[key].food)? '&#xe6c1;':'&#xe678;'}}></span>
                         </div>
-                        <div className={Style.name} 
+                        <div className={Style.shopName} 
                         onClick={()=>{history.push(`/shopDetail:${key}`)}}>
                           <span>
                             {cartInfo[key].shopInfo.name}
@@ -189,13 +189,13 @@ function Cart(props) {
                               dangerouslySetInnerHTML={{__html:!obj.isSelect?'&#xe6c1;':'&#xe678;'}}></span>
                             </div>
                             <div className={Style.shopFoodImg}>
-                              <img src={obj.img} alt="" />
+                              <img src={obj.foodImg} alt="" />
                             </div>
                             <div className={Style.shopFoodInfo}>
-                              <p className={Style.name}>{obj.name}</p>
+                              <p className={Style.name}>{obj.foodName}</p>
                               <div className={Style.tools}>
                                 <div className={Style.price}>
-                                  ￥{obj.price}
+                                  ￥{obj.foodPrice}
                                 </div>
                                 <div className={Style.btn}>
                                   {/* 添加购物车按钮 */}
