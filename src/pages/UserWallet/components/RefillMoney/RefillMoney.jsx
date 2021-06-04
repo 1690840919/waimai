@@ -26,6 +26,7 @@ function RefillMoney(props) {
       })
       return
     }
+    console.log(money * 1 + userInfo.money * 1)
     const { data } = await userEdit({
       addMoney: money * 1,
       money: money * 1 + userInfo.money * 1

@@ -8,22 +8,22 @@ import cartNullImg from '../../assets/images/cartNull.jpg'
 import { updateCart } from '../../redux/actions'
 
 function Cart(props) {
-  const { history, cartInfo,dispatch } = props
-  const [totalCartPrice,setTotalCartPrice] = useState(0)
+  const { history, cartInfo, dispatch } = props
+  const [totalCartPrice, setTotalCartPrice] = useState(0)
 
-  useEffect(()=>{
+  useEffect(() => {
     let price = 0
-    for(let key in cartInfo){
+    for (let key in cartInfo) {
       let num = 0
-      cartInfo[key].food.forEach( obj => {
-        if(obj.isSelect){
+      cartInfo[key].food.forEach(obj => {
+        if (obj.isSelect) {
           num += obj.num * obj.foodPrice
         }
       })
       price += num
     }
     setTotalCartPrice(price)
-  },[cartInfo])
+  }, [cartInfo])
 
   // 清空购物车内容
   const clearCartContent = () => {
@@ -60,9 +60,9 @@ function Cart(props) {
     }
     const newCartInfo = {
       ...cartInfo,
-      [shopInfo.id]:data
-    } 
-    if(!food.length){
+      [shopInfo.id]: data
+    }
+    if (!food.length) {
       delete newCartInfo[shopInfo.id]
     }
     dispatch(updateCart(newCartInfo))
@@ -70,47 +70,47 @@ function Cart(props) {
 
   // 检测商店是否全选
   const checkShopSelect = food => {
-    const result = food.find(obj=>!obj.isSelect)
+    const result = food.find(obj => !obj.isSelect)
     return !!result
   }
 
   // 更新购物车商品选中状态
-  const updateCartFoodSelect = (obj,shopInfo,food) => {
+  const updateCartFoodSelect = (obj, shopInfo, food) => {
     obj.isSelect = !obj.isSelect
     food.forEach((item, index) => {
       if (item.id === obj.id) {
         food[index] = obj
       }
     })
-    updateReduxCartInfo(shopInfo,food)
+    updateReduxCartInfo(shopInfo, food)
   }
 
   // 更新购物车店铺的选中状态
-  const updateCartShopSelect = (food,shopInfo) => {
+  const updateCartShopSelect = (food, shopInfo) => {
     const result = !checkShopSelect(food)
-    if(result){// 现在是全选，改为全不选
+    if (result) {// 现在是全选，改为全不选
       food.forEach((item, index) => {
         food[index].isSelect = false
       })
-    }else{
+    } else {
       food.forEach((item, index) => {
         food[index].isSelect = true
       })
     }
-    updateReduxCartInfo(shopInfo,food)
+    updateReduxCartInfo(shopInfo, food)
   }
 
   // 更新redux中cart数据
-  const updateReduxCartInfo = (shopInfo,food) => {
+  const updateReduxCartInfo = (shopInfo, food) => {
     const data = {
       shopInfo,
       food
     }
     const newCartInfo = {
       ...cartInfo,
-      [shopInfo.id]:data
-    } 
-    if(!food.length){
+      [shopInfo.id]: data
+    }
+    if (!food.length) {
       delete newCartInfo[shopInfo.id]
     }
     dispatch(updateCart(newCartInfo))
@@ -118,9 +118,9 @@ function Cart(props) {
 
   // 检测是否购物车所有都选中
   const checkAllShopSelect = () => {
-    for (let key in cartInfo){
-      const result = cartInfo[key].food.find(obj=>!obj.isSelect)
-      if(result){
+    for (let key in cartInfo) {
+      const result = cartInfo[key].food.find(obj => !obj.isSelect)
+      if (result) {
         return false
       }
     }
@@ -130,16 +130,16 @@ function Cart(props) {
   // 点击购物车去结算的选中
   const handlePayCartSelect = () => {
     const result = checkAllShopSelect()
-    const newCartInfo = {...cartInfo}
-    if(result){
-      for(let key in newCartInfo){
-        newCartInfo[key].food.forEach((obj,index)=>{
+    const newCartInfo = { ...cartInfo }
+    if (result) {
+      for (let key in newCartInfo) {
+        newCartInfo[key].food.forEach((obj, index) => {
           newCartInfo[key].food[index].isSelect = false
         })
       }
-    }else{
-      for(let key in newCartInfo){
-        newCartInfo[key].food.forEach((obj,index)=>{
+    } else {
+      for (let key in newCartInfo) {
+        newCartInfo[key].food.forEach((obj, index) => {
           newCartInfo[key].food[index].isSelect = true
         })
       }
@@ -149,7 +149,7 @@ function Cart(props) {
 
   return (
     <div className={Style.cart}>
-      
+
       {/* 顶部标题栏目 */}
       <AppBar fixed={true} handleRight={clearCartContent}
         bgColor={'rgb(91,170,250)'} leftIcon={null} rightIcon={'&#xe61d;'}
@@ -168,25 +168,25 @@ function Cart(props) {
                       {/* 店铺名称 */}
                       <div className={Style.shopName}>
                         <div className={Style.selectBtn}>
-                          <span className="iconfont" 
-                            onClick={()=>{updateCartShopSelect(cartInfo[key].food,cartInfo[key].shopInfo)}}
-                            dangerouslySetInnerHTML={{__html:checkShopSelect(cartInfo[key].food)? '&#xe6c1;':'&#xe678;'}}></span>
+                          <span className="iconfont"
+                            onClick={() => { updateCartShopSelect(cartInfo[key].food, cartInfo[key].shopInfo) }}
+                            dangerouslySetInnerHTML={{ __html: checkShopSelect(cartInfo[key].food) ? '&#xe6c1;' : '&#xe678;' }}></span>
                         </div>
-                        <div className={Style.shopName} 
-                        onClick={()=>{history.push(`/shopDetail:${key}`)}}>
+                        <div className={Style.name}
+                          onClick={() => { history.push(`/shopDetail:${key}`) }}>
                           <span>
-                            {cartInfo[key].shopInfo.name}
+                            {cartInfo[key].shopInfo.shopname}
                           </span>
                         </div>
                       </div>
                       {/* 店铺商品 */}
                       {
-                        cartInfo[key].food.map(obj=>(
+                        cartInfo[key].food.map(obj => (
                           <div key={obj.id} className={Style.shopFood}>
                             <div className={Style.selectBtn}>
-                            <span className="iconfont" 
-                            onClick={()=>{updateCartFoodSelect(obj,cartInfo[key].shopInfo,cartInfo[key].food)}}
-                              dangerouslySetInnerHTML={{__html:!obj.isSelect?'&#xe6c1;':'&#xe678;'}}></span>
+                              <span className="iconfont"
+                                onClick={() => { updateCartFoodSelect(obj, cartInfo[key].shopInfo, cartInfo[key].food) }}
+                                dangerouslySetInnerHTML={{ __html: !obj.isSelect ? '&#xe6c1;' : '&#xe678;' }}></span>
                             </div>
                             <div className={Style.shopFoodImg}>
                               <img src={obj.foodImg} alt="" />
@@ -201,9 +201,9 @@ function Cart(props) {
                                   {/* 添加购物车按钮 */}
                                   <div className={Style.changeBtn}>
                                     {obj.num ? <span className={`iconfont ${Style.red}`} // 减少商品
-                                      onClick={() => { handleNum(obj,0,cartInfo[key].shopInfo) }} >&#xe611;</span> : null}
+                                      onClick={() => { handleNum(obj, 0, cartInfo[key].shopInfo) }} >&#xe611;</span> : null}
                                     {obj.num ? <span className={Style.foodNum}>{obj.num}</span> : null}
-                                    <span onClick={() => { handleNum(obj,1,cartInfo[key].shopInfo) }} // 增加商品
+                                    <span onClick={() => { handleNum(obj, 1, cartInfo[key].shopInfo) }} // 增加商品
                                       className={`iconfont ${Style.add}`}>&#xe640;</span>
                                   </div>
                                 </div>
@@ -236,24 +236,24 @@ function Cart(props) {
       {/* 购物车去结算 */}
       {
         Object.keys(cartInfo).length ?
-        <div className={Style.goPayBox}>
-          <div className={Style.payCartInfo}>
-            <div className={Style.allSelect}>
-              <span className="iconfont" onClick={handlePayCartSelect}
-                dangerouslySetInnerHTML={{__html:checkAllShopSelect()?'&#xe678;' :'&#xe6c1;'}}></span>
+          <div className={Style.goPayBox}>
+            <div className={Style.payCartInfo}>
+              <div className={Style.allSelect}>
+                <span className="iconfont" onClick={handlePayCartSelect}
+                  dangerouslySetInnerHTML={{ __html: checkAllShopSelect() ? '&#xe678;' : '&#xe6c1;' }}></span>
+              </div>
+              <div className={Style.allSelectTitle}>
+                全选
             </div>
-            <div className={Style.allSelectTitle}>
-              全选
-            </div>
-            <div className={Style.price}>
+              <div className={Style.price}>
                 合计：<span>￥{totalCartPrice.toFixed(2)}</span>
-            </div> 
+              </div>
+            </div>
+            <div className={Style.payBtn}>
+              去结算
+        </div>
           </div>
-          <div className={Style.payBtn}>
-            去结算
-        </div>
-        </div>
-        : null
+          : null
       }
       {/* 底部导航栏 */}
       <TabBar history={history} current={2} />

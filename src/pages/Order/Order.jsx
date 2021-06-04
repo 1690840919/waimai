@@ -4,6 +4,7 @@ import { userOrder } from '../../api/user'
 import AppBar from '../../components/AppBar/AppBar'
 import Button from '../../components/Button/Button'
 import TabBar from '../../components/TabBar/TabBar'
+import formatMoney from '../../utils/formatMoney'
 import Style from './Order.module.scss'
 
 function Order(props) {
@@ -40,13 +41,18 @@ function Order(props) {
                 <div className={Style.orderContent}>
                   {
                     orderData.map(obj => (
-                      <div key={obj.order.id} className={Style.order} onClick={() => { history.push('/orderInfo') }}>
+                      <div key={obj.order.id} className={Style.order}
+                      >
                         {/* 店铺信息 */}
                         <div className={Style.shopInfo}>
-                          <div className={Style.avatar}>
+                          <div
+                            onClick={() => { history.push(`/shopDetail:${obj.shop.id}`) }}
+                            className={Style.avatar}>
                             <img src={obj.shop.img} alt="" />
                           </div>
-                          <div className={Style.info}>
+                          <div
+                            onClick={() => { history.push(`/shopDetail:${obj.shop.id}`) }}
+                            className={Style.info}>
                             <div className={Style.title}>
                               <span>
                                 {obj.shop.name}
@@ -58,10 +64,14 @@ function Order(props) {
                               <span>30减6</span>
                             </div>
                           </div>
-                          <div className={Style.orderStatus}>{obj.order.arrive ? '已完成' : '配送中'}</div>
+                          <div
+                            onClick={() => { history.push('/orderInfo') }}
+                            className={Style.orderStatus}>{obj.order.arrive ? '已完成' : '配送中'}</div>
                         </div>
                         {/* 食品 */}
-                        <div className={Style.orderFood}>
+                        <div
+                          onClick={() => { history.push('/orderInfo') }}
+                          className={Style.orderFood}>
                           <div className={Style.foods}>
                             {
                               obj.food.data.map(item => (
@@ -77,13 +87,15 @@ function Order(props) {
                             }
                           </div>
                           <div className={Style.foodInfo}>
-                            <p className={Style.price}>￥{obj.food.totalPrice}</p>
+                            <p className={Style.price}>￥{formatMoney(obj.food.totalPrice)}</p>
                             <p className={Style.num}>共{obj.food.data.length}件</p>
                           </div>
                         </div>
                         {/* 按钮 */}
                         <div className={Style.orderBtn}>
-                          <div className={Style.btn}>再来一单</div>
+                          <div
+                            onClick={() => { history.push(`/shopDetail:${obj.shop.id}`) }}
+                            className={Style.btn}>再来一单</div>
                           {
                             !obj.order.comment ?
                               <div className={Style.btn}>评价</div>

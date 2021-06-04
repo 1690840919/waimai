@@ -10,6 +10,7 @@ import Popup from '../../components/Popup/Popup'
 import RefillMoney from './components/RefillMoney/RefillMoney'
 import { getTime } from '../../utils/time'
 import Loading from '../../components/Loading/Loading'
+import formatMoney from '../../utils/formatMoney'
 function UserWallet(props) {
   const { history, dispatch, userInfo, billInfo } = props
   const [toastInfo, setToastInfo] = useState({})
@@ -95,7 +96,7 @@ function UserWallet(props) {
           ></div>
         </div>
         <div className={Style.price}>
-          <div className={Style.num}>{!userInfo.showMoney ? '*****' : (userInfo.money * 1).toFixed(2) || '0.00'}</div>
+          <div className={Style.num}>{!userInfo.showMoney ? '*****' : formatMoney(userInfo.money) || '0.00'}</div>
           <div className={Style.btn} onClick={handleRefill}>立即充值</div>
         </div>
       </div>
@@ -123,8 +124,8 @@ function UserWallet(props) {
                         <p className={Style.time}>{getTime(obj.time, 'YY-MM-DD hh:mm:ss')}</p>
                       </div>
                       <div className={Style.right}>
-                        <p>{obj.isSpend ? "-" + obj.num : "+" + obj.num}</p>
-                        <p>余额：{obj.money}</p>
+                        <p>{obj.isSpend ? "-" + formatMoney(obj.num) : "+" + formatMoney(obj.num)}</p>
+                        <p>余额：{formatMoney(obj.money)}</p>
                       </div>
                     </div>
                   ))

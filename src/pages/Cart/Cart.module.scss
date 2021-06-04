@@ -59,22 +59,6 @@
             line-height: 29px;
             font-size: 16px;
             color: rgb(112, 112, 112);
-            span{
-              position: relative;
-              &::after{
-                content: "";
-                display: block;
-                width: 7px;
-                height: 7px;
-                border: 2px solid rgb(100, 96, 96);
-                border-top: none;
-                border-left: none;
-                position: absolute;
-                top: 7px;
-                right: -5px;
-                transform: rotate(-45deg);
-              }
-            }
           }
         }
         // 店铺商品
