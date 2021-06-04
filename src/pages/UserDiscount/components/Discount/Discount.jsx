@@ -5,6 +5,21 @@ import { useHistory } from 'react-router-dom'
 function Discount(props) {
   const history = useHistory()
   const { obj } = props
+
+  // 点击去使用红包
+  const handlePacket = (discount) => {
+    if (history.location.params && history.location.params.orderSure) {
+      history.replace({
+        pathname: `/orderSure:${history.location.params.id}`,
+        params: {
+          discount,
+        }
+      })
+    } else {
+      history.push("/home")
+    }
+  }
+
   return (
     <div className={Style.discount}>
       <div className={Style.content}>
@@ -36,7 +51,7 @@ function Discount(props) {
             <span>{obj.method}</span>
           </div>
           <div className={Style.btn}
-            onClick={() => { history.push('/home') }}>去使用</div>
+            onClick={() => { handlePacket(obj.money) }}>使用</div>
         </div>
       </div>
     </div>

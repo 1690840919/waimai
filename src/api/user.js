@@ -89,7 +89,7 @@ export const userNewAddress = (data) => {
   })
 }
 
-// 保存新地址
+// 获取新地址
 export const userAddress = (data) => {
   return request({
     method: 'post',

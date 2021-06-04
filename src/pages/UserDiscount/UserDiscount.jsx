@@ -44,10 +44,20 @@ function UserDiscount(props) {
     }
   }
 
+  // 点击返回
+  const handleBack = async () => {
+    if (history.location.params && history.location.params.orderSure) {
+      history.goBack()
+    } else {
+      history.push('/user')
+    }
+  }
+
+
   return (
     <div className={Style.userDiscount}>
       {/* 顶部标题 */}
-      <AppBar fixed={true} handleLeft={() => { history.goBack() }}
+      <AppBar fixed={true} handleLeft={handleBack}
         center={'红包卡券'} bgColor={'rgb(91,170,250)'} />
       {/* 选项卡 */}
       <AppTab sticky={true} top={'40px'}

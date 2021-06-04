@@ -30,16 +30,37 @@ function UserAddress(props) {
     })
   }
 
+  // 点击返回
+  const handleBack = async () => {
+    if (history.location.params && history.location.params.orderSure) {
+      history.goBack()
+    } else {
+      history.push('/user')
+    }
+  }
+
+  // 点击地址
+  const handleAddress = async (address) => {
+    if (history.location.params && history.location.params.orderSure) {
+      history.replace({
+        pathname: `/orderSure:${history.location.params.id}`,
+        params: {
+          address,
+        }
+      })
+    }
+  }
+
   return (
     <div className={Style.userAddress}>
       {/* 顶部标题 */}
-      <AppBar fixed={true} handleLeft={() => { history.push('/user') }}
+      <AppBar fixed={true} handleLeft={handleBack}
         center={'我的地址'} bgColor={'rgb(91,170,250)'} />
       {/* 我的地址 */}
       <div className={Style.myAddress}>
         {
           addressData.map(obj => (
-            <div key={obj.id} className={Style.address}>
+            <div onClick={() => { handleAddress(obj) }} key={obj.id} className={Style.address}>
               <div
                 dangerouslySetInnerHTML={{ __html: obj.isDefault ? '&#xe678;' : '&#xe6c1;' }}
                 className={`${Style.aside} iconfont`}>

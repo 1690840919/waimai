@@ -1,0 +1,29 @@
+.editGender{
+  .radio{
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    background: white;
+    margin: 10px;
+    border-radius: 10px;
+    position: relative;
+    .title{
+      font-size: 16px;
+    }
+    input{
+      font-size: 20px;
+    }
+    .icon{
+      position: absolute;
+      top: 2px;
+      left: 5px;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      span{
+        font-size: 30px;
+      }
+    }
+  }
+}
