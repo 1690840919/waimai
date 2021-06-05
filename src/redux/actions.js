@@ -5,6 +5,7 @@ import {
   UPDATE_USERINFO,
   UPDATE_BILLINFO,
   UPDATE_DISCOUNTINFO,
+  UPDATE_ORDERINFO,
 } from "./actionTypes";
 
 // 更新购物车
@@ -15,3 +16,5 @@ export const updateUserInfo = (data) => ({type: UPDATE_USERINFO, data})
 export const updateBillInfo = (data) => ({type: UPDATE_BILLINFO, data})
 // 更新红包卡券
 export const updateDiscountInfo = (data) => ({type: UPDATE_DISCOUNTINFO, data})
+// 更新订单信息
+export const updateOrderInfo = (data) => ({type: UPDATE_ORDERINFO, data})

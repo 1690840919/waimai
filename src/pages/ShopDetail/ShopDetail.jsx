@@ -15,6 +15,7 @@ function ShopDetail(props) {
 
   useEffect(() => {
     initShopInfo()
+    
   }, [])
 
   // 初始化数据

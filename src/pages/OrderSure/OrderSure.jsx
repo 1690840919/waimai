@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Style from './OrderSure.module.scss'
 import AppBar from '../../components/AppBar/AppBar'
 import Toast from '../../components/Toast/Toast'
-import { updateCart, updateUserInfo } from '../../redux/actions'
+import { updateCart, updateUserInfo, updateOrderInfo } from '../../redux/actions'
 import { userOrderCreate, userAddress } from '../../api/user'
 import ToastLoading from '../../components/ToastLoading/ToastLoading'
 import { setItem } from '../../utils/storage'
@@ -13,7 +13,10 @@ import EditTip from './components/EditTip/EditTip'
 import { getTime } from '../../utils/time'
 
 function OrderSure(props) {
-  const { history, dispatch, cartInfo, match, userInfo } = props
+  const {
+    updateReduxOrderInfo,
+    history, dispatch, cartInfo, match, userInfo, orderInfo
+  } = props
   const [toastInfo, setToastInfo] = useState({})
   const [totalMoney, setTotalMoney] = useState(0)
   const PopupRef = useRef()
@@ -22,6 +25,7 @@ function OrderSure(props) {
   const [address, setAddress] = useState()
   const [toastLoading, setToastLoading] = useState({ is: false })
   const [submitData, setSubmitData] = useState({
+    address: '',
     addressId: '',
     shopId,
     payMethod: "钱包",
@@ -31,49 +35,55 @@ function OrderSure(props) {
     isTicket: 0,
     discount: 0,
     deliverTime: "",
-    packMoney: 0
+    packMoney: 0,
+    discountId: "",
   })
 
   useEffect(() => {
-    const address = history.location.params && history.location.params.address
-    const discount = history.location.params && history.location.params.discount
-    if (address) {
-      setAddress(address)
-      setSubmitData(pre => {
-        const data = { ...pre }
-        data.addressId = address.id
-        return data
-      })
+    const keyArr = Object.keys(orderInfo)
+    if (!keyArr.length) {
+      updateReduxOrderInfo(submitData)
     }
-    if (discount) {
-      setSubmitData(pre => {
-        const data = { ...pre }
-        data.discount = discount
-        return data
-      })
+    initData()
+  }, [])
+
+  useEffect(() => {
+    setSubmitData({ ...submitData, ...orderInfo })
+    setAddress(orderInfo.address)
+  }, [orderInfo])
+
+  // 更新redux订单
+  const getOrderInfo = (obj) => {
+    let newData = { ...orderInfo, ...obj }
+    return newData
+  }
+
+  useEffect(() => {
+    const params = history.location.params
+    if (params && params.address) {
+      const address = params.address
+      updateReduxOrderInfo(getOrderInfo({ address, addressId: address.id }))
     }
-    if (!history.location.params) {
-      initData()
+    if (params && params.discount && params.discountId) {
+      const discount = params.discount
+      const discountId = params.discountId
+      updateReduxOrderInfo(getOrderInfo({ discount, discountId }))
     }
   }, [history])
 
   // 初始化数据
   const initData = async () => {
-    let obj
-    if (submitData.addressId) {
-      const { data } = await userAddress({ id: submitData.addressId })
-      obj = data.data[0]
+    const params = history.location.params
+    if ((params && params.address) || (params && params.discount)) {
+      setAddress(params.address)
     } else {
       const { data } = await userAddress()
-      obj = data.data.find(obj => obj.isDefault)
-
-    }
-    if (obj) {
-      setAddress(obj)
+      const obj = data.data.find(obj => obj.isDefault)
+      if (obj) {
+        updateReduxOrderInfo(getOrderInfo({ address: obj }))
+      }
     }
   }
-
-
 
   // 切换popup弹出层
   const changePopup = value => {
@@ -119,12 +129,8 @@ function OrderSure(props) {
           },
         ]
       }
-      update={value => {
-        setSubmitData(pre => {
-          const data = { ...pre }
-          data.isTicket = value * 1
-          return data
-        })
+      update={isTicket => {
+        updateReduxOrderInfo(getOrderInfo({ isTicket: isTicket * 1 }))
       }}
       closePopup={() => { changePopup(false) }} />)
   }
@@ -154,12 +160,8 @@ function OrderSure(props) {
           },
         ]
       }
-      update={value => {
-        setSubmitData(pre => {
-          const data = { ...pre }
-          data.tools = value
-          return data
-        })
+      update={tools => {
+        updateReduxOrderInfo(getOrderInfo({ tools }))
       }}
       closePopup={() => { changePopup(false) }} />)
   }
@@ -191,12 +193,8 @@ function OrderSure(props) {
           },
         ]
       }
-      update={value => {
-        setSubmitData(pre => {
-          const data = { ...pre }
-          data.payMethod = value
-          return data
-        })
+      update={payMethod => {
+        updateReduxOrderInfo(getOrderInfo({ payMethod }))
       }}
       closePopup={() => { changePopup(false) }} />)
   }
@@ -206,12 +204,8 @@ function OrderSure(props) {
     changePopup(true)
     setPopupContent(<EditTip
       value={submitData.tip}
-      update={value => {
-        setSubmitData(pre => {
-          const data = { ...pre }
-          data.tip = value
-          return data
-        })
+      update={tip => {
+        updateReduxOrderInfo(getOrderInfo({ tip }))
       }}
       closePopup={() => { changePopup(false) }} />)
   }
@@ -252,6 +246,7 @@ function OrderSure(props) {
       })
       num += cartInfo[shopId].shopInfo.deliver
       num += foodArr.length * 0.5
+      num -= orderInfo.discount * 1 || 0
       setTotalMoney(num)
     }
     if (foodArr && foodArr.length) {
@@ -407,10 +402,11 @@ function OrderSure(props) {
 }
 
 export default connect(
-  ({ cartInfo, userInfo }) => ({
-    cartInfo, userInfo
+  ({ cartInfo, userInfo, orderInfo }) => ({
+    cartInfo, userInfo, orderInfo
   }),
   (dispatch) => ({
-    dispatch
+    dispatch,
+    updateReduxOrderInfo: value => { dispatch(updateOrderInfo(value)) }
   })
 )(OrderSure)

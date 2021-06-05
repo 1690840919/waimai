@@ -7,12 +7,13 @@ function Discount(props) {
   const { obj } = props
 
   // 点击去使用红包
-  const handlePacket = (discount) => {
+  const handlePacket = (discount,discountId) => {
     if (history.location.params && history.location.params.orderSure) {
       history.replace({
         pathname: `/orderSure:${history.location.params.id}`,
         params: {
           discount,
+          discountId
         }
       })
     } else {
@@ -51,7 +52,7 @@ function Discount(props) {
             <span>{obj.method}</span>
           </div>
           <div className={Style.btn}
-            onClick={() => { handlePacket(obj.money) }}>使用</div>
+            onClick={() => { handlePacket(obj.money,obj.id) }}>使用</div>
         </div>
       </div>
     </div>

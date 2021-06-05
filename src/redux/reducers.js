@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux'
 import {
-  UPDATE_CART, 
+  UPDATE_CART,
   UPDATE_USERINFO,
   UPDATE_BILLINFO,
   UPDATE_DISCOUNTINFO,
+  UPDATE_ORDERINFO,
 } from './actionTypes'
 // 购物车
 const cartInfo = (state = {}, action) => {
@@ -29,7 +30,7 @@ const billInfo = (state = [], action) => {
     case UPDATE_BILLINFO:
       return action.data
     default:
-      return [ ...state ]
+      return [...state]
   }
 }
 // 红包卡券
@@ -38,7 +39,16 @@ const discountInfo = (state = [], action) => {
     case UPDATE_DISCOUNTINFO:
       return action.data
     default:
-      return [ ...state ]
+      return [...state]
+  }
+}
+// 订单信息
+const orderInfo = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_ORDERINFO:
+      return action.data
+    default:
+      return { ...state }
   }
 }
 
@@ -47,4 +57,5 @@ export default combineReducers({
   userInfo,
   billInfo,
   discountInfo,
+  orderInfo,
 })

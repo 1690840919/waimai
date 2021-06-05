@@ -43,7 +43,7 @@ function UserAddress(props) {
   const handleAddress = async (address) => {
     if (history.location.params && history.location.params.orderSure) {
       history.replace({
-        pathname: `/orderSure:${history.location.params.id}`,
+        pathname: `/OrderSure:${history.location.params.id}`,
         params: {
           address,
         }

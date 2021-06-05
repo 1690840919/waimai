@@ -6,12 +6,12 @@ import Food from './components/Food/Food'
 import CartFood from './components/CartFood/CartFood'
 import { connect } from 'react-redux'
 import Toast from '../../.../../../../components/Toast/Toast'
-import { updateCart } from '../../../../redux/actions'
+import { updateCart, updateOrderInfo } from '../../../../redux/actions'
 import { shopMenu, shopFood } from '../../../../api/shop'
 
 
 function ShopFood(props) {
-  const { cartInfo, shopInfo, dispatch } = props
+  const { cartInfo, shopInfo, dispatch, orderInfo, clearReduxOrderInfo } = props
 
   const [currentMenu, setCurrentMenu] = useState(2)
 
@@ -71,8 +71,18 @@ function ShopFood(props) {
     }
   }
 
+  // 重置redux订单信息
+  const resetOrderInfo = () => {
+    const keyArr = Object.keys(orderInfo)
+    if (keyArr.length) {
+      clearReduxOrderInfo({})
+    }
+  }
+
+
   // 更新购物车里面的信息
   useEffect(() => {
+    resetOrderInfo()
     if (cartInfo[shopInfo.id] && cartInfo[shopInfo.id].food) {
       setCartContent(cartInfo[shopInfo.id].food)
       const food = cartInfo[shopInfo.id]?.food || []
@@ -204,10 +214,11 @@ function ShopFood(props) {
 }
 
 export default connect(
-  ({ cartInfo }) => ({
-    cartInfo
+  ({ cartInfo, orderInfo }) => ({
+    cartInfo, orderInfo
   }),
   (dispatch) => ({
-    dispatch
+    dispatch,
+    clearReduxOrderInfo: value => { dispatch(updateOrderInfo(value)) }
   })
 )(ShopFood)
