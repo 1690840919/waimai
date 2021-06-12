@@ -71,13 +71,13 @@ function ShopComment(props) {
                     {/* 用户头像 */}
                     <div className={Style.aside}>
                       <div className={Style.avatar}>
-                        <img src={obj.isName?obj.user.avatar:'https://img.yzcdn.cn/vant/cat.jpeg'} alt="" />
+                        <img src={obj.isName ? obj.user && obj.user.avatar : 'https://img.yzcdn.cn/vant/cat.jpeg'} alt="" />
                       </div>
                     </div>
                     {/* 用户评论 */}
                     <div className={Style.content}>
                       <div className={Style.nameAndTime}>
-                        <div className={Style.name}>{obj.isName ? obj.user.nickName : '匿名用户'}</div>
+                        <div className={Style.name}>{obj.isName ?  obj.user && obj.user.nickName : '匿名用户'}</div>
                         <div className={Style.time}>{getTime(obj.time, 'YYYY-MM-DD')}</div>
                       </div>
                       <p className={Style.arriveTime}>{getSpecialTime(obj.time)}</p>
