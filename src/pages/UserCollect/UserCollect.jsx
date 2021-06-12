@@ -3,9 +3,13 @@ import Style from './UserCollect.module.scss'
 import AppBar from '../../components/AppBar/AppBar'
 import Shop from '../../components/Shop/Shop'
 import { shopCollect } from '../../api/shop'
+import Loading from '../../components/Loading/Loading'
+import DataNull from '../../components/DataNull/DataNull'
 function UserCollect(props) {
   const { history } = props
-  const [collectData, setCollectData] = useState()
+  const [collectData, setCollectData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [showDataNull, setShowDataNull] = useState(false)
 
 
   useEffect(() => {
@@ -16,8 +20,15 @@ function UserCollect(props) {
   const initData = async () => {
     const { data } = await shopCollect()
     if (data.code === 1000) {
-      setCollectData(data.data)
+      const arr = data.data
+      setCollectData(arr)
+      setLoading(false)
+      if (!arr.length) {
+        setShowDataNull(true)
+      }
+      return
     }
+    setShowDataNull(true)
   }
 
   return (
@@ -26,15 +37,29 @@ function UserCollect(props) {
       <AppBar handleLeft={() => { history.goBack() }}
         center={'我的收藏'} bgColor={'rgb(91,170,250)'} />
       {/* 收藏店铺 */}
-      {
-        collectData && collectData.length ?
+      {/* {
+        !collectData.length ?
+          <Loading tip={!showDataNull} loading={loading} /> :
           <div className={Style.collectShop}>
             {
               collectData.map(item => {
                 return <Shop bgColor={'white'} history={props.history} key={item.id} data={item} />
               })
             }
+            <Loading tip={!showDataNull} loading={loading} />
           </div>
+      } */}
+      <div className={Style.collectShop}>
+        {
+          collectData && collectData.map(item => {
+            return <Shop bgColor={'white'} history={props.history} key={item.id} data={item} />
+          })
+        }
+        <Loading tip={!showDataNull} loading={loading} />
+      </div>
+      {
+        showDataNull ?
+          <DataNull />
           : null
       }
     </div>

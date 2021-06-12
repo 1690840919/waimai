@@ -11,6 +11,7 @@ import RefillMoney from './components/RefillMoney/RefillMoney'
 import { getTime } from '../../utils/time'
 import Loading from '../../components/Loading/Loading'
 import formatMoney from '../../utils/formatMoney'
+import DataNull from '../../components/DataNull/DataNull'
 function UserWallet(props) {
   const { history, dispatch, userInfo, billInfo } = props
   const [toastInfo, setToastInfo] = useState({})
@@ -134,10 +135,7 @@ function UserWallet(props) {
           }
           {
             showNull ?
-              <div className={Style.billNull}>
-                <span className="iconfont">&#xe603;</span>
-                <p>没有数据</p>
-              </div>
+              <DataNull/>
               : null
           }
 

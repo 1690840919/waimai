@@ -3,11 +3,13 @@ import Style from './UserAddress.module.scss'
 import AppBar from '../../components/AppBar/AppBar'
 import { userAddress } from '../../api/user'
 import Loading from '../../components/Loading/Loading'
+import DataNull from '../../components/DataNull/DataNull'
 
 function UserAddress(props) {
   const { history } = props
   const [addressData, setAddressData] = useState([])
   const [loading, setLoading] = useState(true)
+  const [addressDataNull, setAddressDataNull] = useState(false)
 
   useEffect(() => {
     initUserAddress()
@@ -19,7 +21,12 @@ function UserAddress(props) {
     setLoading(false)
     if (data.code === 1000) {
       setAddressData(data.data)
+      if (data.data && !data.data.length) {
+        setAddressDataNull(true)
+      }
+      return
     }
+    setAddressDataNull(true)
   }
 
   // 编辑地址
@@ -81,7 +88,12 @@ function UserAddress(props) {
             </div>
           ))
         }
-        <Loading loading={loading} />
+        <Loading loading={loading} tip={!addressData} />
+        {
+          addressDataNull ?
+            <DataNull />
+            : null
+        }
       </div>
       {/* 底部按钮 */}
       <div className={Style.addBtn}>

@@ -3,14 +3,14 @@ import Style from './Loading.module.scss'
 
 function Loading(props) {
   const [loading, setLoading] = useState(true)
-  const { loading: newLoading, tip = true } = props
+  const { loading: newLoading, tip = true, padding } = props
   useEffect(() => {
     if (!newLoading) {
       setLoading(false)
     }
   }, [newLoading])
   return (
-    <div style={{ padding: !tip ? '0' : '20px 0' }} className={Style.loading}>
+    <div style={{ padding }} className={Style.loading}>
       {
         loading ?
           <div>

@@ -5,6 +5,7 @@ import AppBar from '../../../../components/AppBar/AppBar'
 import Loading from '../../../../components/Loading/Loading'
 import { getTime } from '../../../../utils/time'
 import { userBill } from '../../../../api/user'
+import DataNull from '../../../../components/DataNull/DataNull'
 function MoreBill(props) {
   const history = useHistory()
   const [billData, setBillData] = useState([])
@@ -24,7 +25,7 @@ function MoreBill(props) {
         return
       }
       setBillData(data.data)
-    }else{
+    } else {
       setBillDataNull(true)
       setLoading(false)
     }
@@ -35,7 +36,7 @@ function MoreBill(props) {
       {/* 顶部标题 */}
       <AppBar fixed={true} handleLeft={() => { history.goBack() }}
         center={'我的账单'} bgColor={'rgb(91,170,250)'} />
-      
+
       {/* 我的账单 */}
       <div className={Style.content}>
         {
@@ -65,16 +66,13 @@ function MoreBill(props) {
         }
         {
           billDataNull ?
-            <div className={Style.billNull}>
-              <span className="iconfont">&#xe603;</span>
-              <p>没有数据</p>
-            </div>
+            <DataNull />
             : null
         }
       </div>
       {/* 加载中 */}
       <div className={Style.loadingBox}>
-        <Loading loading={loading} tip={false} />
+        <Loading padding={'0px'} loading={loading} tip={!billDataNull} />
       </div>
     </div>
   )
