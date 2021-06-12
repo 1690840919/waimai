@@ -25,3 +25,11 @@ export const shopFood = (data) => {
     data,
   })
 }
+// 获取店铺菜单商品
+export const shopCollect = (data) => {
+  return request({
+    method: 'post',
+    url: '/shop/shopCollect',
+    data,
+  })
+}
