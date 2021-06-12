@@ -124,3 +124,20 @@ export const userOrder = (data) => {
     data,
   })
 }
+// 用户评价
+export const userCommentCreate = (data) => {
+  return request({
+    method: 'post',
+    url: 'user/userCommentCreate',
+    data,
+  })
+}
+
+// 获取用户评价
+export const userComment = (data) => {
+  return request({
+    method: 'post',
+    url: 'user/userComment',
+    data,
+  })
+}

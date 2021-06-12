@@ -24,6 +24,7 @@ function OrderSure(props) {
   const [popupContent, setPopupContent] = useState()
   const [address, setAddress] = useState()
   const [toastLoading, setToastLoading] = useState({ is: false })
+  const [addressTip, setAddressTip] = useState('加载中')
   const [submitData, setSubmitData] = useState({
     address: '',
     addressId: '',
@@ -80,7 +81,9 @@ function OrderSure(props) {
       const { data } = await userAddress()
       const obj = data.data.find(obj => obj.isDefault)
       if (obj) {
-        updateReduxOrderInfo(getOrderInfo({ address: obj }))
+        updateReduxOrderInfo(getOrderInfo({ address: obj, addressId: obj.id }))
+      } else {
+        setAddressTip('您还没有收获地址哦')
       }
     }
   }
@@ -212,6 +215,13 @@ function OrderSure(props) {
 
   // 点击确认订单
   const sureOrder = async () => {
+    if (!submitData.address || !submitData.addressId) {
+      setToastInfo({
+        text: '地址不能为空',
+        date: new Date(),
+      })
+      return
+    }
     setToastLoading({ is: true, text: '下单中' })
     const { data } = await userOrderCreate(submitData)
     setToastLoading({ is: false })
@@ -287,9 +297,9 @@ function OrderSure(props) {
                 </p>
               </div>
               :
-              <div className={Style.addressInfo}>
+              <div className={Style.addressInfo} onClick={handleAddress}>
                 <div className={Style.defaultNull}>
-                  加载中
+                  {addressTip}
                 </div>
               </div>
           }

@@ -97,8 +97,22 @@ function Order(props) {
                             onClick={() => { history.push(`/shopDetail:${obj.shop.id}`) }}
                             className={Style.btn}>再来一单</div>
                           {
-                            !obj.order.comment ?
-                              <div className={Style.btn}>评价</div>
+                            !obj.order.commentId ?
+                              <div
+                                onClick={() => {
+                                  history.push({
+                                    pathname: '/orderComment',
+                                    state: { 
+                                      id: obj.order.id,
+                                      shopInfo:{
+                                        img:obj.shop.img,
+                                        name:obj.shop.name,
+                                        id:obj.shop.id,
+                                      }  
+                                    }
+                                  })
+                                }}
+                                className={Style.btn}>评价</div>
                               : null
                           }
 

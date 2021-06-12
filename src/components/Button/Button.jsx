@@ -4,11 +4,12 @@ import Style from './Button.module.scss'
 function Button(props) {
   const { 
     onClick,
-    display = 'block', text, width, height, bgColor, color, size, radius } = props
+    display = 'block', text, width, height, bgColor, color, size, radius,margin } = props
   return (
     <div
       onClick={onClick}
       style={{
+        margin,
         width,
         height,
         color,

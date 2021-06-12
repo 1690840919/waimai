@@ -1,8 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { userComment } from '../../../../api/user'
 import Style from './ShopComment.module.scss'
+import { useRouteMatch } from 'react-router-dom'
+import { Fragment } from 'react'
+import { getSpecialTime, getTime } from '../../../../utils/time'
 
 function ShopComment(props) {
+  const match = useRouteMatch()
+  const [commentData, setCommentData] = useState([])
   const commentItemsData = ['全部', '好评', '差评', '好', '有图评价', '味道好', '分量足', '价格实惠', '主食不错', '满意']
+
+  useEffect(() => {
+    initData()
+  }, [])
+
+  // 初始化数据
+  const initData = async () => {
+    const { data } = await userComment({ id: match.params.id.replace(':', '') })
+    if (data.code === 1000) {
+      setCommentData(data.data)
+    }
+  }
+
   return (
     <div className={Style.shopComment}>
       {/* 评分信息 */}
@@ -43,48 +62,44 @@ function ShopComment(props) {
       </div>
       {/* 评价信息 */}
       <div>
-        {/* 用户1 */}
-        <div className={Style.commentInfo}>
-          {/* 用户头像 */}
-          <div className={Style.aside}>
-            <div style={{ background: 'red' }} className={Style.avatar}></div>
-          </div>
-          {/* 用户评论 */}
-          <div className={Style.content}>
-            <div className={Style.nameAndTime}>
-              <div className={Style.name}>世间之人</div>
-              <div className={Style.time}>2021-05-20</div>
-            </div>
-            <p className={Style.arriveTime}>32分钟前</p>
-            <p className={Style.text}>一周点好几次，不知道吃什么的时候就会点，这家店的叉烧每天的口味都不一样，有时候脆一点有时候甜一点，一吃就知道是当天现做的那种，酸菜也很爽口，emm就挺喜欢的</p>
-            <div className={Style.commentImg}>
-              <img src="https://img.meituan.net/msmerchant/c5a3b24ff7fe9076081c7af20d96ac7060537.png@320w_320h_1e_1c" alt="" />
-              <img src="https://img.meituan.net/msmerchant/c5a3b24ff7fe9076081c7af20d96ac7060537.png@320w_320h_1e_1c" alt="" />
-              <img src="https://img.meituan.net/msmerchant/c5a3b24ff7fe9076081c7af20d96ac7060537.png@320w_320h_1e_1c" alt="" />
-            </div>
-          </div>
-        </div>
-        {/* 用户2 */}
-        <div className={Style.commentInfo}>
-          {/* 用户头像 */}
-          <div className={Style.aside}>
-            <div style={{ background: 'red' }} className={Style.avatar}></div>
-          </div>
-          {/* 用户评论 */}
-          <div className={Style.content}>
-            <div className={Style.nameAndTime}>
-              <div className={Style.name}>世间之人</div>
-              <div className={Style.time}>2021-05-20</div>
-            </div>
-            <p className={Style.arriveTime}>32分钟前</p>
-            <p className={Style.text}>一周点好几次，不知道吃什么的时候就会点，这家店的叉烧每天的口味都不一样，有时候脆一点有时候甜一点，一吃就知道是当天现做的那种，酸菜也很爽口，emm就挺喜欢的</p>
-            <div className={Style.commentImg}>
-              <img src="https://img.meituan.net/msmerchant/c5a3b24ff7fe9076081c7af20d96ac7060537.png@320w_320h_1e_1c" alt="" />
-              <img src="https://img.meituan.net/msmerchant/c5a3b24ff7fe9076081c7af20d96ac7060537.png@320w_320h_1e_1c" alt="" />
-              <img src="https://img.meituan.net/msmerchant/c5a3b24ff7fe9076081c7af20d96ac7060537.png@320w_320h_1e_1c" alt="" />
-            </div>
-          </div>
-        </div>
+        {
+          commentData && commentData.length ?
+            <Fragment>
+              {
+                commentData.map(obj => (
+                  <div key={obj.id} className={Style.commentInfo}>
+                    {/* 用户头像 */}
+                    <div className={Style.aside}>
+                      <div className={Style.avatar}>
+                        <img src={obj.isName?obj.user.avatar:'https://img.yzcdn.cn/vant/cat.jpeg'} alt="" />
+                      </div>
+                    </div>
+                    {/* 用户评论 */}
+                    <div className={Style.content}>
+                      <div className={Style.nameAndTime}>
+                        <div className={Style.name}>{obj.isName ? obj.user.nickName : '匿名用户'}</div>
+                        <div className={Style.time}>{getTime(obj.time, 'YYYY-MM-DD')}</div>
+                      </div>
+                      <p className={Style.arriveTime}>{getSpecialTime(obj.time)}</p>
+                      <p className={Style.text}>{obj.commentText || '用户没有留下任意评价'}</p>
+                      {
+                        obj.img ?
+                          <div className={Style.commentImg}>
+                            {
+                              obj.img.split(',').map(img => (
+                                <img src={img} alt="" />
+                              ))
+                            }
+                          </div>
+                          : null
+                      }
+                    </div>
+                  </div>
+                ))
+              }
+            </Fragment>
+            : null
+        }
       </div>
     </div>
   )

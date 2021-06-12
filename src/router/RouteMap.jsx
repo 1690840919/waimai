@@ -27,6 +27,7 @@ import { updateUserInfo } from '../redux/actions'
 import { loginCheck } from '../api/user'
 import Toast from '../components/Toast/Toast'
 import MoreBill from '../pages/UserWallet/components/MoreBill/MoreBill'
+import OrderComment from '../pages/OrderComment/OrderComment'
 class RouteMap extends Component {
 
   constructor(props){
@@ -66,6 +67,7 @@ class RouteMap extends Component {
           <Route path='/home' component={Home} />
           <Route path='/cart' component={Cart} />
           <Route path='/order' component={Order} />
+          <Route path='/orderComment' component={OrderComment} />
           <Route path='/orderInfo' component={OrderInfo} />
           <Route path='/orderSure:id' component={OrderSure} />
           <Route path='/user' component={User} />
