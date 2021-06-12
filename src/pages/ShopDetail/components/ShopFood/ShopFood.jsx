@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import Toast from '../../.../../../../components/Toast/Toast'
 import { updateCart, updateOrderInfo } from '../../../../redux/actions'
 import { shopMenu, shopFood } from '../../../../api/shop'
-
+import Loading from '../../../../components/Loading/Loading'
 
 function ShopFood(props) {
   const { cartInfo, shopInfo, dispatch, orderInfo, clearReduxOrderInfo } = props
@@ -36,6 +36,8 @@ function ShopFood(props) {
 
   const match = useRouteMatch()
 
+  const [loading,setLoading] = useState(true)
+
   useEffect(() => {
     if (shopInfo) {
       initData()
@@ -57,11 +59,14 @@ function ShopFood(props) {
     if (foods.code === 1000) {
       setFoodData(foods.data)
     }
+    setLoading(false)
   }
 
   // 点击菜单
   const handleMenu = async (index) => {
     setCurrentMenu(index)
+    setFoodData([])
+    setLoading(true)
     const { data: foods } = await shopFood({
       id: shopInfo.id,
       menu: menuData[index].menus
@@ -69,6 +74,7 @@ function ShopFood(props) {
     if (foods.code === 1000) {
       setFoodData(foods.data)
     }
+    setLoading(false)
   }
 
   // 重置redux订单信息
@@ -165,6 +171,7 @@ function ShopFood(props) {
             return <Food key={obj.id} obj={obj} shopInfo={shopInfo} />
           })
         }
+        <Loading loading={loading}/>
       </div>
       {/* 购物车 */}
       <div className={Style.cart}>

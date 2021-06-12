@@ -8,6 +8,9 @@ function Loading(props) {
     if (!newLoading) {
       setLoading(false)
     }
+    if(newLoading){
+      setLoading(true)
+    }
   }, [newLoading])
   return (
     <div style={{ padding }} className={Style.loading}>
