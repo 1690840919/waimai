@@ -36,6 +36,14 @@
           margin-left: 10px;
         }
       }
+      .star{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .starName{
+          margin-right: 10px;
+        }
+      }
     }
     // 店铺东西和新店
     .item{

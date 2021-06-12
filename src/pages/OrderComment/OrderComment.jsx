@@ -8,9 +8,10 @@ import Field from '../../components/Field/Field'
 import ToastLoading from '../../components/ToastLoading/ToastLoading'
 import Toast from '../../components/Toast/Toast'
 import { userCommentCreate } from '../../api/user'
-
+import Star from '../../components/Star/Star'
 function OrderComment(props) {
   const { orderInfo, location } = props
+  const starName = ['口味', '配送', '包装']
   const { id: orderId, shopInfo } = location.state || {}
   const [toastLoading, setToastLoading] = useState({ is: false, text: "" })
   const [toastInfo, setToastInfo] = useState({})
@@ -59,6 +60,14 @@ function OrderComment(props) {
     })
   }
 
+  // 点击星星
+  const handleStar = (index, value) => {
+    const arr = submitData.star.split(',')
+    arr[index] = value
+    const res = arr.join(',')
+    updateSubmitData('star', res)
+  }
+
   return (
     <div className={Style.orderComment}>
       {/* 消息加载 */}
@@ -93,18 +102,16 @@ function OrderComment(props) {
         </div>
         {/* 评分信息 */}
         <div className={Style.star}>
-          <div className={Style.item}>
-            <span>包装</span>
-            <span>5.0</span>
-          </div>
-          <div className={Style.item}>
-            <span>味道</span>
-            <span>5.0</span>
-          </div>
-          <div className={Style.item}>
-            <span>配送</span>
-            <span>5.0</span>
-          </div>
+          {
+            starName.map((name, index) => (
+              <div className={Style.item}>
+                <span className={Style.name}>味道</span>
+                <Star
+                  isEdit={true}
+                  onChange={(value) => { handleStar(index, value) }} size={'30px'} />
+              </div>
+            ))
+          }
         </div>
       </div>
       {/* 文字评价 */}

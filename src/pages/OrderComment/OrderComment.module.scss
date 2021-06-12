@@ -44,6 +44,11 @@
         display: flex;
         justify-content: center;
         margin: 10px 0;
+        .name{
+          font-size: 12px;
+          line-height: 35px;
+          margin-right: 20px;
+        }
         span{
           vertical-align: middle;
         }

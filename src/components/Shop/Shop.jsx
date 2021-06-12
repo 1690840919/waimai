@@ -1,5 +1,6 @@
 import React from 'react'
 import Style from './Shop.module.scss'
+import Star from '../../components/Star/Star'
 
 function Shop(props) {
   const { data, history, bgColor, color, isTopInfo } = props
@@ -21,8 +22,11 @@ function Shop(props) {
         <p className={Style.name}>{data.shopname}</p>
         {/* 店铺星星和地址 */}
         <div className={Style.others}>
-          <div className="star">
-            店铺评分:{data.star}
+          <div className={Style.star}>
+            <span className={Style.starName}>
+              店铺评分:
+            </span>
+            <Star value={data.star} />
           </div>
           <div className={Style.address}>
             <span>{data.address}</span>

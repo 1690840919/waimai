@@ -57,7 +57,7 @@ function EditPhone(props) {
         isShow={toastInfo.date} icon={toastInfo.icon} />
       <div className={Style.editBox}>
         <Field inputValue={phone => { setSubmitData({ phone }) }}
-          value={submitData.phone} length={(submitData.phone+"").length}
+          value={submitData.phone} length={(submitData.phone && submitData.phone.length) || 0}
           title={'手机号'} max={11} tips={'请输入新的手机号'} />
       </div>
       <Button
