@@ -1,4 +1,18 @@
 .shopDetail{
+  // 页面加载中
+  .pageLoading{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgb(244,244,244);
+    z-index: 333;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .appBarMoreMenuBox{
     position: fixed;
     top: 40px;

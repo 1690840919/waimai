@@ -10,6 +10,7 @@ import { shopList } from '../../api/shop'
 import { userEdit } from '../../api/user'
 import { connect } from 'react-redux'
 import { updateUserInfo } from '../../redux/actions'
+import Loading from '../../components/Loading/Loading'
 function ShopDetail(props) {
   const { history, match, userInfo, updateReduxUserInfo } = props
   const [current, setCurrent] = useState(0)
@@ -17,7 +18,7 @@ function ShopDetail(props) {
   const [shopInfo, setShopInfo] = useState()
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [isCollect, setIsCollect] = useState(false)
-
+  const [pageLoading, setPageLoading] = useState(true)
 
   useEffect(() => {
     initShopInfo()
@@ -39,6 +40,7 @@ function ShopDetail(props) {
   // 初始化数据
   const initShopInfo = async () => {
     const { data } = await shopList({ id: match.params.id.replace(':', '') })
+    setPageLoading(false)
     if (data.code === 1000) {
       setShopInfo(data.data[0])
     }
@@ -79,6 +81,15 @@ function ShopDetail(props) {
 
   return (
     <div className={Style.shopDetail}>
+      {/* 进入页面加载中 */}
+      {
+        pageLoading ?
+          <div className={Style.pageLoading}>
+            <Loading tip={false} loading={true} />
+          </div>
+          : null
+      }
+
       {/* 更多菜单 */}
       {
         showMoreMenu ?

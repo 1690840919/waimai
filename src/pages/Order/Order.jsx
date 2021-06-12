@@ -6,11 +6,15 @@ import Button from '../../components/Button/Button'
 import TabBar from '../../components/TabBar/TabBar'
 import formatMoney from '../../utils/formatMoney'
 import Style from './Order.module.scss'
+import Loading from '../../components/Loading/Loading'
+import DataNull from '../../components/DataNull/DataNull'
 
 function Order(props) {
   const { history, userInfo } = props
   const [isLogin, setIsLogin] = useState(0)
   const [orderData, setOrderData] = useState()
+  const [orderDataNull, setOrderDataNull] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (userInfo && userInfo.id) {
@@ -23,7 +27,11 @@ function Order(props) {
   const initData = async () => {
     const { data } = await userOrder()
     if (data.code === 1000) {
+      setLoading(false)
       setOrderData(data.data)
+      if (data.data && !data.data.length) {
+        setOrderDataNull(true)
+      }
     }
   }
 
@@ -102,13 +110,13 @@ function Order(props) {
                                 onClick={() => {
                                   history.push({
                                     pathname: '/orderComment',
-                                    state: { 
+                                    state: {
                                       id: obj.order.id,
-                                      shopInfo:{
-                                        img:obj.shop.img,
-                                        name:obj.shop.name,
-                                        id:obj.shop.id,
-                                      }  
+                                      shopInfo: {
+                                        img: obj.shop.img,
+                                        name: obj.shop.name,
+                                        id: obj.shop.id,
+                                      }
                                     }
                                   })
                                 }}
@@ -121,6 +129,12 @@ function Order(props) {
                     ))
                   }
                 </div>
+                : null
+            }
+            <Loading tip={!orderDataNull} loading={loading} />
+            {
+              orderDataNull ?
+                <DataNull />
                 : null
             }
           </div>

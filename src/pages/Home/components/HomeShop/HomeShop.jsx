@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import Style from './HomeShop.module.scss'
 import Shop from '../../../../components/Shop/Shop'
 import { shopList } from '../../../../api/shop'
+import Loading from '../../../../components/Loading/Loading'
 function HomeShop(props) {
 
   const [shopData, setShopData] = useState()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     initShopData()
@@ -13,7 +15,8 @@ function HomeShop(props) {
   // 初始化店铺数据
   const initShopData = async () => {
     const { data } = await shopList({ num: 5 })
-    if (data.code === 1000) { 
+    setLoading(false)
+    if (data.code === 1000) {
       setShopData(data.data)
     }
   }
@@ -25,6 +28,7 @@ function HomeShop(props) {
           return <Shop history={props.history} key={item.id} data={item} />
         })
       }
+      <Loading padding={'0px'} loading={loading} />
     </div>
   )
 }
