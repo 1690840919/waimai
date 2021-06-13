@@ -5,7 +5,7 @@ import AppBar from '../../../../components/AppBar/AppBar'
 import Loading from '../../../../components/Loading/Loading'
 import { getTime } from '../../../../utils/time'
 import { userBill } from '../../../../api/user'
-import DataNull from '../../../../components/DataNull/DataNull'
+import DataNull from '../../../../components/DateNull/DataNull'
 function MoreBill(props) {
   const history = useHistory()
   const [billData, setBillData] = useState([])

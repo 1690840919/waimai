@@ -24,9 +24,16 @@
     .star{
       flex: 1;
       padding-left: 10px;
+      
       p{
         margin: 8px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         span{
+          margin-right: 5px;
+        }
+        .name{
           margin-right: 10px;
         }
       }

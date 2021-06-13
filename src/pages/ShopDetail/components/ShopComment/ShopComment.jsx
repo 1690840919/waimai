@@ -4,12 +4,14 @@ import Style from './ShopComment.module.scss'
 import { useRouteMatch } from 'react-router-dom'
 import { Fragment } from 'react'
 import { getSpecialTime, getTime } from '../../../../utils/time'
+import LoadingDataNull from '../../../../components/LoadingDataNull/LoadingDataNull'
+import Star from '../../../../components/Star/Star'
 
 function ShopComment(props) {
   const match = useRouteMatch()
   const [commentData, setCommentData] = useState([])
   const commentItemsData = ['全部', '好评', '差评', '好', '有图评价', '味道好', '分量足', '价格实惠', '主食不错', '满意']
-
+  const [dataNull, setDataNull] = useState({ loading: true, dataNull: false })
   useEffect(() => {
     initData()
   }, [])
@@ -17,8 +19,12 @@ function ShopComment(props) {
   // 初始化数据
   const initData = async () => {
     const { data } = await userComment({ id: match.params.id.replace(':', '') })
+    setDataNull({ loading: false, dataNull: false })
     if (data.code === 1000) {
       setCommentData(data.data)
+      if (data.data && !data.data.length) {
+        setDataNull({ loading: false, dataNull: true })
+      }
     }
   }
 
@@ -29,21 +35,21 @@ function ShopComment(props) {
         {/* 商品评分 */}
         <div className={Style.shopStarInfo}>
           <p className={Style.num}>4.5</p>
-          <p className={Style.title}>配送评分</p>
+          <p className={Style.title}>店铺评分</p>
         </div>
         {/* 星星 */}
         <div className={Style.star}>
           <p>
-            <span>口味</span>
-            4.0
+            <span className={Style.name}>口味</span>
+            <Star value={5}/>
           </p>
           <p>
-            <span>口味</span>
-            4.0
+            <span className={Style.name}>配送</span>
+            <Star value={4}/>
           </p>
           <p>
-            <span>口味</span>
-            4.0
+            <span className={Style.name}>包装</span>
+            <Star value={3}/>
           </p>
         </div>
         {/* 配送评分 */}
@@ -77,7 +83,7 @@ function ShopComment(props) {
                     {/* 用户评论 */}
                     <div className={Style.content}>
                       <div className={Style.nameAndTime}>
-                        <div className={Style.name}>{obj.isName ?  obj.user && obj.user.nickName : '匿名用户'}</div>
+                        <div className={Style.name}>{obj.isName ? obj.user && obj.user.nickName : '匿名用户'}</div>
                         <div className={Style.time}>{getTime(obj.time, 'YYYY-MM-DD')}</div>
                       </div>
                       <p className={Style.arriveTime}>{getSpecialTime(obj.time)}</p>
@@ -100,6 +106,7 @@ function ShopComment(props) {
             </Fragment>
             : null
         }
+        <LoadingDataNull padding={'0px'} loading={dataNull.loading} dataNull={dataNull.dataNull} />
       </div>
     </div>
   )

@@ -4,7 +4,7 @@ import AppBar from '../../components/AppBar/AppBar'
 import Shop from '../../components/Shop/Shop'
 import { shopCollect } from '../../api/shop'
 import Loading from '../../components/Loading/Loading'
-import DataNull from '../../components/DataNull/DataNull'
+import DataNull from '../../components/DateNull/DataNull'
 function UserCollect(props) {
   const { history } = props
   const [collectData, setCollectData] = useState([])
