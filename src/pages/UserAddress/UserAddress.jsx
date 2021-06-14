@@ -3,7 +3,7 @@ import Style from './UserAddress.module.scss'
 import AppBar from '../../components/AppBar/AppBar'
 import { userAddress } from '../../api/user'
 import Loading from '../../components/Loading/Loading'
-import DataNull from '../../components/DateNull/DataNull'
+import DataNull from '../../components/DataNull/DataNull'
 
 function UserAddress(props) {
   const { history } = props
