@@ -22,19 +22,31 @@ function Search(props) {
   const [searchHistory, setSearchHistory] = useState([])
 
   // 初始化搜索记录
-  useEffect(()=>{
+  useEffect(() => {
     const data = getItem(SEARCHHISTORY)
-    if(data){
+    if (data) {
       setSearchHistory(data)
     }
-  },[])
+    haveMenu()
+  }, [])
+
+  // 检测路由跳转来的
+  const haveMenu = () => {
+    const { state } = history.location
+    if (state) {
+      const { searchValue } = state
+      setSearchValue(searchValue)
+      handleSearch(searchValue)
+    }
+  }
 
   // 增加历史记录
   const addSearchHistory = (value) => {
+    value = value.trim()
     if (!searchHistory.includes(searchValue) && value) {
       const newData = [...searchHistory, value]
       setSearchHistory(newData)
-      setItem(SEARCHHISTORY,newData)
+      setItem(SEARCHHISTORY, newData)
     }
   }
 

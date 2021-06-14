@@ -13,7 +13,7 @@ import Loading from '../../../../components/Loading/Loading'
 function ShopFood(props) {
   const { cartInfo, shopInfo, dispatch, orderInfo, clearReduxOrderInfo } = props
 
-  const [currentMenu, setCurrentMenu] = useState(2)
+  const [currentMenu, setCurrentMenu] = useState(0)
 
   const [showCartContent, setShowCartContent] = useState(false)
 
@@ -54,7 +54,7 @@ function ShopFood(props) {
 
     const { data: foods } = await shopFood({
       id,
-      menu: menuData[currentMenu] && menuData[currentMenu].menus
+      menu: menuData[0].menus
     })
     if (foods.code === 1000) {
       setFoodData(foods.data)

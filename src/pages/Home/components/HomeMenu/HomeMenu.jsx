@@ -1,5 +1,6 @@
 import React from 'react'
 import Style from './HomeMenu.module.scss'
+import { useHistory } from 'react-router-dom'
 
 function HomeMenu(props) {
   const menuData = [
@@ -44,11 +45,24 @@ function HomeMenu(props) {
       color: 'rgb(85,206,236)'
     },
   ]
+  const history = useHistory()
+  // 点击菜单
+  const handleHomeMenu = (item) => {
+    history.push({
+      pathname: '/search',
+      state: {
+        searchValue: item.name
+      }
+    })
+  }
+
   return (
     <div className={Style.homeMenu}>
       {
         menuData.map(item => {
-          return <div key={item.name} className={Style.item}>
+          return <div
+            onClick={() => { handleHomeMenu(item) }}
+            key={item.name} className={Style.item}>
             <div style={{ backgroundColor: item.color }}
               className={`iconfont ${Style.img}`}
               dangerouslySetInnerHTML={{ __html: item.icon }}

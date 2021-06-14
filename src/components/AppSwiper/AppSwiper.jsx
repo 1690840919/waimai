@@ -23,12 +23,12 @@ function AppSwiper(props) {
       >
         {swiperData.map(item => {
           return <SwiperSlide key={item}>
-            <a href="#/">
+            <div>
               <img style={{
                 width,
                 height
               }} src={item} alt="" />
-            </a>
+            </div>
           </SwiperSlide>
         })}
       </Swiper>
