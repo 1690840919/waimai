@@ -6,10 +6,12 @@ import AppBar from '../../components/AppBar/AppBar'
 import Button from '../../components/Button/Button'
 import cartNullImg from '../../assets/images/cartNull.jpg'
 import { updateCart } from '../../redux/actions'
+import Dialog from '../../components/Dialog/Dialog'
 
 function Cart(props) {
-  const { history, cartInfo, dispatch } = props
+  const { history, cartInfo, dispatch,clearCartInfo } = props
   const [totalCartPrice, setTotalCartPrice] = useState(0)
+  const [dialog, setDialog] = useState({ show: false })
 
   useEffect(() => {
     let price = 0
@@ -27,7 +29,16 @@ function Cart(props) {
 
   // 清空购物车内容
   const clearCartContent = () => {
-    console.log('清空购物车')
+    if (!Object.keys(cartInfo).length) {
+      return
+    }
+    setDialog({
+      show: dialog.show + 1,
+      confirm: () => {
+        clearCartInfo()
+        setDialog({ show: false })
+      }
+    })
   }
 
   // 点击添加/减少商品
@@ -149,7 +160,9 @@ function Cart(props) {
 
   return (
     <div className={Style.cart}>
-
+      {/* dialog弹窗 */}
+      <Dialog dialog={dialog.show} text={'确认清空购物车吗？'}
+        confirm={dialog.confirm} />
       {/* 顶部标题栏目 */}
       <AppBar fixed={true} handleRight={clearCartContent}
         bgColor={'rgb(91,170,250)'} leftIcon={null} rightIcon={'&#xe61d;'}
@@ -244,14 +257,14 @@ function Cart(props) {
               </div>
               <div className={Style.allSelectTitle}>
                 全选
-            </div>
+              </div>
               <div className={Style.price}>
                 合计：<span>￥{totalCartPrice.toFixed(2)}</span>
               </div>
             </div>
             <div className={Style.payBtn}>
               去结算
-        </div>
+            </div>
           </div>
           : null
       }
@@ -267,7 +280,8 @@ export default connect(
     cartInfo
   }),
   (dispatch) => ({
-    dispatch
+    dispatch,
+    clearCartInfo: () => { dispatch(updateCart({})) }
   })
 )(Cart)
 
