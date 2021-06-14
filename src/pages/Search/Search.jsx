@@ -42,8 +42,7 @@ function Search(props) {
 
   // 增加历史记录
   const addSearchHistory = (value) => {
-    value = value.trim()
-    if (!searchHistory.includes(searchValue) && value) {
+    if (searchHistory.indexOf(value) === -1 && value) {
       const newData = [...searchHistory, value]
       setSearchHistory(newData)
       setItem(SEARCHHISTORY, newData)

@@ -9,9 +9,10 @@ import Toast from '../../.../../../../components/Toast/Toast'
 import { updateCart, updateOrderInfo } from '../../../../redux/actions'
 import { shopMenu, shopFood } from '../../../../api/shop'
 import Loading from '../../../../components/Loading/Loading'
+import Dialog from '../../../../components/Dialog/Dialog'
 
 function ShopFood(props) {
-  const { cartInfo, shopInfo, dispatch, orderInfo, clearReduxOrderInfo } = props
+  const { userInfo, cartInfo, shopInfo, dispatch, orderInfo, clearReduxOrderInfo } = props
 
   const [currentMenu, setCurrentMenu] = useState(0)
 
@@ -25,6 +26,8 @@ function ShopFood(props) {
 
   const [toastInfo, setToastInfo] = useState({})
 
+  const [dialog, setDialog] = useState({ show: false })
+
   const [menuData, setMenuData] = useState([
     { menus: '热销', id: '000' },
     { menus: '折扣', id: '001' },
@@ -36,7 +39,7 @@ function ShopFood(props) {
 
   const match = useRouteMatch()
 
-  const [loading,setLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (shopInfo) {
@@ -145,11 +148,29 @@ function ShopFood(props) {
       })
       return
     }
+    if (!userInfo || !userInfo.id) {
+      checkLogin()
+      return
+    }
     history.push(`/OrderSure:${(match.params.id).replace(':', "")}`)
+  }
+
+  // 检测登陆
+  const checkLogin = () => {
+    setDialog({
+      show: dialog.show + 1,
+      confirm: () => {
+        setDialog({ show: false })
+        history.push('/login')
+      }
+    })
   }
 
   return (
     <div className={Style.shopFood}>
+      {/* dialog弹窗 */}
+      <Dialog dialog={dialog.show} text={'该功能需要登陆才能使用，是否登陆？'}
+        confirm={dialog.confirm} />
       {/* 侧边菜单 */}
       <div className={Style.aside}>
         <ul className={Style.items}>
@@ -171,7 +192,7 @@ function ShopFood(props) {
             return <Food key={obj.id} obj={obj} shopInfo={shopInfo} />
           })
         }
-        <Loading loading={loading}/>
+        <Loading loading={loading} />
       </div>
       {/* 购物车 */}
       <div className={Style.cart}>
@@ -221,8 +242,8 @@ function ShopFood(props) {
 }
 
 export default connect(
-  ({ cartInfo, orderInfo }) => ({
-    cartInfo, orderInfo
+  ({ cartInfo, orderInfo, userInfo }) => ({
+    cartInfo, orderInfo, userInfo
   }),
   (dispatch) => ({
     dispatch,

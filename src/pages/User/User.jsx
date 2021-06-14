@@ -3,11 +3,13 @@ import { connect } from 'react-redux'
 import Style from './User.module.scss'
 import AppBar from '../../components/AppBar/AppBar'
 import TabBar from '../../components/TabBar/TabBar'
+import Dialog from '../../components/Dialog/Dialog'
 
 function User(props) {
-  const { history,userInfo } = props
+  const { history, userInfo } = props
   // 登陆状态
   const [isLogin, setIsLogin] = useState(0)
+  const [dialog, setDialog] = useState({ show: false })
   // 菜单数据
   const menuData = [
     {
@@ -57,13 +59,36 @@ function User(props) {
   const toLogin = () => {
     history.push('/login')
   }
+  // 检测登陆
+  const checkLogin = () => {
+    setDialog({
+      show: dialog.show + 1,
+      confirm: () => {
+        setDialog({ show: false })
+        history.push('/login')
+      }
+    })
+  }
 
-  useEffect(()=>{
+  // 点击菜单
+  const handleMenu = (path) => {
+    console.log(path)
+    if (!isLogin) {
+      checkLogin()
+      return
+    }
+    history.push(path)
+  }
+
+  useEffect(() => {
     setIsLogin(!!userInfo.id)
-  },[userInfo])
+  }, [userInfo])
 
   return (
     <div className={Style.user}>
+      {/* dialog弹窗 */}
+      <Dialog dialog={dialog.show} text={'该功能需要登陆才能使用，是否登陆？'}
+        confirm={dialog.confirm} />
       {
         isLogin ?
           // 已经登陆显示信息
@@ -77,16 +102,16 @@ function User(props) {
               <div className={Style.avatar}>
                 {
                   // 'http://localhost:7000/upload_b665aff76b1824e2974417c67ee7b6de.jpg'
-                  userInfo.avatar?
-                  <img src={userInfo.avatar} alt="" />
-                  :<div className={`iconfont ${Style.img}`}>&#xe658;</div>
+                  userInfo.avatar ?
+                    <img src={userInfo.avatar} alt="" />
+                    : <div className={`iconfont ${Style.img}`}>&#xe658;</div>
                 }
               </div>
               {/* 用户昵称 */}
               <div className={Style.text}>
                 <p className={Style.userName}>{userInfo.nickName}</p>
                 <p>
-                  <span className={Style.userId}>{`用户ID：${"8"+String(userInfo.id).padStart(5,0)}`}</span>
+                  <span className={Style.userId}>{`用户ID：${"8" + String(userInfo.id).padStart(5, 0)}`}</span>
                 </p>
               </div>
               {/* 更多 */}
@@ -107,7 +132,7 @@ function User(props) {
       <div className={Style.funcArea}>
         {
           funcData.map(item => (
-            <div onClick={() => { history.push(item.to) }}
+            <div onClick={() => { handleMenu(item.to) }}
               key={item.title} className={Style.item}>
               <div className={`iconfont ${Style.icon}`}
                 dangerouslySetInnerHTML={{ __html: item.icon }}></div>
@@ -122,7 +147,7 @@ function User(props) {
           {menuData.map(item => {
             return <AppBar key={item.left} leftIcon={item.leftIcon}
               left={item.left} bgColor={'white'} leftIconColor={item.iconColor}
-              onClick={() => { history.push(item.to) }}
+              onClick={() => { handleMenu(item.to) }}
               color={'#333'} rightIcon={'&#xe695;'} />
           })}
         </div>
@@ -135,7 +160,7 @@ function User(props) {
 
 
 export default connect(
-  ({userInfo}) => ({
+  ({ userInfo }) => ({
     userInfo
   }),
   (dispatch) => ({
