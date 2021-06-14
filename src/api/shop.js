@@ -33,3 +33,11 @@ export const shopCollect = (data) => {
     data,
   })
 }
+// 商铺搜索
+export const shopSearch = (data) => {
+  return request({
+    method: 'post',
+    url: '/shop/shopSearch',
+    data,
+  })
+}

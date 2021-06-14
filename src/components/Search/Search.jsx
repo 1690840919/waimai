@@ -2,7 +2,7 @@ import React from 'react'
 import Style from './Search.module.scss'
 
 function Search(props) {
-  const { height = '50px', left, right, onClick, rightClick } = props
+  const { height = '50px', left, right, onClick, rightClick, handleInput, value } = props
   return (
     <div onClick={onClick} style={{ height, lineHeight: height }} className={Style.search}>
       {
@@ -15,7 +15,10 @@ function Search(props) {
 
       <div className={Style.center}>
         <div className={`iconfont ${Style.searchIcon}`}>&#xe602;</div>
-        <input placeholder="请输入搜索关键词" type="text" />
+        <input
+          value={value}
+          placeholder="请输入搜索关键词"
+          type="text" onChange={e => { handleInput(e.target.value) }} />
       </div>
       {
         right ?
