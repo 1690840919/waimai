@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { HashRouter as Router, Redirect, Route, Switch,withRouter } from 'react-router-dom'
+import { HashRouter as Router, Redirect, Route, Switch, withRouter } from 'react-router-dom'
 
 import Home from '../pages/Home/Home'
 import NotFound from '../pages/NotFound/NotFound'
@@ -22,7 +22,7 @@ import UserWallet from '../pages/UserWallet/UserWallet'
 import OrderInfo from '../pages/OrderInfo/OrderInfo'
 import Search from '../pages/Search/Search'
 import OrderSure from '../pages/OrderSure/OrderSure'
-import { getItem,removeItem } from '../utils/storage'
+import { getItem, removeItem } from '../utils/storage'
 import { updateUserInfo } from '../redux/actions'
 import { loginCheck } from '../api/user'
 import Toast from '../components/Toast/Toast'
@@ -30,33 +30,57 @@ import MoreBill from '../pages/UserWallet/components/MoreBill/MoreBill'
 import OrderComment from '../pages/OrderComment/OrderComment'
 class RouteMap extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
-      toastInfo:{}
+      toastInfo: {},
+      RouteData: [
+        { path: '/home', component: Home },
+        { path: '/cart', component: Cart },
+        { path: '/order', component: Order },
+        { path: '/orderComment', component: OrderComment },
+        { path: '/orderInfo', component: OrderInfo },
+        { path: '/orderSure:id', component: OrderSure },
+        { path: '/user', component: User },
+        { path: '/login', component: Login },
+        { path: '/shopDetail:id', component: ShopDetail },
+        { path: '/setting', component: Setting },
+        { path: '/userInfo', component: UserInfo },
+        { path: '/userVip', component: UserVip },
+        { path: '/userAddress', component: UserAddress },
+        { path: '/userAddressEdit', component: UserAddressEdit },
+        { path: '/userService', component: UserService },
+        { path: '/userRule', component: UserRule },
+        { path: '/userCollect', component: UserCollect },
+        { path: '/userDiscount', component: UserDiscount },
+        { path: '/userWallet', component: UserWallet },
+        { path: '/search', component: Search },
+        { path: "/userBill", component: MoreBill },
+        { path: "*", component: NotFound },
+      ]
     }
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     const userInfo = getItem('lazy_waimai_userInfo')
-    const {data:{code}} = await loginCheck()
-    if(code !== 1000 && userInfo && userInfo.id){
+    const { data: { code } } = await loginCheck()
+    if (code !== 1000 && userInfo && userInfo.id) {
       this.setState({
-        toastInfo:{
+        toastInfo: {
           text: '登陆信息过期',
           date: new Date(),
-          callBackFn:()=>{
+          callBackFn: () => {
             removeItem('lazy_waimai_userInfo')
           }
         }
       })
       return
     }
-    userInfo && userInfo.id && this.props.dispatch(updateUserInfo({data:userInfo}))
+    userInfo && userInfo.id && this.props.dispatch(updateUserInfo({ data: userInfo }))
   }
 
   render() {
-    const { toastInfo } = this.state
+    const { toastInfo, RouteData } = this.state
     return (
       <Router>
         {/* 消息提醒 */}
@@ -64,28 +88,11 @@ class RouteMap extends Component {
           isShow={toastInfo.date} icon={toastInfo.icon} />
         <Switch>
           <Redirect from='/' to='/login' exact />
-          <Route path='/home' component={Home} />
-          <Route path='/cart' component={Cart} />
-          <Route path='/order' component={Order} />
-          <Route path='/orderComment' component={OrderComment} />
-          <Route path='/orderInfo' component={OrderInfo} />
-          <Route path='/orderSure:id' component={OrderSure} />
-          <Route path='/user' component={User} />
-          <Route path='/login' component={Login}/>
-          <Route path='/shopDetail:id' component={ShopDetail} />
-          <Route path='/setting' component={Setting} />
-          <Route path='/userInfo' component={UserInfo} />
-          <Route path='/userVip' component={UserVip} />
-          <Route path='/userAddress' component={UserAddress} />
-          <Route path='/userAddressEdit' component={UserAddressEdit} />
-          <Route path='/userService' component={UserService} />
-          <Route path='/userRule' component={UserRule} />
-          <Route path='/userCollect' component={UserCollect} />
-          <Route path='/userDiscount' component={UserDiscount} />
-          <Route path='/userWallet' component={UserWallet} />
-          <Route path='/search' component={Search} />
-          <Route path="/userBill" component={MoreBill} />
-          <Route path="*" component={NotFound} />
+          {
+            RouteData.map(obj => (
+              <Route key={obj.path} path={obj.path} component={obj.component} />
+            ))
+          }
         </Switch>
       </Router>
     )
@@ -94,7 +101,7 @@ class RouteMap extends Component {
 
 
 export default connect(
-  ({userInfo}) => ({
+  ({ userInfo }) => ({
     userInfo
   }),
   (dispatch) => ({
